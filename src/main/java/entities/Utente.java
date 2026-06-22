@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 @DiscriminatorColumn(name = "tipo_utente")
 public abstract class Utente {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
