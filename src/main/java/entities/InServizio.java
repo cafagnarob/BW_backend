@@ -26,6 +26,13 @@ public class InServizio {
     public InServizio() {
     }
 
+    public InServizio(Mezzo mezzo, Tratta tratta, int numVolte) {
+        this.mezzo = mezzo;
+        this.tratta = tratta;
+        this.tempoPercorrenzaEffettivo = // getTempodipercorrenzamedia * numVolte
+                this.numVolte = numVolte;
+    }
+
     public long getId() {
         return id;
     }
@@ -50,9 +57,6 @@ public class InServizio {
         return tempoPercorrenzaEffettivo;
     }
 
-    public void setTempoPercorrenzaEffettivo(int tempoPercorrenzaEffettivo) {
-        this.tempoPercorrenzaEffettivo = tempoPercorrenzaEffettivo;
-    }
 
     public int getNumVolte() {
         return numVolte;

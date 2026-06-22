@@ -3,12 +3,15 @@ package entities;
 import Enum.TipoAbbonamento;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 import java.time.LocalDate;
 
 @Entity
 public class Abbonamento extends Titolo_di_viaggio {
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private TipoAbbonamento tipo;
 
     @Column(nullable = false)
