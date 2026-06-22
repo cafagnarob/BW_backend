@@ -2,6 +2,7 @@ package entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ public class Viaggiatore extends Utente {
     @Column(unique = true)
     private Tessera tessera;
 
-
+    @OneToMany(mappedBy = "viaggiatore")
     private List<Biglietto> lista_biglietti = new ArrayList<>();
 
     public Viaggiatore() {
