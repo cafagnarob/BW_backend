@@ -37,6 +37,7 @@ public class Tessera {
         this.data_di_emissione = data_di_emissione;
         this.data_di_scadenza = data_di_emissione.plusYears(1);
         this.luogo_di_emissione = luogo_di_emissione;
+        this.codice_univoco_tessera = "TESS_" + id;
         this.proprietario_tessera = proprietario_tessera;
     }
 

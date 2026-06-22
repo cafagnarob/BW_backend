@@ -7,6 +7,10 @@
         <class>entities.Utente</class>
         <class>entities.Admin</class>
         <class>entities.Viaggiatore</class>
+        <class>entities.Tessera</class>
+        <class>entities.Titolo_di_viaggio</class>
+        <class>entities.Abbonamento</class>
+        <class>entities.Biglietto</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/BW_backend"/>
