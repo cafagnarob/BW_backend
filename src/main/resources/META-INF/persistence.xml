@@ -16,6 +16,7 @@
         <class>entities.Titolo_di_viaggio</class>
         <class>entities.Abbonamento</class>
         <class>entities.Biglietto</class>
+        <class>entities.Tratta</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/BW_backend"/>
