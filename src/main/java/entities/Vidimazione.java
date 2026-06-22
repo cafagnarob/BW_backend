@@ -14,7 +14,7 @@ public class Vidimazione {
     @GeneratedValue
     private Long id;
 
-    @Column(name= "id_biglietto", nullable = false)
+    @Column(name = "id_biglietto", nullable = false)
     private Biglietto biglietto;
 
     @Column(nullable = false)
@@ -29,8 +29,8 @@ public class Vidimazione {
     public Vidimazione() {
     }
 
-    public Vidimazione(LocalDateTime orario, Biglietto biglietto, Mezzo mezzo, InServizio servizio) {
-        this.orario = orario;
+    public Vidimazione(Biglietto biglietto, Mezzo mezzo, InServizio servizio) {
+        this.orario = LocalDateTime.now();
         this.biglietto = biglietto;
         this.mezzo = mezzo;
         this.servizio = servizio;
@@ -44,16 +44,10 @@ public class Vidimazione {
         return orario;
     }
 
-    public void setOrario(LocalDateTime orario) {
-        this.orario = orario;
-    }
 
     public Titolo_di_viaggio getBiglietto() {
         return biglietto;
     }
 
-    public void setBiglietto(Biglietto biglietto) {
-        this.biglietto = biglietto;
-    }
 
 }

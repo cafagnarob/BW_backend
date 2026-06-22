@@ -1,6 +1,7 @@
 package entities;
 
-
+import Enum.StatoMezzo;
+import Enum.TipoMezzo;
 import jakarta.persistence.*;
 
 @Entity
@@ -19,12 +20,17 @@ public class Mezzo {
     @Column(name = "tipo", nullable = false)
     private TipoMezzo tipo;
 
-    public Mezzo(){
+    public Mezzo() {
 
     }
 
-    public Mezzo(int capienza, StatoMezzo stato, TipoMezzo tipo){
-        this.capienza = capienza;
+    public Mezzo(int capienza, StatoMezzo stato, TipoMezzo tipo) {
+        if (tipo == TipoMezzo.AUTOBUS) {
+
+            this.capienza = 50;
+        } else {
+            this.capienza = 80;
+        }
         this.stato = stato;
         this.tipo = tipo;
     }
@@ -37,9 +43,6 @@ public class Mezzo {
         return capienza;
     }
 
-    public void setCapienza(int capienza) {
-        this.capienza = capienza;
-    }
 
     public StatoMezzo getStato() {
         return stato;
@@ -53,8 +56,5 @@ public class Mezzo {
         return tipo;
     }
 
-    public void setTipo(TipoMezzo tipo) {
-        this.tipo = tipo;
-    }
-
+    
 }
