@@ -35,22 +35,21 @@ public class Viaggiatore extends Utente {
         this.lista_biglietti = lista_biglietti;
     }
 
-    public String getCodice_univoco_tessera() {
-        return codice_univoco_tessera;
+    public Tessera getTessera() {
+        return tessera;
     }
 
-    public void setCodice_univoco_tessera(String codice_univoco_tessera) {
-        this.codice_univoco_tessera = codice_univoco_tessera;
+    public void setTessera(Tessera tessera) {
+        this.tessera = tessera;
     }
-
 
     @Override
     public String toString() {
-        return "Viaggiatore{ \n" +
-                super.toString() + "\n" +
-                "codice_univoco_tessera='" + codice_univoco_tessera + "\n" +
+        return "Viaggiatore{ \n"
+                + super.toString() +
+                "tessera=" + tessera + "\n" +
                 ", lista_biglietti=" + lista_biglietti + "\n" +
-                "} \n";
+                "} \n ";
     }
 }
 

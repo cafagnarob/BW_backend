@@ -12,6 +12,11 @@
         <class>entities.StatoMezzo</class>
         <class>entities.InServizio</class>
         <class>entities.Vidimazione</class>
+        <class>entities.Tessera</class>
+        <class>entities.Titolo_di_viaggio</class>
+        <class>entities.Abbonamento</class>
+        <class>entities.Biglietto</class>
+
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/BW_backend"/>
             <!--            nome user x acesso al DB-->

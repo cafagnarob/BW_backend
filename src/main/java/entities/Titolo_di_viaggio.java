@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Titolo_di_viaggio {
+public abstract class Titolo_di_viaggio {
     @Id
     @GeneratedValue
     private Long id;
@@ -19,6 +19,7 @@ public class Titolo_di_viaggio {
 
     @Column(nullable = false, unique = true)
     private String codice_univoco_titolo_di_viaggio;
+    // TV + id (TV 1...TV 2.... ecc)
 
     @Column(nullable = false)
     private double prezzo;
@@ -26,9 +27,33 @@ public class Titolo_di_viaggio {
     public Titolo_di_viaggio() {
     }
 
-    public Titolo_di_viaggio(Long id, LocalDate data_di_emissione, Punto_di_emissione luogo_di_emissione
-            , String codice_univoco_titolo_di_viaggio, double prezzo) {
+    public Titolo_di_viaggio(Long id, Punto_di_emissione luogo_di_emissione, double prezzo) {
         this.data_di_emissione = LocalDate.now();
         this.luogo_di_emissione = luogo_di_emissione;
+        this.codice_univoco_titolo_di_viaggio = "TV" + id;
+        this.prezzo = prezzo;
     }
+
+    public LocalDate getData_di_emissione() {
+        return data_di_emissione;
+    }
+
+    public Punto_di_emissione getLuogo_di_emissione() {
+        return luogo_di_emissione;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public double getPrezzo() {
+        return prezzo;
+    }
+
+    public String getCodice_univoco_titolo_di_viaggio() {
+        return codice_univoco_titolo_di_viaggio;
+    }
+
+
 }
+
