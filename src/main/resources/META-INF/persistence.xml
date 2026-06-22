@@ -8,8 +8,8 @@
         <class>entities.Admin</class>
         <class>entities.Viaggiatore</class>
         <class>entities.Mezzo</class>
-        <class>entities.TipoMezzo</class>
-        <class>entities.StatoMezzo</class>
+        <class>Enum.TipoMezzo</class>
+        <class>Enum.StatoMezzo</class>
         <class>entities.InServizio</class>
         <class>entities.Vidimazione</class>
         <class>entities.Tessera</class>
