@@ -1,12 +1,15 @@
 package itsemanuela;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="distributore")
 public class Distributore extends Punto_di_Emissione {
-    Stato_Distributore stato;
+    @Enumerated(EnumType.STRING)
+    private Stato_Distributore stato;
 
     public Distributore() {
         super();
