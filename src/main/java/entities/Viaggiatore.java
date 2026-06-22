@@ -1,3 +1,4 @@
+/*
 package entities;
 
 import jakarta.persistence.Column;
@@ -52,3 +53,4 @@ public class Viaggiatore extends Utente {
                 "} \n";
     }
 }
+*/

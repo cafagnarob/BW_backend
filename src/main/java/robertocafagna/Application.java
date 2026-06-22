@@ -6,7 +6,7 @@ import jakarta.persistence.Persistence;
 
 public class Application {
 
-    private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("u4-w3-d5pu");
+    private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("BW_backendpu");
 
 
     public static void main(String[] args) {
