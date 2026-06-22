@@ -56,4 +56,14 @@ public class Tratta {
     public void setCapolinea(String capolinea) {
         this.capolinea = capolinea;
     }
+
+    @Override
+    public String toString() {
+        return "Tratta{ \n" +
+                "id=" + id + "\n" +
+                ", tempo di percorrenza medio= " + tempoDiPercorrenzaMedio + "\n" +
+                ", partenza da " + partenza + "\n" +
+                ", arrivo a " + capolinea + "\n" +
+                "} \n";
+    }
 }

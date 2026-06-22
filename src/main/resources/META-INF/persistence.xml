@@ -13,7 +13,7 @@
         <class>entities.InServizio</class>
         <class>entities.Vidimazione</class>
         <class>entities.Tessera</class>
-        <class>entities.Titolo_di_viaggio</class>
+        <class>entities.TitoloDiViaggio</class>
         <class>entities.Abbonamento</class>
         <class>entities.Biglietto</class>
         <class>entities.Tratta</class>
