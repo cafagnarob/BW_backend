@@ -10,8 +10,8 @@ import java.util.List;
 public class Viaggiatore extends Utente {
 
     @Column(unique = true)
-    private String codice_univoco_tessera;
-    // TESS + id_tessera
+    private Tessera tessera;
+
 
     private List<Biglietto> lista_biglietti = new ArrayList<>();
 
@@ -20,7 +20,7 @@ public class Viaggiatore extends Utente {
 
     public Viaggiatore(String nome, String cognome, String email, int eta) {
         super(nome, cognome, email, eta);
-        this.codice_univoco_tessera = null;
+        this.tessera = null;
     }
 
 
