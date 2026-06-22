@@ -1,6 +1,9 @@
 package entities;
 
+import Enum.TipoManutenzione;
+
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
 @Entity
@@ -20,13 +23,14 @@ public class Manutenzione {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_manutenzione", nullable = false)
-    private Tipo_Manutenzione tipo_manutenzione;
+    private TipoManutenzione tipo_manutenzione;
 
 
-    public Manutenzione() {}
+    public Manutenzione() {
+    }
 
 
-    public Manutenzione(LocalDate data_fine_manutenzione, Tipo_Manutenzione tipo_manutenzione) {
+    public Manutenzione(LocalDate data_fine_manutenzione, TipoManutenzione tipo_manutenzione) {
         this.data_inizio_manutenzione = LocalDate.now();
         this.data_fine_manutenzione = data_fine_manutenzione;
         this.tipo_manutenzione = tipo_manutenzione;
@@ -49,15 +53,12 @@ public class Manutenzione {
         return data_fine_manutenzione;
     }
 
-    public void setData_fine_manutenzione(LocalDate data_fine_manutenzione) {
-        this.data_fine_manutenzione = data_fine_manutenzione;
-    }
 
-    public Tipo_Manutenzione getTipo_manutenzione() {
+    public TipoManutenzione getTipo_manutenzione() {
         return tipo_manutenzione;
     }
 
-    public void setTipo_manutenzione(Tipo_Manutenzione tipo_manutenzione) {
+    public void setTipo_manutenzione(TipoManutenzione tipo_manutenzione) {
         this.tipo_manutenzione = tipo_manutenzione;
     }
 

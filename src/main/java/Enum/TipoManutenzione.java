@@ -1,6 +1,6 @@
 package Enum;
 
-public enum Tipo_Manutenzione {
+public enum TipoManutenzione {
     PREVENTIVA,
     CORRETTIVA,
     PREDITTIVA,
