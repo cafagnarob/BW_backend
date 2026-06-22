@@ -1,4 +1,4 @@
-package entities;
+package Enum;
 
 public enum StatoMezzo {
     SERVIZIO, MANUTENZIONE, FERMO

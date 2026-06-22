@@ -12,7 +12,7 @@ public class Viaggiatore extends Utente {
     @Column(unique = true)
     private Tessera tessera;
 
-   
+
     private List<Biglietto> lista_biglietti = new ArrayList<>();
 
     public Viaggiatore() {
