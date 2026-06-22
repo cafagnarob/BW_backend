@@ -24,8 +24,9 @@ public class Tessera {
 
     @Column(nullable = false, unique = true)
     private String codice_univoco_tessera;
+    // Tess + id
 
-    /*@Column(nullable = false, unique = true)
-    private Viaggiatore proprietario_tessera;*/
+    @Column(nullable = false, unique = true)
+    private Viaggiatore proprietario_tessera;
 
 }
