@@ -1,4 +1,4 @@
-package itsemanuela;
+package Enum;
 
 public enum Stato_Distributore {
     DISPONIBILE,

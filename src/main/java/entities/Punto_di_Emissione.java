@@ -1,20 +1,21 @@
-package itsemanuela;
+package entities;
 
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="punto_di_emissione")
-@Inheritance(strategy=InheritanceType.JOINED)
+@Table(name = "punto_di_emissione")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Punto_di_Emissione {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
     public String indirizzo;
 
 
     //costruttore vuoto
-    public Punto_di_Emissione() {}
+    public Punto_di_Emissione() {
+    }
 
     //costruttore pieno
     public Punto_di_Emissione(String indirizzo) {
@@ -26,12 +27,15 @@ public abstract class Punto_di_Emissione {
     public long getId() {
         return id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
+
     public String getIndirizzo() {
         return indirizzo;
     }
+
     public void setIndirizzo(String indirizzo) {
         this.indirizzo = indirizzo;
     }

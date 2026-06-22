@@ -1,4 +1,4 @@
-package itsemanuela;
+package entities;
 
 public class Tratta {
 }
