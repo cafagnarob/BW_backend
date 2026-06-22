@@ -7,7 +7,11 @@
         <class>entities.Utente</class>
         <class>entities.Admin</class>
         <class>entities.Viaggiatore</class>
-
+        <class>entities.Mezzo</class>
+        <class>entities.TipoMezzo</class>
+        <class>entities.StatoMezzo</class>
+        <class>entities.InServizio</class>
+        <class>entities.Vidimazione</class>
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/BW_backend"/>
             <!--            nome user x acesso al DB-->
