@@ -9,13 +9,13 @@ import jakarta.persistence.Enumerated;
 import java.time.LocalDate;
 
 @Entity
-public class Abbonamento extends Titolo_di_viaggio {
+public class Abbonamento extends TitoloDiViaggio {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoAbbonamento tipo;
 
     @Column(nullable = false)
-    private LocalDate data_di_scadenza;
+    private LocalDate dataDiScadenza;
 
     @Column(nullable = false)
     private Tessera tessera;
@@ -24,20 +24,20 @@ public class Abbonamento extends Titolo_di_viaggio {
 
     }
 
-    public Abbonamento(Long id, Punto_di_emissione luogo_di_emissione, double prezzo, TipoAbbonamento tipo,
+    public Abbonamento(Long id, PuntoDiEmissione luogoDiEmissione, double prezzo, TipoAbbonamento tipo,
                        Tessera tessera) {
-        super(id, luogo_di_emissione, prezzo);
+        super(id, luogoDiEmissione, prezzo);
         this.tipo = tipo;
         if (tipo == TipoAbbonamento.SETTIMANALE) {
-            this.data_di_scadenza = getData_di_emissione().plusWeeks(1);
+            this.dataDiScadenza = getDataDiEmissione().plusWeeks(1);
         } else {
-            this.data_di_scadenza = getData_di_emissione().plusMonths(1);
+            this.dataDiScadenza = getDataDiEmissione().plusMonths(1);
         }
         this.tessera = tessera;
     }
 
-    public LocalDate getData_di_scadenza() {
-        return data_di_scadenza;
+    public LocalDate getDataDiScadenza() {
+        return dataDiScadenza;
     }
 
     public Tessera getTessera() {
@@ -57,7 +57,7 @@ public class Abbonamento extends Titolo_di_viaggio {
         return "Abbonamento{ \n" +
                 super.toString() +
                 "tipo=" + tipo + "\n" +
-                ", data_di_scadenza=" + data_di_scadenza + "\n" +
+                ", data_di_scadenza=" + dataDiScadenza + "\n" +
                 ", tessera=" + tessera + "\n" +
                 "}  \n";
     }

@@ -6,7 +6,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Biglietto extends Titolo_di_viaggio {
+public class Biglietto extends TitoloDiViaggio {
     @Column(nullable = false)
     private boolean vidimato;
 
@@ -17,7 +17,7 @@ public class Biglietto extends Titolo_di_viaggio {
     public Biglietto() {
     }
 
-    public Biglietto(Long id, Punto_di_emissione luogo_di_emissione, double prezzo) {
+    public Biglietto(Long id, PuntoDiEmissione luogo_di_emissione, double prezzo) {
         super(id, luogo_di_emissione, prezzo);
         this.vidimato = false;
         this.viaggiatore = null;

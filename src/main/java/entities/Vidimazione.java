@@ -45,9 +45,19 @@ public class Vidimazione {
     }
 
 
-    public Titolo_di_viaggio getBiglietto() {
+    public Biglietto getBiglietto() {
         return biglietto;
     }
 
 
+    @Override
+    public String toString() {
+        return "Vidimazione{ \n" +
+                "id=" + id + "\n" +
+                ", biglietto=" + biglietto + "\n" +
+                ", orario=" + orario + "\n" +
+                ", mezzo=" + mezzo + "\n" +
+                ", servizio=" + servizio + "\n" +
+                "} \n";
+    }
 }

@@ -11,31 +11,31 @@ public class Tessera {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDate data_di_emissione;
+    private LocalDate dataDiEmissione;
 
     @Column(nullable = false)
-    private LocalDate data_di_scadenza;
+    private LocalDate dataDiScadenza;
 
     @Column(nullable = false)
-    private Punto_di_emissione luogo_di_emissione;
+    private PuntoDiEmissione luogoDiEmissione;
 
     @Column(nullable = false, unique = true)
-    private String codice_univoco_tessera;
+    private String codiceUnivocoTessera;
     // Tess + id
 
     @Column(nullable = false, unique = true)
-    private Viaggiatore proprietario_tessera;
+    private Viaggiatore proprietarioTessera;
 
     public Tessera() {
     }
 
-    public Tessera(LocalDate data_di_emissione, LocalDate data_di_scadenza,
-                   Punto_di_emissione luogo_di_emissione, Viaggiatore proprietario_tessera) {
-        this.data_di_emissione = data_di_emissione;
-        this.data_di_scadenza = data_di_emissione.plusYears(1);
-        this.luogo_di_emissione = luogo_di_emissione;
-        this.codice_univoco_tessera = "TESS_" + id;
-        this.proprietario_tessera = proprietario_tessera;
+    public Tessera(LocalDate dataDiEmissione, LocalDate dataDiScadenza,
+                   PuntoDiEmissione luogoDiEmissione, Viaggiatore proprietarioTessera) {
+        this.dataDiEmissione = dataDiEmissione;
+        this.dataDiScadenza = dataDiEmissione.plusYears(1);
+        this.luogoDiEmissione = luogoDiEmissione;
+        this.codiceUnivocoTessera = "TESS_" + id;
+        this.proprietarioTessera = proprietarioTessera;
     }
 
     public Long getId() {
@@ -43,27 +43,27 @@ public class Tessera {
     }
 
     public String getCodice_univoco_tessera() {
-        return codice_univoco_tessera;
+        return codiceUnivocoTessera;
     }
 
     public LocalDate getData_di_emissione() {
-        return data_di_emissione;
+        return dataDiEmissione;
     }
 
     public void setData_di_emissione(LocalDate data_di_emissione) {
-        this.data_di_emissione = data_di_emissione;
+        this.dataDiEmissione = data_di_emissione;
     }
 
     public LocalDate getData_di_scadenza() {
-        return data_di_scadenza;
+        return dataDiScadenza;
     }
 
-    public Punto_di_emissione getLuogo_di_emissione() {
-        return luogo_di_emissione;
+    public PuntoDiEmissione getLuogo_di_emissione() {
+        return luogoDiEmissione;
     }
 
     public Viaggiatore getProprietario_tessera() {
-        return proprietario_tessera;
+        return proprietarioTessera;
     }
 
 
@@ -71,11 +71,11 @@ public class Tessera {
     public String toString() {
         return "Tessera{ \n" +
                 "id=" + id + "\n" +
-                ", data_di_emissione=" + data_di_emissione + "\n" +
-                ", data_di_scadenza=" + data_di_scadenza + "\n" +
-                ", luogo_di_emissione=" + luogo_di_emissione + "\n" +
-                ", codice_univoco_tessera='" + codice_univoco_tessera + "\n" +
-                ", proprietario_tessera=" + proprietario_tessera + "\n" +
+                ", data_di_emissione=" + dataDiEmissione + "\n" +
+                ", data_di_scadenza=" + dataDiScadenza + "\n" +
+                ", luogo_di_emissione=" + luogoDiEmissione + "\n" +
+                ", codice_univoco_tessera='" + codiceUnivocoTessera + "\n" +
+                ", proprietario_tessera=" + proprietarioTessera + "\n" +
                 "} \n ";
     }
 }

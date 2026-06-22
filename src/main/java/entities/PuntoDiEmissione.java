@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "punto_di_emissione")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Punto_di_Emissione {
+public abstract class PuntoDiEmissione {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
@@ -14,11 +14,11 @@ public abstract class Punto_di_Emissione {
 
 
     //costruttore vuoto
-    public Punto_di_Emissione() {
+    public PuntoDiEmissione() {
     }
 
     //costruttore pieno
-    public Punto_di_Emissione(String indirizzo) {
+    public PuntoDiEmissione(String indirizzo) {
         this.indirizzo = indirizzo;
     }
 

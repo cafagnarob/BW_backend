@@ -1,5 +1,6 @@
 package entities;
 
+import Enum.StatoDistributore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -7,26 +8,26 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "distributore")
-public class Distributore extends Punto_di_Emissione {
+public class Distributore extends PuntoDiEmissione {
     @Enumerated(EnumType.STRING)
-    private Stato_Distributore stato;
+    private StatoDistributore stato;
 
     public Distributore() {
         super();
     }
 
-    public Distributore(Stato_Distributore stato, String indirizzo) {
+    public Distributore(StatoDistributore stato, String indirizzo) {
         super(indirizzo);
         this.stato = stato;
 
     }
 
     //getter e setter
-    public Stato_Distributore getStato() {
+    public StatoDistributore getStato() {
         return stato;
     }
 
-    public void setStato(Stato_Distributore stato) {
+    public void setStato(StatoDistributore stato) {
         this.stato = stato;
     }
 

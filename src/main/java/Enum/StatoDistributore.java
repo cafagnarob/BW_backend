@@ -1,6 +1,6 @@
 package Enum;
 
-public enum Stato_Distributore {
+public enum StatoDistributore {
     DISPONIBILE,
     NON_DISPONIBILE,
 }

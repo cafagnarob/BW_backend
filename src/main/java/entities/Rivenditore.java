@@ -5,7 +5,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "rivenditore_autorizzato")
-public class Rivenditore extends Punto_di_Emissione {
+public class Rivenditore extends PuntoDiEmissione {
 
     public String nome;
 

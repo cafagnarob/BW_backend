@@ -14,7 +14,7 @@ public class Viaggiatore extends Utente {
     private Tessera tessera;
 
     @OneToMany(mappedBy = "viaggiatore")
-    private List<Biglietto> lista_biglietti = new ArrayList<>();
+    private List<Biglietto> listaBiglietti = new ArrayList<>();
 
     public Viaggiatore() {
     }
@@ -29,11 +29,11 @@ public class Viaggiatore extends Utente {
 
 
     public List<Biglietto> getLista_biglietti() {
-        return lista_biglietti;
+        return listaBiglietti;
     }
 
     public void setLista_biglietti(List<Biglietto> lista_biglietti) {
-        this.lista_biglietti = lista_biglietti;
+        this.listaBiglietti = lista_biglietti;
     }
 
     public Tessera getTessera() {
@@ -49,7 +49,7 @@ public class Viaggiatore extends Utente {
         return "Viaggiatore{ \n"
                 + super.toString() +
                 "tessera=" + tessera + "\n" +
-                ", lista_biglietti=" + lista_biglietti + "\n" +
+                ", lista_biglietti=" + listaBiglietti + "\n" +
                 "} \n ";
     }
 }
