@@ -22,7 +22,7 @@ public abstract class Punto_di_Emissione {
     }
 
     //getter e setter
-
+//
     public long getId() {
         return id;
     }
