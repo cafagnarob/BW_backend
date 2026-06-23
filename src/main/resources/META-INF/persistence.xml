@@ -5,18 +5,21 @@
     <persistence-unit name="BW_backendpu">
         <!--    lista delle classi -->
         <class>entities.Utente</class>
-        <class>entities.Admin</class>
-        <class>entities.Viaggiatore</class>
         <class>entities.Mezzo</class>
         <class>Enum.TipoMezzo</class>
         <class>Enum.StatoMezzo</class>
         <class>entities.InServizio</class>
         <class>entities.Vidimazione</class>
         <class>entities.Tessera</class>
-        <class>entities.Titolo_di_viaggio</class>
+        <class>entities.TitoloDiViaggio</class>
         <class>entities.Abbonamento</class>
         <class>entities.Biglietto</class>
         <class>entities.Tratta</class>
+        <class>entities.Distributore</class>
+        <class>entities.Manutenzione</class>
+        <class>entities.PuntoDiEmissione</class>
+        <class>entities.Rivenditore</class>
+
 
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/BW_backend"/>

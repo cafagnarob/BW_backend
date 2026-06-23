@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 public abstract class PuntoDiEmissione {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @OneToMany(mappedBy = "luogoDiEmissione")
     public long id;
     public String indirizzo;
 

@@ -16,21 +16,21 @@ public class Tessera {
     @Column(nullable = false)
     private LocalDate dataDiScadenza;
 
-    @Column(nullable = false)
+    @ManyToOne
     private PuntoDiEmissione luogoDiEmissione;
 
     @Column(nullable = false, unique = true)
     private String codiceUnivocoTessera;
     // Tess + id
 
-    @Column(nullable = false, unique = true)
-    private Viaggiatore proprietarioTessera;
+    @OneToOne
+    private Utente proprietarioTessera;
 
     public Tessera() {
     }
 
     public Tessera(LocalDate dataDiEmissione, LocalDate dataDiScadenza,
-                   PuntoDiEmissione luogoDiEmissione, Viaggiatore proprietarioTessera) {
+                   PuntoDiEmissione luogoDiEmissione, Utente proprietarioTessera) {
         this.dataDiEmissione = dataDiEmissione;
         this.dataDiScadenza = dataDiEmissione.plusYears(1);
         this.luogoDiEmissione = luogoDiEmissione;
@@ -62,7 +62,7 @@ public class Tessera {
         return luogoDiEmissione;
     }
 
-    public Viaggiatore getProprietario_tessera() {
+    public Utente getProprietario_tessera() {
         return proprietarioTessera;
     }
 
