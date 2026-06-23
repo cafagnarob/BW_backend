@@ -2,37 +2,42 @@ package entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+import java.time.LocalDate;
 
 @Entity
 public class Biglietto extends TitoloDiViaggio {
-    @Column(nullable = false)
-    private boolean vidimato;
 
+    @Column(name = "orario_inizio_corsa")
+    private LocalDate orarioInizioCorsa;
+
+    @Column(name = "orario_fine_corsa")
+    private LocalDate orarioFineCorsa;
+
+    @Column(name = "orario_vidimazione")
+    private LocalDate orarioVidimazione;
+
+    @ManyToOne
+    @JoinColumn(name = "id_mezzo")
+    private Mezzo mezzo;
 
     public Biglietto() {
     }
 
-    public Biglietto(Long id, PuntoDiEmissione luogo_di_emissione, double prezzo) {
-        super(id, luogo_di_emissione, prezzo);
-        this.vidimato = false;
-
+    public Biglietto(LocalDate dataDiEmissione, PuntoDiEmissione luogo_di_emissione, double prezzo) {
+        super(dataDiEmissione, luogo_di_emissione, prezzo);
 
     }
-
-    public boolean isVidimato() {
-        return vidimato;
-    }
-
-    public void setVidimato(boolean vidimato) {
-        this.vidimato = vidimato;
-    }
-
 
     @Override
     public String toString() {
-        return "Biglietto{ \n"
-                + super.toString() + "\n" +
-                "vidimato=" + vidimato + "\n" +
-                "} \n";
+        return "Biglietto{ " +
+                "id= " + getId() +
+                ", emesso il: " + getDataDiEmissione() +
+                ", prezzo=" + getPrezzo() +
+                ", vidimato il: " + (orarioVidimazione != null ? orarioVidimazione : "Non ancora usato") +
+                " }";
     }
 }

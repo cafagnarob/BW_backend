@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 @Entity
 public class Abbonamento extends TitoloDiViaggio {
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoAbbonamento tipo;
@@ -15,16 +16,16 @@ public class Abbonamento extends TitoloDiViaggio {
     private LocalDate dataDiScadenza;
 
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private Tessera tessera;
 
     public Abbonamento() {
 
     }
 
-    public Abbonamento(Long id, PuntoDiEmissione luogoDiEmissione, double prezzo, TipoAbbonamento tipo,
+    public Abbonamento(LocalDate dataDiEmissione, PuntoDiEmissione luogoDiEmissione, double prezzo, TipoAbbonamento tipo,
                        Tessera tessera) {
-        super(id, luogoDiEmissione, prezzo);
+        super(dataDiEmissione, luogoDiEmissione, prezzo);
         this.tipo = tipo;
         if (tipo == TipoAbbonamento.SETTIMANALE) {
             this.dataDiScadenza = getDataDiEmissione().plusWeeks(1);
@@ -38,8 +39,16 @@ public class Abbonamento extends TitoloDiViaggio {
         return dataDiScadenza;
     }
 
+    public void setDataDiScadenza(LocalDate dataDiScadenza) {
+        this.dataDiScadenza = dataDiScadenza;
+    }
+
     public Tessera getTessera() {
         return tessera;
+    }
+
+    public void setTessera(Tessera tessera) {
+        this.tessera = tessera;
     }
 
     public TipoAbbonamento getTipo() {
@@ -55,6 +64,7 @@ public class Abbonamento extends TitoloDiViaggio {
         return "Abbonamento{ \n" +
                 super.toString() +
                 "tipo=" + tipo + "\n" +
+                ", prezzo=" + getPrezzo() + "\n" +
                 ", data_di_scadenza=" + dataDiScadenza + "\n" +
                 ", tessera=" + tessera + "\n" +
                 "}  \n";

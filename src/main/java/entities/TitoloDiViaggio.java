@@ -11,27 +11,24 @@ public abstract class TitoloDiViaggio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "data_di_emissione", nullable = false)
     private LocalDate dataDiEmissione;
-
-    @ManyToOne
-    @Column(nullable = false)
-    private PuntoDiEmissione luogoDiEmissione;
-
-    @Column(nullable = false, unique = true)
-    private String codiceUnivocoTitoloDiViaggio;
-    // TV + id (TV 1...TV 2.... ecc)
 
     @Column(nullable = false)
     private double prezzo;
 
+    @ManyToOne
+    @JoinColumn(name = "id_luogo_di_emissione", nullable = false)
+    private PuntoDiEmissione luogoDiEmissione;
+
+
+
     public TitoloDiViaggio() {
     }
 
-    public TitoloDiViaggio(Long id, PuntoDiEmissione luogoDiEmissione, double prezzo) {
+    public TitoloDiViaggio(LocalDate dataDiEmissione, PuntoDiEmissione luogoDiEmissione, double prezzo) {
         this.dataDiEmissione = LocalDate.now();
         this.luogoDiEmissione = luogoDiEmissione;
-        this.codiceUnivocoTitoloDiViaggio = "TV" + id;
         this.prezzo = prezzo;
     }
 
@@ -39,8 +36,16 @@ public abstract class TitoloDiViaggio {
         return dataDiEmissione;
     }
 
+    public void setDataEmissione(LocalDate dataDiEmissione) {
+        this.dataDiEmissione = dataDiEmissione;
+    }
+
     public PuntoDiEmissione getLuogoDiEmissione() {
         return luogoDiEmissione;
+    }
+
+    public void setLuogoDiEmissione(PuntoDiEmissione luogoDiEmissione) {
+        this.luogoDiEmissione = luogoDiEmissione;
     }
 
     public Long getId() {
@@ -51,9 +56,10 @@ public abstract class TitoloDiViaggio {
         return prezzo;
     }
 
-    public String getCodiceUnivocoTitoloDiViaggio() {
-        return codiceUnivocoTitoloDiViaggio;
+    public void setPrezzo(double prezzo) {
+        this.prezzo = prezzo;
     }
+
 
 }
 
