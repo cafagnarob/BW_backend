@@ -8,35 +8,54 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
+
 import java.time.LocalDate;
 import java.util.List;
 
 public class PercorrenzaDAO {
 
-    private final EntityManager em;
+    private final EntityManager entityManager;
 
-    public PercorrenzaDAO(EntityManager em){
-        this.em = em;
+    public PercorrenzaDAO(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
+
+    // SAVE
     public void save(Percorrenza p){
-        EntityTransaction transaction = em.getTransaction();
+        EntityTransaction transaction = entityManager.getTransaction();
 
             transaction.begin();
-            em.persist(p);
+        entityManager.persist(p);
             transaction.commit();
             System.out.println("Nuova Percorrenza " + p + " aggiunta con successo al DB");
 
     }
 
-    public int getTempoEffettivoDaId(long id) {
-
-        Percorrenza p = em.find(Percorrenza.class, id);
+    // GET
+    public Percorrenza getById(long id) {
+        Percorrenza p = entityManager.find(Percorrenza.class, id);
         if (p == null) {
             throw new NotFoundException("Non esistono percorrenze con questo id: " + id);
-        } else {
-            return p.getTempoPercorrenzaEffettivo();
         }
+        return p;
+    }
+
+    //DELETE
+    public void delete(long id) {
+        Percorrenza fromDB = this.getById(id);
+        EntityTransaction transaction = this.entityManager.getTransaction();
+        transaction.begin();
+        this.entityManager.remove(fromDB);
+        transaction.commit();
+        System.out.println("La Percorrenza " + fromDB + "è stato rimosso dal DB");
+    }
+
+    // Tempo effettivo da ID
+    public int getTempoEffettivoDaId(long id) {
+
+        Percorrenza p = this.getById(id);
+        return p.getTempoPercorrenzaEffettivo();
     }
 
     // Nuova percorrenza assegnando una tratta ad un mezzo
@@ -48,9 +67,10 @@ public class PercorrenzaDAO {
     }
 
     // Informazioni di percorreze da id di un mezzo
+
     public void stampaInfoDaIdMezzo(long idMezzo){
 
-        TypedQuery<Percorrenza> query = em.createQuery(
+        TypedQuery<Percorrenza> query = entityManager.createQuery(
                 "SELECT p FROM Percorrenza p WHERE p.mezzo.id = :idMezzo",
                 Percorrenza.class
         );
