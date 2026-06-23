@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 
-public abstract class Utente {
+public class Utente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
