@@ -4,6 +4,9 @@ import Enum.StatoMezzo;
 import Enum.TipoMezzo;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Mezzo {
     @Id
@@ -19,6 +22,12 @@ public class Mezzo {
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo", nullable = false)
     private TipoMezzo tipo;
+
+    @OneToMany(mappedBy = "mezzo", cascade = CascadeType.ALL)
+    private List<Biglietto> bigliettiVidimati = new ArrayList<>();
+
+    @OneToMany(mappedBy = "mezzo", cascade = CascadeType.ALL)
+    private List<Manutenzione> manutenzioni = new ArrayList<>();
 
     public Mezzo() {
 
