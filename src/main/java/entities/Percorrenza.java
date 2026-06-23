@@ -1,36 +1,32 @@
 package entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
-public class InServizio {
+public class Percorrenza {
     @Id
     @GeneratedValue
     private long id;
 
+    @ManyToOne
     @Column(name = "id_mezzo", nullable = false)
     private Mezzo mezzo;
 
+    @ManyToOne
     @Column(name = "id_tratta", nullable = false)
     private Tratta tratta;
 
     @Column(name = "tempo_di_percorrenza_effettivo", nullable = false)
     private int tempoPercorrenzaEffettivo;
 
-    @Column(name = "num_volte")
-    private int numVolte;
 
-    public InServizio() {
+    public Percorrenza() {
     }
 
-    public InServizio(Mezzo mezzo, Tratta tratta, int numVolte) {
+    public Percorrenza(Mezzo mezzo, Tratta tratta, int tempoPercorrenzaEffettivo) {
         this.mezzo = mezzo;
         this.tratta = tratta;
-        this.tempoPercorrenzaEffettivo = // getTempodipercorrenzamedia * numVolte
-                this.numVolte = numVolte;
+        this.tempoPercorrenzaEffettivo = tempoPercorrenzaEffettivo;
     }
 
     public long getId() {
@@ -57,13 +53,10 @@ public class InServizio {
         return tempoPercorrenzaEffettivo;
     }
 
-    public int getNumVolte() {
-        return numVolte;
+    public void setTempoDiPercorrenzaEffettivo(int tempoPercorrenzaEffettivo) {
+        this.tempoPercorrenzaEffettivo = tempoPercorrenzaEffettivo;
     }
 
-    public void setNumVolte(int numVolte) {
-        this.numVolte = numVolte;
-    }
 
     @Override
     public String toString() {
@@ -71,7 +64,7 @@ public class InServizio {
                 "id=" + id + "\n" +
                 ", mezzo= " + mezzo + "\n" +
                 ", tratta: " + tratta + "\n" +
-                ", numero di volte= " + numVolte + "\n" +
+                ", tempo effettivo: " + tempoPercorrenzaEffettivo + " min" +
                 "} \n";
     }
 

@@ -17,25 +17,22 @@ public class Tessera {
     private LocalDate dataDiScadenza;
 
     @ManyToOne
+    @Column(nullable = false)
     private PuntoDiEmissione luogoDiEmissione;
 
-    @Column(nullable = false, unique = true)
-    private String codiceUnivocoTessera;
-    // Tess + id
-
     @OneToOne
-    private Utente proprietarioTessera;
+    @Column(name = "id_utente", nullable = false, unique = true)
+    private Utente idUtente;
 
     public Tessera() {
     }
 
     public Tessera(LocalDate dataDiEmissione, LocalDate dataDiScadenza,
-                   PuntoDiEmissione luogoDiEmissione, Utente proprietarioTessera) {
+                   PuntoDiEmissione luogoDiEmissione, Utente idUtente) {
         this.dataDiEmissione = dataDiEmissione;
         this.dataDiScadenza = dataDiEmissione.plusYears(1);
         this.luogoDiEmissione = luogoDiEmissione;
-        this.codiceUnivocoTessera = "TESS_" + id;
-        this.proprietarioTessera = proprietarioTessera;
+        this.idUtente = idUtente;
     }
 
     public Long getId() {
