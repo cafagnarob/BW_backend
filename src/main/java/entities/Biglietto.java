@@ -18,11 +18,10 @@ public class Biglietto extends TitoloDiViaggio {
     @JoinColumn(name = "id_mezzo")
     private Mezzo mezzo;
 
-    public Biglietto() {
+    protected Biglietto() {
     }
 
-    public Biglietto(LocalDate dataDiEmissione, PuntoDiEmissione luogo_di_emissione, double prezzo,
-                     LocalTime orarioVidimazione, Mezzo mezzo) {
+    public Biglietto(LocalDate dataDiEmissione, PuntoDiEmissione luogo_di_emissione, double prezzo) {
         super(dataDiEmissione, luogo_di_emissione, prezzo);
         this.orarioVidimazione = null;
         this.mezzo = null;

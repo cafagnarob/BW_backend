@@ -9,11 +9,11 @@ import java.util.List;
 @Table(name = "punto_di_emissione")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class PuntoDiEmissione {
-    @Column(nullable = false)
-    public String indirizzo;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(nullable = false)
+    private String indirizzo;
     @OneToMany(mappedBy = "luogoDiEmissione", cascade = CascadeType.ALL)
     private List<TitoloDiViaggio> titoliEmessi;
 

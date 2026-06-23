@@ -1,7 +1,7 @@
 package dao;
 
-import entities.Biglietto;
-import entities.TitoloDiViaggio;
+import Enum.TipoAbbonamento;
+import entities.*;
 import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -22,10 +22,18 @@ public class TitoloDiViaggioDAO {
     //save
     public void save(TitoloDiViaggio newTitoloDiViaggio) {
         EntityTransaction transaction = this.entityManager.getTransaction();
-        transaction.begin();
-        this.entityManager.persist(newTitoloDiViaggio);
-        transaction.commit();
-        System.out.println("Il TITOLO DI VIAGGIO " + newTitoloDiViaggio + "è stato aggiungo al DB");
+        try {
+
+            transaction.begin();
+            this.entityManager.persist(newTitoloDiViaggio);
+            transaction.commit();
+            System.out.println("Il TITOLO DI VIAGGIO " + newTitoloDiViaggio + "è stato aggiungo al DB");
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            System.out.println("Errore nel salvataggio del DB " + e.getMessage());
+        }
     }
 
     //get
@@ -65,7 +73,7 @@ public class TitoloDiViaggioDAO {
 
     public List<TitoloDiViaggio> stampaListaNumTDV(Long idPunto) {
         TypedQuery<TitoloDiViaggio> query = this.entityManager.createQuery(
-                "SELECT t FROM TitoloDiViaggio t WHERE t.luogoDiEmissione = :param", TitoloDiViaggio.class);
+                "SELECT t FROM TitoloDiViaggio t WHERE t.luogoDiEmissione.id = :param", TitoloDiViaggio.class);
         query.setParameter("param", idPunto);
         List<TitoloDiViaggio> res = query.getResultList();
         System.out.println("I TITOLI DI VIAGGIO EMESSI DALL ATTIVITA: " + idPunto + "SONO : " + res.size());
@@ -89,9 +97,14 @@ public class TitoloDiViaggioDAO {
     }
 
 
-    public Biglietto creaBiglietto() {
-        Biglietto newBiglietto = new Biglietto();
-        return newBiglietto;
+    public Biglietto creaBiglietto(PuntoDiEmissione puntoDiEmissione) {
+        return new Biglietto(LocalDate.now(), puntoDiEmissione, 2.50);
+    }
+
+    public Abbonamento creaAbbonamento(PuntoDiEmissione puntoDiEmissione, Tessera tessera,
+                                       double prezzo, TipoAbbonamento tipo) {
+        return new Abbonamento(LocalDate.now(), puntoDiEmissione, prezzo,
+                tipo, tessera);
     }
 
     public void stampaInfoAbbonamento(Long idTessera) {

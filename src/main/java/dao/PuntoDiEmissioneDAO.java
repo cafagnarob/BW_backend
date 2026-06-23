@@ -60,9 +60,6 @@ public class PuntoDiEmissioneDAO {
             if (trovato instanceof entities.Rivenditore) {
                 entities.Rivenditore rivenditore = (entities.Rivenditore) trovato;
 
-                //  metodi set per aggiornare l'istanza
-                rivenditore.setNome(nuovoNome);
-                rivenditore.setIndirizzo(nuovoIndirizzo);
 
                 System.out.println("Rivenditore aggiornato con successo: " + rivenditore);
             } else {
@@ -136,4 +133,6 @@ public class PuntoDiEmissioneDAO {
             System.out.println("Errore durante l'aggiornamento nel DB: " + e.getMessage());
         }
     }
+
+
 }

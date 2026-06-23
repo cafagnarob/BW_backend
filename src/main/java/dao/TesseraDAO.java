@@ -1,9 +1,13 @@
 package dao;
 
+import entities.PuntoDiEmissione;
 import entities.Tessera;
+import entities.Utente;
 import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+
+import java.time.LocalDate;
 
 public class TesseraDAO {
     private final EntityManager entityManager;
@@ -15,10 +19,18 @@ public class TesseraDAO {
     //save
     public void save(Tessera newTessera) {
         EntityTransaction transaction = this.entityManager.getTransaction();
-        transaction.begin();
-        this.entityManager.persist(newTessera);
-        transaction.commit();
-        System.out.println("La TESSERA " + newTessera + "è stato aggiungo al DB");
+        try {
+
+            transaction.begin();
+            this.entityManager.persist(newTessera);
+            transaction.commit();
+            System.out.println("La TESSERA " + newTessera + "è stato aggiungo al DB");
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            System.out.println("Errore nel salvataggio del DB " + e.getMessage());
+        }
     }
 
     //get
@@ -41,6 +53,10 @@ public class TesseraDAO {
         System.out.println("LA TESSERA " + fromDB + "è stato rimosso dal DB");
 
 
+    }
+
+    public Tessera creaTessera(PuntoDiEmissione puntoDiEmissione, Utente utente) {
+        return new Tessera(LocalDate.now(), puntoDiEmissione, utente);
     }
 
 }

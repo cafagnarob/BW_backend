@@ -15,10 +15,18 @@ public class MezzoDAO {
     //save
     public void save(Mezzo newMezzo) {
         EntityTransaction transaction = this.entityManager.getTransaction();
-        transaction.begin();
-        this.entityManager.persist(newMezzo);
-        transaction.commit();
-        System.out.println("Il MEZZO " + newMezzo + "è stato aggiungo al DB");
+        try {
+
+            transaction.begin();
+            this.entityManager.persist(newMezzo);
+            transaction.commit();
+            System.out.println("Il MEZZO " + newMezzo + "è stato aggiungo al DB");
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            System.out.println("Errore nel salvataggio del DB " + e.getMessage());
+        }
     }
 
     //get

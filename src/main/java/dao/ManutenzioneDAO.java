@@ -18,10 +18,17 @@ public class ManutenzioneDAO {
     //save
     public void save(Manutenzione newManutenzione) {
         EntityTransaction transaction = this.entityManager.getTransaction();
-        transaction.begin();
-        this.entityManager.persist(newManutenzione);
-        transaction.commit();
-        System.out.println("Il TITOLO DI VIAGGIO " + newManutenzione + "è stato aggiungo al DB");
+        try {
+            transaction.begin();
+            this.entityManager.persist(newManutenzione);
+            transaction.commit();
+            System.out.println("Il TITOLO DI VIAGGIO " + newManutenzione + "è stato aggiungo al DB");
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            System.out.println("Errore nel salvataggio del DB " + e.getMessage());
+        }
     }
 
     //get

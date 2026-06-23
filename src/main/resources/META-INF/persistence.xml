@@ -22,6 +22,7 @@
 
 
         <properties>
+            
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/BW_backend"/>
             <!--            nome user x acesso al DB-->
             <property name="jakarta.persistence.jdbc.user" value="postgres"/>

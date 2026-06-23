@@ -15,10 +15,18 @@ public class TrattaDAO {
     //save
     public void save(Tratta newTratta) {
         EntityTransaction transaction = this.entityManager.getTransaction();
-        transaction.begin();
-        this.entityManager.persist(newTratta);
-        transaction.commit();
-        System.out.println("La TRATTA " + newTratta + "è stato aggiungo al DB");
+        try {
+
+            transaction.begin();
+            this.entityManager.persist(newTratta);
+            transaction.commit();
+            System.out.println("La TRATTA " + newTratta + "è stato aggiungo al DB");
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            System.out.println("Errore nel salvataggio del DB " + e.getMessage());
+        }
     }
 
     //get

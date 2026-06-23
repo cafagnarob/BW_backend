@@ -4,8 +4,7 @@ import Enum.TipoUtente;
 import jakarta.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo_utente")
+
 public abstract class Utente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
