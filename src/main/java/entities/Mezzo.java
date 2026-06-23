@@ -56,5 +56,14 @@ public class Mezzo {
         return tipo;
     }
 
+    @Override
+    public String toString() {
+        return "Mezzo{ \n" +
+                "id=" + id + "\n" +
+                ", capienza= " + capienza + "\n" +
+                ", stato: " + stato + "\n" +
+                ", tipo:" + tipo + "\n" +
+                "} \n";
+    }
 
 }

@@ -57,13 +57,22 @@ public class InServizio {
         return tempoPercorrenzaEffettivo;
     }
 
-
     public int getNumVolte() {
         return numVolte;
     }
 
     public void setNumVolte(int numVolte) {
         this.numVolte = numVolte;
+    }
+
+    @Override
+    public String toString() {
+        return "In servizio{ \n" +
+                "id=" + id + "\n" +
+                ", mezzo= " + mezzo + "\n" +
+                ", tratta: " + tratta + "\n" +
+                ", numero di volte= " + numVolte + "\n" +
+                "} \n";
     }
 
 }

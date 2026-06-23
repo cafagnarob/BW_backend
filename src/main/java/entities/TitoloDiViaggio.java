@@ -54,6 +54,5 @@ public abstract class TitoloDiViaggio {
         return codiceUnivocoTitoloDiViaggio;
     }
 
-
 }
 
