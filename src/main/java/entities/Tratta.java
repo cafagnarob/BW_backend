@@ -11,8 +11,8 @@ public class Tratta {
     @GeneratedValue
     private long id;
 
-    @Column(name = "tempo_di_percorrenza_medio", nullable = false)
-    private int tempoDiPercorrenzaMedio;
+    @Column(name = "tempo_di_percorrenza_previsto", nullable = false)
+    private int tempoDiPercorrenzaPrevisto;
 
     @Column(nullable = false)
     private String partenza;
@@ -23,8 +23,8 @@ public class Tratta {
     public Tratta() {
     }
 
-    public Tratta(int tempoDiPercorrenzaMedio, String partenza, String capolinea){
-        this.tempoDiPercorrenzaMedio = tempoDiPercorrenzaMedio;
+    public Tratta(int tempoDiPercorrenzaPrevisto, String partenza, String capolinea) {
+        this.tempoDiPercorrenzaPrevisto = tempoDiPercorrenzaPrevisto;
         this.partenza = partenza;
         this.capolinea = capolinea;
     }
@@ -33,12 +33,12 @@ public class Tratta {
         return id;
     }
 
-    public int getTempoDiPercorrenzaMedio() {
-        return tempoDiPercorrenzaMedio;
+    public int getTempoDiPercorrenzaPrevisto() {
+        return tempoDiPercorrenzaPrevisto;
     }
 
-    public void setTempoDiPercorrenzaMedio(int tempoDiPercorrenzaMedio) {
-        this.tempoDiPercorrenzaMedio = tempoDiPercorrenzaMedio;
+    public void setTempoDiPercorrenzaPrevisto(int tempoDiPercorrenzaMedio) {
+        this.tempoDiPercorrenzaPrevisto = tempoDiPercorrenzaMedio;
     }
 
     public String getPartenza() {
@@ -61,7 +61,7 @@ public class Tratta {
     public String toString() {
         return "Tratta{ \n" +
                 "id=" + id + "\n" +
-                ", tempo di percorrenza medio= " + tempoDiPercorrenzaMedio + "\n" +
+                ", tempo di percorrenza medio= " + tempoDiPercorrenzaPrevisto + "\n" +
                 ", partenza da " + partenza + "\n" +
                 ", arrivo a " + capolinea + "\n" +
                 "} \n";

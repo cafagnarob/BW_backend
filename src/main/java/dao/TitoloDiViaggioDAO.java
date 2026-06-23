@@ -73,12 +73,14 @@ public class TitoloDiViaggioDAO {
         return res;
     }
 
-    // metodo che stampa i biglietti vidimanti dalle ore ... alle ore ...
-    public List<TitoloDiViaggio> stampaListNumTDVVidimatiPerTempo(LocalTime oraInizo, LocalTime oraFine) {
+    // metodo che stampa i biglietti vidimanti dalle ore ... alle ore ... dato il mezzo
+    public List<Biglietto> stampaListNumTDVVidimatiPerTempo(LocalTime oraInizo, LocalTime oraFine,
+                                                            Long idMezzo) {
         TypedQuery<Biglietto> query = this.entityManager.createQuery(
                 "SELECT b FROM Biglietto b " +
-                        "WHERE b.orarioDiVidimazione BETWEEN :param AND :param2 ", Biglietto.class);
+                        "WHERE b.orarioDiVidimazione BETWEEN :param AND :param2 AND b.mezzo.id=:param3", Biglietto.class);
         query.setParameter("param", oraInizo);
+        query.setParameter("param3", idMezzo);
         query.setParameter("param2", oraFine);
         List<Biglietto> res = query.getResultList();
         System.out.println("I BIGLIETTI VIDIMATI DAL" + oraInizo + "AL" + oraFine + "SONO : " + res.size());
@@ -87,7 +89,12 @@ public class TitoloDiViaggioDAO {
     }
 
 
-    public void stampaInfoAbbonamento(Long idAbbonamento) {
+    public Biglietto creaBiglietto() {
+        Biglietto newBiglietto = new Biglietto();
+        return newBiglietto;
+    }
+
+    public void stampaInfoAbbonamento(Long idTessera) {
     }
 
 }

@@ -59,6 +59,7 @@ public class Mezzo {
         return stato;
     }
 
+    //SET STATO MEZZO
     public void setStato(StatoMezzo stato) {
         this.stato = stato;
     }
