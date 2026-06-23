@@ -9,11 +9,11 @@ public class Percorrenza {
     private long id;
 
     @ManyToOne
-    @Column(name = "id_mezzo", nullable = false)
+    @JoinColumn(name = "id_mezzo", nullable = false)
     private Mezzo mezzo;
 
     @ManyToOne
-    @Column(name = "id_tratta", nullable = false)
+    @JoinColumn(name = "id_tratta", nullable = false)
     private Tratta tratta;
 
     @Column(name = "tempo_di_percorrenza_effettivo", nullable = false)
