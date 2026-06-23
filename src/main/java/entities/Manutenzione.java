@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "manutenzione")
-@Inheritance(strategy = InheritanceType.JOINED)
+
 public class Manutenzione {
 
     @Id
@@ -25,7 +25,8 @@ public class Manutenzione {
     @Column(name = "tipo_manutenzione", nullable = false)
     private TipoManutenzione tipoManutenzione;
 
-    @OneToMany(mappedBy = "id_mezzo")
+    @ManyToOne
+    @JoinColumn(name = "id_mezzo", nullable = false)
     private Mezzo mezzo;
 
 
@@ -33,7 +34,7 @@ public class Manutenzione {
     }
 
 
-    public Manutenzione(LocalDate dataFineManutenzione, TipoManutenzione tipoManutenzione, Mezzo mezzo) {
+    public Manutenzione(LocalDate dataInizioManutenzione, LocalDate dataFineManutenzione, TipoManutenzione tipoManutenzione, Mezzo mezzo) {
         this.dataInizioManutenzione = LocalDate.now();
         this.dataFineManutenzione = dataFineManutenzione;
         this.tipoManutenzione = tipoManutenzione;
@@ -68,6 +69,10 @@ public class Manutenzione {
 
     public Mezzo getMezzo() {
         return mezzo;
+    }
+
+    public void setMezzo(Mezzo mezzo) {
+        this.mezzo = mezzo;
     }
 
 
