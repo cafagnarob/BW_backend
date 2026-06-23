@@ -43,20 +43,21 @@ public class UtenteDAO {
 
     }
 
-
-    public void stampaInfoPercorrenza(Long idMezzo) {
-    }
-
-    public void stampaInfoManutenzione(Long idMezzo) {
-    }
-
-    public Tratta calcolaTempoEffettivo(Long idTratta) {
-    }
-
-    public void stampaInfoTessera(Long idTessera) {
-    }
-
-    public void stampaInfoAbbonamento(Long idAbbonamento) {
-    }
+//
+//    public void stampaInfoPercorrenza(Long idMezzo) {
+//
+//    }
+//
+//    public void stampaInfoManutenzione(Long idMezzo) {
+//    }
+//
+//    public Tratta calcolaTempoEffettivo(Long idTratta) {
+//    }
+//
+//    public void stampaInfoTessera(Long idTessera) {
+//    }
+//
+//    public void stampaInfoAbbonamento(Long idAbbonamento) {
+//    }
 
 }

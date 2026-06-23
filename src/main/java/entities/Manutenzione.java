@@ -25,7 +25,8 @@ public class Manutenzione {
     @Column(name = "tipo_manutenzione", nullable = false)
     private TipoManutenzione tipoManutenzione;
 
-    @OneToMany(mappedBy = "id_mezzo")
+    @ManyToOne
+            @JoinColumn(name = "id_mezzo", nullable = false)
     private Mezzo mezzo;
 
 

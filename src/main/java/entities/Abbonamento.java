@@ -15,7 +15,7 @@ public class Abbonamento extends TitoloDiViaggio {
     private LocalDate dataDiScadenza;
 
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private Tessera tessera;
 
     public Abbonamento() {

@@ -15,7 +15,7 @@ public abstract class TitoloDiViaggio {
     private LocalDate dataDiEmissione;
 
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private PuntoDiEmissione luogoDiEmissione;
 
     @Column(nullable = false, unique = true)
