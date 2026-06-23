@@ -9,7 +9,6 @@
         <class>Enum.TipoMezzo</class>
         <class>Enum.StatoMezzo</class>
         <class>entities.Percorrenza</class>
-        <class>entities.Vidimazione</class>
         <class>entities.Tessera</class>
         <class>entities.TitoloDiViaggio</class>
         <class>entities.Abbonamento</class>
@@ -19,6 +18,7 @@
         <class>entities.Manutenzione</class>
         <class>entities.PuntoDiEmissione</class>
         <class>entities.Rivenditore</class>
+
 
 
         <properties>
