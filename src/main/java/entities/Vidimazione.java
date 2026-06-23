@@ -24,12 +24,12 @@ public class Vidimazione {
     private Mezzo mezzo;
 
     @Column(name = "id_servizio", nullable = false)
-    private InServizio servizio;
+    private Percorrenza servizio;
 
     public Vidimazione() {
     }
 
-    public Vidimazione(Biglietto biglietto, Mezzo mezzo, InServizio servizio) {
+    public Vidimazione(Biglietto biglietto, Mezzo mezzo, Percorrenza servizio) {
         this.orario = LocalDateTime.now();
         this.biglietto = biglietto;
         this.mezzo = mezzo;
