@@ -8,7 +8,7 @@
         <class>entities.Mezzo</class>
         <class>Enum.TipoMezzo</class>
         <class>Enum.StatoMezzo</class>
-        <class>entities.InServizio</class>
+        <class>entities.Percorrenza</class>
         <class>entities.Vidimazione</class>
         <class>entities.Tessera</class>
         <class>entities.TitoloDiViaggio</class>

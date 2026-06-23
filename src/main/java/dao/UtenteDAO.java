@@ -6,8 +6,6 @@ import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
-import java.util.UUID;
-
 public class UtenteDAO {
     private final EntityManager entityManager;
 
@@ -21,11 +19,11 @@ public class UtenteDAO {
         transaction.begin();
         this.entityManager.persist(newUtente);
         transaction.commit();
-        System.out.println("L' evento " + newUtente + "è stato aggiungo al DB");
+        System.out.println("L' UTENTE " + newUtente + "è stato aggiungo al DB");
     }
 
     //get
-    public Utente getById(UUID id) {
+    public Utente getById(Long id) {
         Utente fromDB = this.entityManager.find(Utente.class, id);
         if (fromDB == null) throw new NotFoundException("Utente non trovato");
         System.out.println("UTENTE RICHIESTO" + fromDB);
@@ -34,7 +32,7 @@ public class UtenteDAO {
     }
 
     // delete
-    public void delete(UUID id) {
+    public void delete(Long id) {
         Utente fromDB = this.getById(id);
         EntityTransaction transaction = this.entityManager.getTransaction();
         transaction.begin();
@@ -45,9 +43,6 @@ public class UtenteDAO {
 
     }
 
-    public void stampaInfoTratta(Long idTratta) {
-
-    }
 
     public void stampaInfoPercorrenza(Long idMezzo) {
     }

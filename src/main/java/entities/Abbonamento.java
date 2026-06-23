@@ -1,10 +1,7 @@
 package entities;
 
 import Enum.TipoAbbonamento;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -17,6 +14,7 @@ public class Abbonamento extends TitoloDiViaggio {
     @Column(nullable = false)
     private LocalDate dataDiScadenza;
 
+    @ManyToOne
     @Column(nullable = false)
     private Tessera tessera;
 

@@ -16,24 +16,28 @@ public class Manutenzione {
     private Long id;
 
     @Column(name = "data_inizio_manutenzione", nullable = false)
-    private LocalDate data_inizio_manutenzione;
+    private LocalDate dataInizioManutenzione;
 
     @Column(name = "data_fine_manutenzione")
-    private LocalDate data_fine_manutenzione;
+    private LocalDate dataFineManutenzione;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_manutenzione", nullable = false)
-    private TipoManutenzione tipo_manutenzione;
+    private TipoManutenzione tipoManutenzione;
+
+    @OneToMany(mappedBy = "id_mezzo")
+    private Mezzo mezzo;
 
 
     public Manutenzione() {
     }
 
 
-    public Manutenzione(LocalDate data_fine_manutenzione, TipoManutenzione tipo_manutenzione) {
-        this.data_inizio_manutenzione = LocalDate.now();
-        this.data_fine_manutenzione = data_fine_manutenzione;
-        this.tipo_manutenzione = tipo_manutenzione;
+    public Manutenzione(LocalDate dataFineManutenzione, TipoManutenzione tipoManutenzione, Mezzo mezzo) {
+        this.dataInizioManutenzione = LocalDate.now();
+        this.dataFineManutenzione = dataFineManutenzione;
+        this.tipoManutenzione = tipoManutenzione;
+        this.mezzo = mezzo;
     }
 
 
@@ -41,25 +45,29 @@ public class Manutenzione {
         return id;
     }
 
-    public LocalDate getData_inizio_manutenzione() {
-        return data_inizio_manutenzione;
+    public LocalDate getDataInizioManutenzione() {
+        return dataInizioManutenzione;
     }
 
-    public void setData_inizio_manutenzione(LocalDate data_inizio_manutenzione) {
-        this.data_inizio_manutenzione = data_inizio_manutenzione;
+    public void setDataInizioManutenzione(LocalDate data_inizio_manutenzione) {
+        this.dataInizioManutenzione = data_inizio_manutenzione;
     }
 
-    public LocalDate getData_fine_manutenzione() {
-        return data_fine_manutenzione;
+    public LocalDate getDataFineManutenzione() {
+        return dataFineManutenzione;
     }
 
 
-    public TipoManutenzione getTipo_manutenzione() {
-        return tipo_manutenzione;
+    public TipoManutenzione getTipoManutenzione() {
+        return tipoManutenzione;
     }
 
-    public void setTipo_manutenzione(TipoManutenzione tipo_manutenzione) {
-        this.tipo_manutenzione = tipo_manutenzione;
+    public void setTipoManutenzione(TipoManutenzione tipo_manutenzione) {
+        this.tipoManutenzione = tipo_manutenzione;
+    }
+
+    public Mezzo getMezzo() {
+        return mezzo;
     }
 
 
@@ -67,9 +75,9 @@ public class Manutenzione {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Manutenzione{");
         sb.append("id=").append(id);
-        sb.append(", data_inizio_manutenzione=").append(data_inizio_manutenzione);
-        sb.append(", data_fine_manutenzione=").append(data_fine_manutenzione);
-        sb.append(", tipo_manutenzione=").append(tipo_manutenzione);
+        sb.append(", data_inizio_manutenzione=").append(dataInizioManutenzione);
+        sb.append(", data_fine_manutenzione=").append(dataFineManutenzione);
+        sb.append(", tipo_manutenzione=").append(tipoManutenzione);
         sb.append('}');
         return sb.toString();
     }

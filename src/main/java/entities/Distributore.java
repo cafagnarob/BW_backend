@@ -1,15 +1,13 @@
 package entities;
 
 import Enum.StatoDistributore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "distributore")
 public class Distributore extends PuntoDiEmissione {
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private StatoDistributore stato;
 
     public Distributore() {
