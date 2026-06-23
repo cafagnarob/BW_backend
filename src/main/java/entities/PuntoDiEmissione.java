@@ -3,7 +3,6 @@ package entities;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,12 +11,10 @@ import java.util.List;
 public abstract class PuntoDiEmissione {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
-
+    private long id;
     public String indirizzo;
-
     @OneToMany(mappedBy = "luogoDiEmissione", cascade = CascadeType.ALL)
-    private List<Tessera> tessereEmesse = new ArrayList<>();
+    private List<TitoloDiViaggio> titoliEmessi;
 
     //costruttore vuoto
     public PuntoDiEmissione() {
@@ -46,20 +43,12 @@ public abstract class PuntoDiEmissione {
         this.indirizzo = indirizzo;
     }
 
-
-    public List<Tessera> getTessereEmesse() {
-        return tessereEmesse;
-    }
-
-    public void setTessereEmesse(List<Tessera> tessereEmesse) {
-        this.tessereEmesse = tessereEmesse;
-    }
-
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Punto_di_Emissione{");
+        final StringBuilder sb = new StringBuilder("PuntoDiEmissione{");
         sb.append("id=").append(id);
         sb.append(", indirizzo='").append(indirizzo).append('\'');
+        sb.append(", titoliEmessi=").append(titoliEmessi);
         sb.append('}');
         return sb.toString();
     }

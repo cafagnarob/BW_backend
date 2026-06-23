@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "distributore")
 public class Distributore extends PuntoDiEmissione {
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private StatoDistributore stato;
