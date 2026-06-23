@@ -22,6 +22,7 @@ public class TesseraDAO {
     }
 
     //get
+    // STAMPA INFO TESSERA DATO ID-TESSERA
     public Tessera getById(Long id) {
         Tessera fromDB = this.entityManager.find(Tessera.class, id);
         if (fromDB == null) throw new NotFoundException("Tessera non trovato");

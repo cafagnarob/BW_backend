@@ -25,6 +25,7 @@ public class ManutenzioneDAO {
     }
 
     //get
+    //
     public Manutenzione getById(Long id) {
         Manutenzione fromDB = this.entityManager.find(Manutenzione.class, id);
         if (fromDB == null) throw new NotFoundException("Manutenzione non trovata");
@@ -47,9 +48,10 @@ public class ManutenzioneDAO {
 
     public List<Manutenzione> stampaInfoManutenzione(Long idMezzo) {
         TypedQuery<Manutenzione> query = this.entityManager.createQuery(
-                "SELECT m FROM Manutenzioni m WHERE m.mezzo.id = :param", Manutenzione.class);
+                "SELECT m FROM Manutenzione m WHERE m.mezzo.id = :param", Manutenzione.class);
         query.setParameter("param", idMezzo);
-        System.out.println("LISTA MANUTENZIONE DI" + idMezzo + ":" + query.getResultList());
-        return query.getResultList();
+        List<Manutenzione> risultati = query.getResultList();
+        System.out.println("LISTA MANUTENZIONE DI" + idMezzo + ":" + risultati);
+        return risultati;
     }
 }
