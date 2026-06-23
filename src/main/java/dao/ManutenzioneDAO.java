@@ -43,8 +43,13 @@ public class ManutenzioneDAO {
         System.out.println("MANUTENZIONE " + fromDB + "è stato rimosso dal DB");
     }
 
+    // STAMPA INFO MANUTENZIONI DATO ID MEZZO
+
     public List<Manutenzione> stampaInfoManutenzione(Long idMezzo) {
         TypedQuery<Manutenzione> query = this.entityManager.createQuery(
-                "SELECT m FROM Manutenzioni m WHERE m.id_mezzo :param")
+                "SELECT m FROM Manutenzioni m WHERE m.mezzo.id = :param", Manutenzione.class);
+        query.setParameter("param", idMezzo);
+        System.out.println("LISTA MANUTENZIONE DI" + idMezzo + ":" + query.getResultList());
+        return query.getResultList();
     }
 }
