@@ -2,6 +2,8 @@ package entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 public class Percorrenza {
     @Id
@@ -19,14 +21,20 @@ public class Percorrenza {
     @Column(name = "tempo_di_percorrenza_effettivo", nullable = false)
     private int tempoPercorrenzaEffettivo;
 
+    @Column(nullable = false)
+    private LocalDate data;
+
 
     public Percorrenza() {
+
     }
 
-    public Percorrenza(Mezzo mezzo, Tratta tratta, int tempoPercorrenzaEffettivo) {
+
+    public Percorrenza(LocalDate data, Mezzo mezzo, Tratta tratta, int tempoPercorrenzaEffettivo) {
         this.mezzo = mezzo;
         this.tratta = tratta;
         this.tempoPercorrenzaEffettivo = tempoPercorrenzaEffettivo;
+        this.data = data;
     }
 
     public long getId() {
@@ -37,35 +45,26 @@ public class Percorrenza {
         return mezzo;
     }
 
-    public void setMezzo(Mezzo mezzo) {
-        this.mezzo = mezzo;
-    }
-
     public Tratta getTratta() {
         return tratta;
-    }
-
-    public void setTratta(Tratta tratta) {
-        this.tratta = tratta;
     }
 
     public int getTempoPercorrenzaEffettivo() {
         return tempoPercorrenzaEffettivo;
     }
 
-    public void setTempoDiPercorrenzaEffettivo(int tempoPercorrenzaEffettivo) {
-        this.tempoPercorrenzaEffettivo = tempoPercorrenzaEffettivo;
+    public LocalDate getData() {
+        return data;
     }
-
 
     @Override
     public String toString() {
-        return "In servizio{ \n" +
+        return "Percorrenza{ \n" +
                 "id=" + id + "\n" +
-                ", mezzo= " + mezzo + "\n" +
-                ", tratta: " + tratta + "\n" +
-                ", tempo effettivo: " + tempoPercorrenzaEffettivo + " min" +
+                ", mezzo=" + mezzo + "\n" +
+                ", tratta=" + tratta + "\n" +
+                ", tempoPercorrenzaEffettivo=" + tempoPercorrenzaEffettivo + "\n" +
+                ", data=" + data + "\n" +
                 "} \n";
     }
-
 }

@@ -22,7 +22,6 @@ public abstract class TitoloDiViaggio {
     private PuntoDiEmissione luogoDiEmissione;
 
 
-
     public TitoloDiViaggio() {
     }
 
@@ -36,17 +35,11 @@ public abstract class TitoloDiViaggio {
         return dataDiEmissione;
     }
 
-    public void setDataEmissione(LocalDate dataDiEmissione) {
-        this.dataDiEmissione = dataDiEmissione;
-    }
 
     public PuntoDiEmissione getLuogoDiEmissione() {
         return luogoDiEmissione;
     }
 
-    public void setLuogoDiEmissione(PuntoDiEmissione luogoDiEmissione) {
-        this.luogoDiEmissione = luogoDiEmissione;
-    }
 
     public Long getId() {
         return id;
@@ -54,10 +47,6 @@ public abstract class TitoloDiViaggio {
 
     public double getPrezzo() {
         return prezzo;
-    }
-
-    public void setPrezzo(double prezzo) {
-        this.prezzo = prezzo;
     }
 
 

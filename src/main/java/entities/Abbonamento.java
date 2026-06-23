@@ -39,25 +39,14 @@ public class Abbonamento extends TitoloDiViaggio {
         return dataDiScadenza;
     }
 
-    public void setDataDiScadenza(LocalDate dataDiScadenza) {
-        this.dataDiScadenza = dataDiScadenza;
-    }
-
     public Tessera getTessera() {
         return tessera;
-    }
-
-    public void setTessera(Tessera tessera) {
-        this.tessera = tessera;
     }
 
     public TipoAbbonamento getTipo() {
         return tipo;
     }
-
-    public void setTipo(TipoAbbonamento tipo) {
-        this.tipo = tipo;
-    }
+    
 
     @Override
     public String toString() {

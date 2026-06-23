@@ -29,12 +29,12 @@ public class Tessera {
     public Tessera() {
     }
 
-    public Tessera(LocalDate dataDiEmissione, LocalDate dataDiScadenza,
-                   PuntoDiEmissione luogoDiEmissione, Utente idUtente) {
+    public Tessera(LocalDate dataDiEmissione,
+                   PuntoDiEmissione luogoDiEmissione, Utente utente) {
         this.dataDiEmissione = dataDiEmissione;
         this.dataDiScadenza = dataDiEmissione.plusYears(1);
         this.luogoDiEmissione = luogoDiEmissione;
-        this.utente = idUtente;
+        this.utente = utente;
     }
 
     public Long getId() {
@@ -56,7 +56,6 @@ public class Tessera {
     public PuntoDiEmissione getLuogo_di_emissione() {
         return luogoDiEmissione;
     }
-
 
 
     @Override

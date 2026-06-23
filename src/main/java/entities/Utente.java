@@ -1,5 +1,6 @@
 package entities;
 
+import Enum.TipoUtente;
 import jakarta.persistence.*;
 
 @Entity
@@ -19,15 +20,25 @@ public abstract class Utente {
 
     private int eta;
 
+    @Column
+    private double portafoglio;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TipoUtente tipo;
+
 
     public Utente() {
     }
 
-    public Utente(String nome, String cognome, String email, int eta) {
+    public Utente(String nome, String cognome, String email, int eta, double portafoglio,
+                  TipoUtente tipo) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.eta = eta;
+        this.portafoglio = portafoglio;
+        this.tipo = tipo;
     }
 
     public String getCognome() {
@@ -60,15 +71,33 @@ public abstract class Utente {
         this.eta = eta;
     }
 
+    public double getPortafoglio() {
+        return portafoglio;
+    }
+
+    public void setPortafoglio(double portafoglio) {
+        this.portafoglio = portafoglio;
+    }
+
+    public TipoUtente getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoUtente tipo) {
+        this.tipo = tipo;
+    }
+
 
     @Override
     public String toString() {
         return "Utente{ \n" +
                 "id=" + id + "\n" +
-                ", nome='" + nome + '\'' + "\n" +
-                ", cognome='" + cognome + '\'' + "\n" +
-                ", email='" + email + '\'' + "\n" +
+                ", nome='" + nome + "\n" +
+                ", cognome='" + cognome + "\n" +
+                ", email='" + email + "\n" +
                 ", eta=" + eta + "\n" +
+                ", portafoglio=" + portafoglio + "\n" +
+                ", tipo=" + tipo + "\n" +
                 "} \n";
     }
 }

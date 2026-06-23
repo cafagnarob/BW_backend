@@ -29,19 +29,21 @@ public class Mezzo {
     @OneToMany(mappedBy = "mezzo", cascade = CascadeType.ALL)
     private List<Manutenzione> manutenzioni = new ArrayList<>();
 
+
     public Mezzo() {
 
     }
 
     public Mezzo(int capienza, StatoMezzo stato, TipoMezzo tipo) {
+
+        this.stato = stato;
+        this.tipo = tipo;
         if (tipo == TipoMezzo.AUTOBUS) {
 
             this.capienza = 50;
         } else {
             this.capienza = 80;
         }
-        this.stato = stato;
-        this.tipo = tipo;
     }
 
     public long getId() {

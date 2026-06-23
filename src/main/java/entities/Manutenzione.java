@@ -48,10 +48,7 @@ public class Manutenzione {
     public LocalDate getDataInizioManutenzione() {
         return dataInizioManutenzione;
     }
-
-    public void setDataInizioManutenzione(LocalDate data_inizio_manutenzione) {
-        this.dataInizioManutenzione = data_inizio_manutenzione;
-    }
+    
 
     public LocalDate getDataFineManutenzione() {
         return dataFineManutenzione;

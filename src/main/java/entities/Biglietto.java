@@ -11,12 +11,6 @@ import java.time.LocalTime;
 @Entity
 public class Biglietto extends TitoloDiViaggio {
 
-    @Column(name = "orario_inizio_corsa")
-    private LocalTime orarioInizioCorsa;
-
-    @Column(name = "orario_fine_corsa")
-    private LocalTime orarioFineCorsa;
-
     @Column(name = "orario_vidimazione")
     private LocalTime orarioVidimazione;
 
@@ -28,10 +22,8 @@ public class Biglietto extends TitoloDiViaggio {
     }
 
     public Biglietto(LocalDate dataDiEmissione, PuntoDiEmissione luogo_di_emissione, double prezzo,
-                     LocalTime orarioInizioCorsa, LocalTime OrarioFineCorsa, LocalTime orarioVidimazione, Mezzo mezzo) {
+                     LocalTime orarioVidimazione, Mezzo mezzo) {
         super(dataDiEmissione, luogo_di_emissione, prezzo);
-        this.orarioInizioCorsa = null;
-        this.orarioFineCorsa = null;
         this.orarioVidimazione = null;
         this.mezzo = null;
     }
@@ -44,21 +36,6 @@ public class Biglietto extends TitoloDiViaggio {
         this.mezzo = mezzo;
     }
 
-    public LocalTime getOrarioFineCorsa() {
-        return orarioFineCorsa;
-    }
-
-    public void setOrarioFineCorsa(LocalTime orarioFineCorsa) {
-        this.orarioFineCorsa = orarioFineCorsa;
-    }
-
-    public LocalTime getOrarioInizioCorsa() {
-        return orarioInizioCorsa;
-    }
-
-    public void setOrarioInizioCorsa(LocalTime orarioInizioCorsa) {
-        this.orarioInizioCorsa = orarioInizioCorsa;
-    }
 
     public LocalTime getOrarioVidimazione() {
         return orarioVidimazione;
