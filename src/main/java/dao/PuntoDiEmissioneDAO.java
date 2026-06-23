@@ -1,12 +1,12 @@
 package dao;
 
+import Enum.StatoDistributore;
 import entities.Distributore;
 import entities.PuntoDiEmissione;
 import exception.FuoriServizioException;
 import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import Enum.StatoDistributore;
 
 
 public class PuntoDiEmissioneDAO {

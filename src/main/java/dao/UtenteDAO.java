@@ -1,6 +1,5 @@
 package dao;
 
-import entities.Tratta;
 import entities.Utente;
 import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
@@ -39,17 +38,6 @@ public class UtenteDAO {
         this.entityManager.remove(fromDB);
         transaction.commit();
         System.out.println("L' UTENTE " + fromDB + "è stato rimosso dal DB");
-
-
     }
-
-
-    public void stampaInfoPercorrenza(Long idMezzo) {
-    }
-
-
-    public Tratta calcolaTempoEffettivo(Long idTratta) {
-    }
-
 
 }

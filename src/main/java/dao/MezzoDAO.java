@@ -38,7 +38,6 @@ public class MezzoDAO {
         this.entityManager.remove(fromDB);
         transaction.commit();
         System.out.println("IL MEZZO " + fromDB + "è stato rimosso dal DB");
-
-
     }
+
 }
