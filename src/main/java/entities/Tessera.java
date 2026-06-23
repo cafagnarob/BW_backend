@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "tessera")
 public class Tessera {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,13 +17,14 @@ public class Tessera {
     @Column(nullable = false)
     private LocalDate dataDiScadenza;
 
+    @OneToOne
+    @JoinColumn(name = "id_utente", nullable = false, unique = true)
+    private Utente utente;
+
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private PuntoDiEmissione luogoDiEmissione;
 
-    @OneToOne
-    @Column(name = "id_utente", nullable = false, unique = true)
-    private Utente idUtente;
 
     public Tessera() {
     }
@@ -32,15 +34,11 @@ public class Tessera {
         this.dataDiEmissione = dataDiEmissione;
         this.dataDiScadenza = dataDiEmissione.plusYears(1);
         this.luogoDiEmissione = luogoDiEmissione;
-        this.idUtente = idUtente;
+        this.utente = idUtente;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public String getCodice_univoco_tessera() {
-        return codiceUnivocoTessera;
     }
 
     public LocalDate getData_di_emissione() {
@@ -59,9 +57,6 @@ public class Tessera {
         return luogoDiEmissione;
     }
 
-    public Utente getProprietario_tessera() {
-        return proprietarioTessera;
-    }
 
 
     @Override
@@ -71,8 +66,6 @@ public class Tessera {
                 ", data_di_emissione=" + dataDiEmissione + "\n" +
                 ", data_di_scadenza=" + dataDiScadenza + "\n" +
                 ", luogo_di_emissione=" + luogoDiEmissione + "\n" +
-                ", codice_univoco_tessera='" + codiceUnivocoTessera + "\n" +
-                ", proprietario_tessera=" + proprietarioTessera + "\n" +
                 "} \n ";
     }
 }
