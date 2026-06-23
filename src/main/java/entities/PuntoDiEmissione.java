@@ -31,12 +31,17 @@ public abstract class PuntoDiEmissione {
     public long getId() {
         return id;
     }
+    public void setId(long id) {
+        this.id = id;
+    }
 
 
     public String getIndirizzo() {
         return indirizzo;
     }
-
+public  void setIndirizzo(String indirizzo) {
+        this.indirizzo = indirizzo;
+}
 
     @Override
     public String toString() {

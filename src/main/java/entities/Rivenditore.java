@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 @Table(name = "rivenditore_autorizzato")
 public class Rivenditore extends PuntoDiEmissione {
 
-
+public String nome;
     // costruttore vuoto
     public Rivenditore() {
         super();
@@ -20,11 +20,24 @@ public class Rivenditore extends PuntoDiEmissione {
         super(indirizzo);
 
     }
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    public String getIndirizzo() {
+        return super.getIndirizzo();
+    }
+    public void setIndirizzo(String indirizzo) {
+        super.setIndirizzo(indirizzo);
+    }
 
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Rivenditore{");
+        sb.append("nome='").append(nome).append('\'');
         sb.append('}');
         return sb.toString();
     }

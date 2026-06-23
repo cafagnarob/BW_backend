@@ -24,7 +24,7 @@ public class PuntoDiEmissioneDAO {
         if (puntoDiEmissione instanceof Distributore) {
             Distributore distributore = (Distributore) puntoDiEmissione;
             if (distributore.getStato() == StatoDistributore.NON_DISPONIBILE) {
-                throw new FuoriServizioException("Impossibile salvare o utilizzare il punto di emissione: il distributore è FUORI SERVIZIO.");
+                System.out.println("Il distributore selezionato non è disponibile" + " " + distributore);
             }
         }
 
