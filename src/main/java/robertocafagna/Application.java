@@ -398,15 +398,65 @@ public class Application {
     }
 
     public static void menuTitoloDiViaggio() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        TitoloDiViaggioDAO titoloDiViaggioDAO = new TitoloDiViaggioDAO(entityManager);
         Scanner scanner = new Scanner(System.in);
-        System.out.println("----- 0 per uscire -------");
-        System.out.println("----- 1 Visualizzare uno storico dei biglietti " +
-                "e abbonamenti emessi in un determinato periodo di tempo ------");
-        System.out.println("----- 2 per Visualizzare i biglietti vidimati in un mezzo ------");
-        System.out.println("----- 3 Controllare la validità di un biglietto------");
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+        try {
+            boolean flag3 = true;
+            while (flag3) {
+                System.out.println("----- GESTIONE TITOLI DI VIAGGIO -----");
+                System.out.println("----- 0 per uscire e tornare indietro -------");
+                System.out.println("----- 1 Visualizzare uno storico dei biglietti " +
+                        "e abbonamenti emessi in un determinato periodo di tempo ------");
+                System.out.println("----- 2 per Visualizzare i biglietti vidimati in un mezzo ------");
+                System.out.println("----- 3 Controllare la validità di un biglietto------");
+
+                try {
+                    int scelta = Integer.parseInt(scanner.nextLine().trim());
+
+                    switch (scelta) {
+                        case 0 -> {
+                            System.out.println("---- RITORNO AL MENU PRINCIPALE ------");
+                            flag3 = false;
+                        }
+                        case 1 -> {
+                            System.out.println("----- STORICO EMISSIONI PER PERIODO -----");
+                            try {
+                                System.out.println("Inserisci la data di INIZIO periodo (YYYY-MM-DD):");
+                                String inputInizio = scanner.nextLine().trim();
+                                LocalDate dataInizio = LocalDate.parse(inputInizio, formato);
+
+                                System.out.println("Inserisci la data di FINE periodo (YYYY-MM-DD):");
+                                String inputFine = scanner.nextLine().trim();
+                                LocalDate dataFine = LocalDate.parse(inputFine, formato);
+
+                                if (dataFine.isBefore(dataInizio)) {
+                                    System.out.println("La data di fine non può essere precedente alla data di inizio!");
+                                } else {
+                                    titoloDiViaggioDAO.stampaNumListTDVPerTempo(dataInizio, dataFine);
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Formato data non valido! Usa YYYY-MM-DD (es. 2026-06-24).");
+                            }
+                        }
+                        case 2 -> {
+                            System.out.println();
+                        }
+                        case 3 -> {
+                            System.out.println();
+                        }
+                        default -> System.out.println("------- INSERISCI UN VALORE VALIDO------");
+                    }
+                } catch (Exception e) {
+                    System.out.println("------- INSERISCI UN VALORE VALIDO------");
+                }
+            }
+        } finally {
+            entityManager.close();
+        }
     }
-
 
     public static void menuUser() {
         Scanner scanner = new Scanner(System.in);
