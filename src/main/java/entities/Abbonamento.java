@@ -38,6 +38,9 @@ public class Abbonamento extends TitoloDiViaggio {
     public LocalDate getDataDiScadenza() {
         return dataDiScadenza;
     }
+    public  void setDataDiScadenza(LocalDate dataDiScadenza) {
+        this.dataDiScadenza = dataDiScadenza;
+    }
 
     public Tessera getTessera() {
         return tessera;

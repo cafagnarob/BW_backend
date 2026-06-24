@@ -100,7 +100,7 @@ public class PuntoDiEmissioneDAO {
 
     //trova p.emissione tramite id
 
-    public PuntoDiEmissione TrovaPuntoDiEmissionePerId(long id) {
+    public PuntoDiEmissione getById(long id) {
         PuntoDiEmissione trovato = em.find(PuntoDiEmissione.class, id);
 
         if (trovato == null) {
