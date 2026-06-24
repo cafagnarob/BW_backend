@@ -1,6 +1,8 @@
 package robertocafagna;
 
 import dao.PuntoDiEmissioneDAO;
+import dao.TesseraDAO;
+import dao.TitoloDiViaggioDAO;
 import dao.UtenteDAO;
 import entities.Distributore;
 import entities.PuntoDiEmissione;
@@ -9,6 +11,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import Enum.StatoDistributore;
+import Enum.TipoUtente;
+import Enum.TipoAbbonamento;
 
 public class Application {
 
@@ -20,6 +24,39 @@ public class Application {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         UtenteDAO utenteDAO = new UtenteDAO(entityManager);
         PuntoDiEmissioneDAO dao = new PuntoDiEmissioneDAO(entityManager);
+        TitoloDiViaggioDAO TdiViaggioDAO = new TitoloDiViaggioDAO(entityManager);
+TesseraDAO tesseraDAO = new TesseraDAO(entityManager);
+
+// creazione di prova per testare metodo STAMPAINFOABBONAMENTO
+        //inizio transazione per la creazione di utente, tessera,abb;
+        entityManager.getTransaction().begin();
+
+        entities.Utente nuovoUtente = new entities.Utente("Rosa", "Dev", "emanuela@test.com", 25, 50.0, TipoUtente.VIAGGIATORE);
+        entityManager.persist(nuovoUtente);
+
+        entities.PuntoDiEmissione nuovoPunto = new entities.Rivenditore("Via Vesuvio 10, Napoli");
+        ((entities.Rivenditore) nuovoPunto).setNome("Tabaccheria Rossi");
+        entityManager.persist(nuovoPunto);
+        entityManager.getTransaction().commit();
+        System.out.println(" Utente e Punto di Emissione creati!");
+
+//compro la tess
+        tesseraDAO.compraTessera(nuovoPunto, nuovoUtente);
+
+        Long idNuovaTessera = nuovoUtente.getId();
+        entities.Tessera tesseraPerTest = tesseraDAO.getById(idNuovaTessera);
+//compro abbonamento
+        entities.Abbonamento nuovoAbb = TdiViaggioDAO.creaAbbonamento(nuovoPunto, tesseraPerTest, 35.0, TipoAbbonamento.MENSILE);
+//test di scadenza
+        nuovoAbb.setDataDiScadenza(java.time.LocalDate.now().plusMonths(1));
+
+        TdiViaggioDAO.save(nuovoAbb);
+
+
+        System.out.println(" STAMPA INFO ABBONAMENTO");
+        TdiViaggioDAO.stampaInfoAbbonamento(idNuovaTessera);
+
+        System.out.println("=== FINE TEST COMPLETO ===");
 
 
         // CREO NUOVI UTENTI
@@ -68,8 +105,8 @@ public class Application {
         */
 
 
-        // creo punti di emissioni
-
+         //creo punti di emissioni
+//
 //        try {
 //            System.out.println("Inizio creazione dei distributori e rivenditori...");
 //

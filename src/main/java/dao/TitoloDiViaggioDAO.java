@@ -86,7 +86,7 @@ public class TitoloDiViaggioDAO {
                                                             Long idMezzo) {
         TypedQuery<Biglietto> query = this.entityManager.createQuery(
                 "SELECT b FROM Biglietto b " +
-                        "WHERE b.orarioDiVidimazione BETWEEN :param AND :param2 AND b.mezzo.id=:param3", Biglietto.class);
+                        "WHERE b.orarioVidimazione BETWEEN :param AND :param2 AND b.mezzo.id=:param3", Biglietto.class);
         query.setParameter("param", oraInizo);
         query.setParameter("param3", idMezzo);
         query.setParameter("param2", oraFine);
@@ -106,8 +106,35 @@ public class TitoloDiViaggioDAO {
         return new Abbonamento(LocalDate.now(), puntoDiEmissione, prezzo,
                 tipo, tessera);
     }
-
     public void stampaInfoAbbonamento(Long idTessera) {
+        //cerco l'abbonamento legato al numero di tessera inserito
+        TypedQuery<Abbonamento> query = this.entityManager.createQuery(
+                "SELECT a FROM Abbonamento a WHERE a.tessera.id = :idTessera ORDER BY a.dataDiEmissione DESC",
+                Abbonamento.class); //ordino in modo decrescente per prendere ultimo valido per data di emissione
+        query.setParameter("idTessera", idTessera);
+        query.setMaxResults(1); // prendo solo l'ultimo abbonamento emesso
+
+        List<Abbonamento> listaresults = query.getResultList();
+
+        System.out.println("=== VERIFICA VALIDITA' ABBONAMENTO ===");
+        if (listaresults.isEmpty()) {
+            System.out.println("Nessun abbonamento trovato nel sistema per la tessera n. " + idTessera);
+        } else {
+            Abbonamento ultimoAbbonamento = listaresults.get(0);
+            LocalDate dataScadenza = ultimoAbbonamento.getDataDiScadenza();
+
+            System.out.println("Tessera Numero: " + idTessera);
+            System.out.println("Tipo Abbonamento: " + ultimoAbbonamento.getTipo()); //metodo di getTipo in abbonamento
+            System.out.println("Data Scadenza: " + dataScadenza);
+
+            // controllo validità rispetto a OGGI
+            if (dataScadenza.isAfter(LocalDate.now()) || dataScadenza.isEqual(LocalDate.now())) {
+                System.out.println(" STATO: VALIDO");
+            } else {
+                System.out.println("STATO: SCADUTO");
+            }
+        }
+        System.out.println("===================================");
     }
 
 }
