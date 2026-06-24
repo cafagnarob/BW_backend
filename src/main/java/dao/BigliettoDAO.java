@@ -6,6 +6,7 @@ import Enum.StatoDistributore;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -120,53 +121,55 @@ public class BigliettoDAO {
 
     public void popolaSeVuoto() {
         long count = entityManager.createQuery("SELECT COUNT(b) FROM Biglietto b", Long.class).getSingleResult();
-        List<PuntoDiEmissione> punti = entityManager.createQuery("SELECT p FROM PuntoDiEmissione p", entities.PuntoDiEmissione.class).getResultList();
-
-        PuntoDiEmissione rivenditore1 = punti.get(0);
-        PuntoDiEmissione rivenditore2 = punti.size() > 1 ? punti.get(1) : rivenditore1;
-        PuntoDiEmissione rivenditore3 = punti.size() > 2 ? punti.get(2) : rivenditore1;
-        PuntoDiEmissione rivenditore4 = punti.size() > 3 ? punti.get(3) : rivenditore1;
-        PuntoDiEmissione rivenditore5 = punti.size() > 4 ? punti.get(4) : rivenditore1;
-
-        PuntoDiEmissione distributore1 = punti.size() > 5 ? punti.get(5) : rivenditore1;
-        PuntoDiEmissione distributore2 = punti.size() > 6 ? punti.get(6) : rivenditore1;
-        PuntoDiEmissione distributore3 = punti.size() > 7 ? punti.get(7) : rivenditore1;
-        PuntoDiEmissione distributore4 = punti.size() > 8 ? punti.get(8) : rivenditore1;
 
         if (count == 0) {
-            Biglietto b1 = new Biglietto(java.time.LocalDate.now(), rivenditore1, 1.50);
+
+            List<PuntoDiEmissione> punti = entityManager.createQuery("SELECT p FROM PuntoDiEmissione p", entities.PuntoDiEmissione.class).getResultList();
+
+            PuntoDiEmissione rivenditore1 = punti.get(0);
+            PuntoDiEmissione rivenditore2 = punti.size() > 1 ? punti.get(1) : rivenditore1;
+            PuntoDiEmissione rivenditore3 = punti.size() > 2 ? punti.get(2) : rivenditore1;
+            PuntoDiEmissione rivenditore4 = punti.size() > 3 ? punti.get(3) : rivenditore1;
+            PuntoDiEmissione rivenditore5 = punti.size() > 4 ? punti.get(4) : rivenditore1;
+
+            PuntoDiEmissione distributore1 = punti.size() > 5 ? punti.get(5) : rivenditore1;
+            PuntoDiEmissione distributore2 = punti.size() > 6 ? punti.get(6) : rivenditore1;
+            PuntoDiEmissione distributore3 = punti.size() > 7 ? punti.get(7) : rivenditore1;
+            PuntoDiEmissione distributore4 = punti.size() > 8 ? punti.get(8) : rivenditore1;
+
+            Biglietto b1 = new Biglietto(LocalDate.now(), rivenditore1, 1.50);
             save(b1);
 
-            Biglietto b2 = new Biglietto(java.time.LocalDate.now(), distributore1, 1.50);
+            Biglietto b2 = new Biglietto(LocalDate.now(), distributore1, 1.50);
             save(b2);
 
-            Biglietto b3 = new Biglietto(java.time.LocalDate.now(), rivenditore2, 2.50);
+            Biglietto b3 = new Biglietto(LocalDate.now(), rivenditore2, 2.50);
             save(b3);
 
-            Biglietto b4 = new Biglietto(java.time.LocalDate.now().minusDays(1), rivenditore3, 1.50);
+            Biglietto b4 = new Biglietto(LocalDate.now().minusDays(1), rivenditore3, 1.50);
             save(b4);
 
-            Biglietto b5 = new Biglietto(java.time.LocalDate.now().minusDays(2), distributore2, 1.50);
+            Biglietto b5 = new Biglietto(LocalDate.now().minusDays(2), distributore2, 1.50);
             save(b5);
 
-            Biglietto b6 = new Biglietto(java.time.LocalDate.now(), rivenditore4, 1.00);
+            Biglietto b6 = new Biglietto(LocalDate.now(), rivenditore4, 1.00);
             save(b6);
 
-            Biglietto b7 = new Biglietto(java.time.LocalDate.now(), rivenditore5, 1.50);
+            Biglietto b7 = new Biglietto(LocalDate.now(), rivenditore5, 1.50);
             save(b7);
 
-            Biglietto b8 = new Biglietto(java.time.LocalDate.now(), distributore3, 1.50);
+            Biglietto b8 = new Biglietto(LocalDate.now(), distributore3, 1.50);
             save(b8);
 
-            Biglietto b9 = new Biglietto(java.time.LocalDate.now(), distributore4, 3.00);
+            Biglietto b9 = new Biglietto(LocalDate.now(), distributore4, 3.00);
             save(b9);
 
-            Biglietto b10 = new Biglietto(java.time.LocalDate.now(), rivenditore1, 1.50);
+            Biglietto b10 = new Biglietto(LocalDate.now(), rivenditore1, 1.50);
             save(b10);
 
-            System.out.println("Percorrenze aggiunte!");
+            System.out.println("Biglietti aggiunti!");
         } else {
-            System.out.println("Tabella percorrenze piena");
+            System.out.println("Tabella Biglietto piena");
         }
     }
 

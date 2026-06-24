@@ -111,9 +111,9 @@ public class MezzoDAO {
             Mezzo m10 = new Mezzo(StatoMezzo.FERMO, TipoMezzo.TRAM);
             save(m10);
 
-            System.out.println("Percorrenze aggiunte!");
+            System.out.println("Mezzi aggiunti!");
         } else {
-            System.out.println("Tabella percorrenze piena");
+            System.out.println("Tabella Mezzo piena");
         }
     }
 

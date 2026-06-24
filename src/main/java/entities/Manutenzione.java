@@ -33,8 +33,8 @@ public class Manutenzione {
     }
 
 
-    public Manutenzione(LocalDate dataFineManutenzione, TipoManutenzione tipoManutenzione, Mezzo mezzo) {
-        this.dataInizioManutenzione = LocalDate.now();
+    public Manutenzione( LocalDate dataInizioManutenzione, LocalDate dataFineManutenzione, TipoManutenzione tipoManutenzione, Mezzo mezzo) {
+        this.dataInizioManutenzione = dataInizioManutenzione;
         this.dataFineManutenzione = dataFineManutenzione;
         this.tipoManutenzione = tipoManutenzione;
         this.mezzo = mezzo;

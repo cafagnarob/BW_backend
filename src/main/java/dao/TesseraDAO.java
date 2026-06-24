@@ -10,6 +10,7 @@ import jakarta.persistence.EntityTransaction;
 import Enum.TipoAbbonamento;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TesseraDAO {
@@ -70,6 +71,10 @@ public class TesseraDAO {
         return new Tessera(LocalDate.now(), puntoDiEmissione, utente);
     }
 
+    public Tessera insertTessera(LocalDate data, PuntoDiEmissione puntoDiEmissione, Utente utente) {
+        return new Tessera(data, puntoDiEmissione, utente);
+    }
+
 
     public void popolaSeVuoto() {
         long count = entityManager.createQuery("SELECT COUNT(t) FROM Tessera t", Long.class).getSingleResult();
@@ -101,15 +106,25 @@ public class TesseraDAO {
             Utente u8 = utenti.size() > 7 ? utenti.get(7) : u1;
             Utente u9 = utenti.size() > 8 ? utenti.get(8) : u1;
 
-            Tessera t1 = creaTessera(rivenditore1, u1); save(t1);
-            Tessera t2 = creaTessera(rivenditore2, u2); save(t2);
-            Tessera t3 = creaTessera(rivenditore3, u3); save(t3);
-            Tessera t4 = creaTessera(distributore1, u4); save(t4);
-            Tessera t5 = creaTessera(distributore2, u5); save(t5);
-            Tessera t6 = creaTessera(rivenditore4, u6); save(t6);
-            Tessera t7 = creaTessera(rivenditore5, u7); save(t7);
-            Tessera t8 = creaTessera(distributore3, u8); save(t8);
-            Tessera t9 = creaTessera(distributore4, u9); save(t9);
+            List<Tessera> tessere = new ArrayList<>();
+
+            tessere.add(insertTessera(LocalDate.of(2024, 5, 12), rivenditore1, u1));
+            tessere.add(insertTessera(LocalDate.of(2024, 11, 20), rivenditore2, u2));
+            tessere.add(insertTessera(LocalDate.of(2025, 2, 15), rivenditore3, u3));
+            tessere.add(insertTessera(LocalDate.of(2025, 8, 22), distributore1, u4));
+            tessere.add(insertTessera(LocalDate.of(2025, 12, 5), distributore2, u5));
+            tessere.add(insertTessera(LocalDate.of(2026, 1, 18), rivenditore4, u6));
+            tessere.add(insertTessera(LocalDate.of(2026, 3, 30), rivenditore5, u7));
+            tessere.add(insertTessera(LocalDate.of(2026, 5, 14), distributore3, u8));
+            tessere.add(insertTessera(LocalDate.of(2025, 2, 4), distributore4, u9));
+
+            for (Tessera t : tessere) {
+                try {
+                    save(t);
+                } catch (Exception e) {
+                    System.err.println("Errore nel salvare la tessera: " + e.getMessage());
+                }
+            }
 
             System.out.println("Tessere aggiunte!");
         } else {
