@@ -49,4 +49,16 @@ public class TrattaDAO {
         System.out.println("LA TRATTA " + fromDB + "è stato rimosso dal DB");
     }
 
+    public void popolaSeVuoto() {
+        long count = entityManager.createQuery("SELECT COUNT(t) FROM Percorrenza t", Long.class).getSingleResult();
+        if (count == 0) {
+            //inserire qui nuove tratte con i save
+            //aggiungere poi il metodo nel main
+
+            System.out.println("Tratte aggiunte!");
+        } else {
+            System.out.println("Tabella Tratta piena");
+        }
+    }
+
 }
