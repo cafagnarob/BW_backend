@@ -51,14 +51,19 @@ public class BigliettoDAO {
             System.out.println("Acquisto in corso presso il distributore #" + puntoDiEmissione.getId() + "...");
         }
 
-        try {
-            salvaBiglietto(biglietto);
-            utente.setPortafoglio(utente.getPortafoglio() - biglietto.getPrezzo());
-            System.out.println("Acquisto andato a buon fine.");
-            System.out.println(biglietto);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        if (utente.getPortafoglio() < biglietto.getPrezzo()) {
+            System.out.println("Credito insufficiente per completare l'acquisto. Prezzo: " + biglietto.getPrezzo());
+        } else {
+            try {
+                salvaBiglietto(biglietto);
+                utente.setPortafoglio(utente.getPortafoglio() - biglietto.getPrezzo());
+                System.out.println("Acquisto andato a buon fine.");
+                System.out.println(biglietto);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
+
     }
 
 
