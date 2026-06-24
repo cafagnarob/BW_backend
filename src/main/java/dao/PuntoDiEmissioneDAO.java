@@ -138,6 +138,7 @@ public class PuntoDiEmissioneDAO {
 
     public void popolaSeVuoto() {
         long count = em.createQuery("SELECT COUNT(p) FROM PuntoDiEmissione p", Long.class).getSingleResult();
+
         if (count == 0) {
 
             PuntoDiEmissione rivenditore1 = new Rivenditore("Via Roma 15, Milano");

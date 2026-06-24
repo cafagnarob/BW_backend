@@ -8,6 +8,7 @@ import Enum.TipoAbbonamento;
 
 import javax.print.attribute.standard.DateTimeAtCompleted;
 import java.time.LocalDate;
+import java.util.List;
 
 public class AbbonamentoDAO {
     private final EntityManager entityManager;
@@ -20,13 +21,13 @@ public class AbbonamentoDAO {
 
 
     //save
-    public void save(Abbonamento newAbbonamnto) {
+    public void save(Abbonamento newAbbonamento) {
         EntityTransaction transaction = this.entityManager.getTransaction();
         try {
             transaction.begin();
-            this.entityManager.persist(newAbbonamnto);
+            this.entityManager.persist(newAbbonamento);
             transaction.commit();
-            System.out.println("Il nuovo abbonamento " + newAbbonamnto + "è stato aggiungo al DB");
+            System.out.println("Il nuovo abbonamento " + newAbbonamento + "è stato aggiungo al DB");
         } catch (Exception e) {
             if (transaction.isActive()) {
                 transaction.rollback();
@@ -104,15 +105,49 @@ public class AbbonamentoDAO {
             System.out.println("Abbonamento acquistato!");
     }
 
+
     public void popolaSeVuoto() {
         long count = entityManager.createQuery("SELECT COUNT(a) FROM Abbonamento a", Long.class).getSingleResult();
-        if (count == 0) {
-            //inserire qui nuovi abbonamenti con i save
-            //aggiungere poi il metodo nel main
 
-            System.out.println("Abbonamenti aggiunti!");
+        if (count == 0) {
+
+            List<PuntoDiEmissione> punti = entityManager.createQuery("SELECT p FROM PuntoDiEmissione p", PuntoDiEmissione.class).getResultList();
+            List<Tessera> tessere = entityManager.createQuery("SELECT t FROM Tessera t", Tessera.class).getResultList();
+
+            PuntoDiEmissione rivenditore1 = punti.get(0);
+            PuntoDiEmissione rivenditore2 = punti.size() > 1 ? punti.get(1) : rivenditore1;
+            PuntoDiEmissione rivenditore3 = punti.size() > 2 ? punti.get(2) : rivenditore1;
+            PuntoDiEmissione rivenditore4 = punti.size() > 3 ? punti.get(3) : rivenditore1;
+            PuntoDiEmissione rivenditore5 = punti.size() > 4 ? punti.get(4) : rivenditore1;
+
+            PuntoDiEmissione distributore1 = punti.size() > 5 ? punti.get(5) : rivenditore1;
+            PuntoDiEmissione distributore2 = punti.size() > 6 ? punti.get(6) : rivenditore1;
+            PuntoDiEmissione distributore3 = punti.size() > 7 ? punti.get(7) : rivenditore1;
+            PuntoDiEmissione distributore4 = punti.size() > 8 ? punti.get(8) : rivenditore1;
+
+            Tessera t1 = tessere.get(0);
+            Tessera t2 = tessere.size() > 1 ? tessere.get(1) : t1;
+            Tessera t3 = tessere.size() > 2 ? tessere.get(2) : t1;
+            Tessera t4 = tessere.size() > 3 ? tessere.get(3) : t1;
+            Tessera t5 = tessere.size() > 4 ? tessere.get(4) : t1;
+            Tessera t6 = tessere.size() > 5 ? tessere.get(5) : t1;
+            Tessera t7 = tessere.size() > 6 ? tessere.get(6) : t1;
+            Tessera t8 = tessere.size() > 7 ? tessere.get(7) : t1;
+            Tessera t9 = tessere.size() > 8 ? tessere.get(8) : t1;
+
+            Abbonamento a1 = new Abbonamento(java.time.LocalDate.now(), rivenditore1, 12.00, TipoAbbonamento.SETTIMANALE, t1); save(a1);
+            Abbonamento a2 = new Abbonamento(java.time.LocalDate.now(), rivenditore2, 35.00, TipoAbbonamento.MENSILE, t2); save(a2);
+            Abbonamento a3 = new Abbonamento(java.time.LocalDate.now(), rivenditore3, 12.00, TipoAbbonamento.SETTIMANALE, t3); save(a3);
+            Abbonamento a4 = new Abbonamento(java.time.LocalDate.now().minusDays(5), distributore1, 35.00, TipoAbbonamento.MENSILE, t4); save(a4);
+            Abbonamento a5 = new Abbonamento(java.time.LocalDate.now(), distributore2, 12.00, TipoAbbonamento.SETTIMANALE, t5); save(a5);
+            Abbonamento a6 = new Abbonamento(java.time.LocalDate.now(), rivenditore4, 35.00, TipoAbbonamento.MENSILE, t6); save(a6);
+            Abbonamento a7 = new Abbonamento(java.time.LocalDate.now(), rivenditore5, 12.00, TipoAbbonamento.SETTIMANALE, t7); save(a7);
+            Abbonamento a8 = new Abbonamento(java.time.LocalDate.now(), distributore3, 35.00, TipoAbbonamento.MENSILE, t8); save(a8);
+            Abbonamento a9 = new Abbonamento(java.time.LocalDate.now(), distributore4, 12.00, TipoAbbonamento.SETTIMANALE, t9); save(a9);
+
+            System.out.println("Tessere aggiunte!");
         } else {
-            System.out.println("Tabella abbonamenti piena");
+            System.out.println("Tabella Tessera piena");
         }
     }
 

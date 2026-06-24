@@ -24,15 +24,22 @@ public class Application {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         UtenteDAO utenteDAO = new UtenteDAO(entityManager);
         MezzoDAO mezzoDAO = new MezzoDAO(entityManager);
-        PuntoDiEmissioneDAO dao = new PuntoDiEmissioneDAO(entityManager);
         Scanner scanner = new Scanner(System.in);
         PuntoDiEmissioneDAO puntoDao = new PuntoDiEmissioneDAO(entityManager);
         TitoloDiViaggioDAO TdiViaggioDAO = new TitoloDiViaggioDAO(entityManager);
         TesseraDAO tesseraDAO = new TesseraDAO(entityManager);
+        AbbonamentoDAO abbonamentoDAO = new AbbonamentoDAO(entityManager, puntoDao);
+        TrattaDAO trattaDAO = new TrattaDAO(entityManager);
 
         //Ripopolamento delle tabelle
         utenteDAO.popolaSeVuoto();
         puntoDao.popolaSeVuoto();
+
+        trattaDAO.popolaSeVuoto();
+        mezzoDAO.popolaSeVuoto();
+        tesseraDAO.popolaSeVuoto();
+        abbonamentoDAO.popolaSeVuoto();
+
 /*
 // creazione di prova per testare metodo STAMPAINFOABBONAMENTO
         //inizio transazione per la creazione di utente, tessera,abb;
