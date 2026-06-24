@@ -81,29 +81,57 @@ public class ManutenzioneDAO {
             List<Manutenzione> manutenzioni = new ArrayList<>();
 
             manutenzioni.add(new Manutenzione(
-                    LocalDate.of(2026, 3, 10),
-                    LocalDate.of(2026, 3, 15),
+                    LocalDate.of(2026, 1, 10),
+                    LocalDate.of(2026, 2, 15),
                     TipoManutenzione.ORDINARIA,
                     m3
             ));
 
             manutenzioni.add(new Manutenzione(
-                    LocalDate.of(2026, 6, 18),
-                    LocalDate.of(2026, 6, 28),
+                    LocalDate.of(2025, 11, 5),
+                    LocalDate.of(2025, 12, 15),
+                    TipoManutenzione.ORDINARIA,
+                    m3
+            ));
+
+            manutenzioni.add(new Manutenzione(
+                    LocalDate.of(2026, 2, 18),
+                    LocalDate.of(2026, 3, 28),
                     TipoManutenzione.STRAORDINARIA,
                     m2
             ));
 
             manutenzioni.add(new Manutenzione(
-                    LocalDate.of(2026, 6, 24),
-                    LocalDate.of(2026, 6, 26),
+                    LocalDate.of(2025, 6, 18),
+                    LocalDate.of(2025, 9, 28),
+                    TipoManutenzione.STRAORDINARIA,
+                    m2
+            ));
+
+            manutenzioni.add(new Manutenzione(
+                    LocalDate.of(2025, 6, 24),
+                    LocalDate.of(2025, 9, 26),
                     TipoManutenzione.STRAORDINARIA,
                     m6
             ));
 
             manutenzioni.add(new Manutenzione(
-                    LocalDate.of(2026, 6, 23),
-                    LocalDate.of(2026, 7, 5),
+                    LocalDate.of(2025, 12, 23),
+                    LocalDate.of(2026, 1, 5),
+                    TipoManutenzione.ORDINARIA,
+                    m9
+            ));
+
+            manutenzioni.add(new Manutenzione(
+                    LocalDate.of(2026, 1, 20),
+                    LocalDate.of(2026, 2, 10),
+                    TipoManutenzione.ORDINARIA,
+                    m9
+            ));
+
+            manutenzioni.add(new Manutenzione(
+                    LocalDate.of(2024, 1, 20),
+                    LocalDate.of(2025, 6, 10),
                     TipoManutenzione.ORDINARIA,
                     m9
             ));
