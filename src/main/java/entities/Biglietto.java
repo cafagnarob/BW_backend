@@ -6,13 +6,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
 public class Biglietto extends TitoloDiViaggio {
 
     @Column(name = "orario_vidimazione")
-    private LocalTime orarioVidimazione;
+    private LocalDateTime orarioVidimazione;
 
     @ManyToOne
     @JoinColumn(name = "id_mezzo")
@@ -36,11 +37,11 @@ public class Biglietto extends TitoloDiViaggio {
     }
 
 
-    public LocalTime getOrarioVidimazione() {
+    public LocalDateTime getOrarioVidimazione() {
         return orarioVidimazione;
     }
 
-    public void setOrarioVidimazione(LocalTime orarioVidimazione) {
+    public void setOrarioVidimazione(LocalDateTime orarioVidimazione) {
         this.orarioVidimazione = orarioVidimazione;
     }
 
