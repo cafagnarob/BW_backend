@@ -30,10 +30,10 @@ public class Percorrenza {
     }
 
 
-    public Percorrenza(LocalDate data, Mezzo mezzo, Tratta tratta, int tempoPercorrenzaEffettivo) {
+    public Percorrenza(LocalDate data, Mezzo mezzo, Tratta tratta) {
         this.mezzo = mezzo;
         this.tratta = tratta;
-        this.tempoPercorrenzaEffettivo = tempoPercorrenzaEffettivo;
+        this.tempoPercorrenzaEffettivo = Integer.parseInt(null);
         this.data = data;
     }
 
@@ -51,6 +51,10 @@ public class Percorrenza {
 
     public int getTempoPercorrenzaEffettivo() {
         return tempoPercorrenzaEffettivo;
+    }
+
+    public void setTempoPercorrenzaEffettivo(int tempoPercorrenzaEffettivo) {
+        this.tempoPercorrenzaEffettivo = tempoPercorrenzaEffettivo;
     }
 
     public LocalDate getData() {

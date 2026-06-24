@@ -8,20 +8,13 @@ import entities.Mezzo;
 import entities.Percorrenza;
 import entities.Tratta;
 import entities.Utente;
-import dao.MezzoDAO;
-import dao.*;
-import entities.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Persistence;
-import Enum.StatoDistributore;
-import Enum.TipoUtente;
-import Enum.TipoAbbonamento;
-import Enum.StatoMezzo;
-import Enum.TipoMezzo;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Application {
@@ -203,11 +196,87 @@ public class Application {
                                     System.out.println("Salvataggio annullato");
                                 }
                             } else {
-
+                                System.out.println("nessun mezzo trovato");
                             }
                         }
                         case 2 -> {
-                            System.out.println("----- ASSEGNAMO UN MEZZO ALLA MANUTENZIONE ------");
+                            while (true) {
+                                System.out.println("----- ASSEGNAMO UN MEZZO ALLA MANUTENZIONE ------");
+                                System.out.println("----LISTA MEZZI FERMI-----");
+                                mezzoDAO.listaMezzoPerStato(StatoMezzo.FERMO);
+                                System.out.println("---- INSERISCI L'ID DEL MEZZO-----");
+                                try {
+                                    Long idScelto = Long.valueOf(scanner.nextLine().trim());
+                                    Mezzo mezzofromdb = mezzoDAO.getById(idScelto);
+                                    if (mezzofromdb == null) {
+                                        System.out.println("---NESSUN MEZZO TROVATO----");
+                                    }
+                                    System.out.println("-----CONFERMARE?-----");
+                                    System.out.println("-----Digita Y per si N per no------");
+                                    String conferma = scanner.nextLine().trim();
+                                    if (conferma.equalsIgnoreCase("Y")) {
+                                        assert mezzofromdb != null;
+                                        if (mezzofromdb.getStato() == StatoMezzo.MANUTENZIONE) {
+                                            System.out.println("----- IL MEZZO " + mezzofromdb + " E' GIA IN MANUTENZIONE-----");
+                                        }
+                                        mezzofromdb.setStato(StatoMezzo.MANUTENZIONE);
+                                        mezzoDAO.update(mezzofromdb);
+                                        //
+                                        //
+                                        //
+// aggiungere creazione riga manutenzione
+                                        //
+                                        //
+                                        //
+                                        //
+
+                                        System.out.println("-----" + mezzofromdb + "E' STATO MANDATO IN MANUTENZIONE-----");
+                                        break;
+                                    } else {
+                                        System.out.println("------ OPERAZIONE ANNULLATA------");
+                                        break;
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println("mezzo non trovato");
+                                }
+                            }
+                        }
+                        case 3 -> {
+                            System.out.println("----- VISUALIZZIAMO IL NUMERO DI VOLTE CHE " +
+                                    "UN MEZZO HA FATTO UNA TRATTA ------");
+                            mezzoDAO.listaMezzi();
+                            System.out.println("-----INSERISCI L'ID DEL MEZZO-----");
+                            try {
+                                Long idMezzo = Long.valueOf(scanner.nextLine());
+                                Mezzo mezzoFromDB = mezzoDAO.getById(idMezzo);
+                                if (mezzoFromDB != null) {
+                                    System.out.println("-----CONFERMARE?-----");
+                                    System.out.println("-----Digita Y per si N per no------");
+                                    String conferma = scanner.nextLine().trim();
+                                    if (conferma.equalsIgnoreCase("Y")) {
+                                        System.out.println("-----MEZZO SELEZIONATO-----");
+                                        trattaDAO.listaTratte();
+                                        try {
+                                            System.out.println("----- INSERISCI L'ID DELLA TRATTA------");
+                                            Long idTratta = Long.valueOf(scanner.nextLine());
+                                            Tratta trattaFromDB = trattaDAO.getById(idTratta);
+                                            if (trattaFromDB != null) {
+                                                percorrenzaDAO.listaPercorrenzePerMezzo(idMezzo, idTratta);
+                                            }
+                                        } catch (Exception e) {
+                                            System.out.println("inserisci un valore valido");
+                                        }
+                                    }
+                                } else {
+                                    System.out.println("mezzo non trovato");
+                                }
+                            } catch (Exception e) {
+                                System.out.println("inserisci un valore valido");
+                            }
+                        }
+                        case 4 -> {
+                          
+                            System.out.println("----- ASSEGNAMO UN MEZZO AD UNA TRATTA ------");
                             System.out.println("----LISTA MEZZI FERMI-----");
                             mezzoDAO.listaMezzoPerStato(StatoMezzo.FERMO);
                             while (true) {
@@ -238,26 +307,26 @@ public class Application {
                                                 String confermaTratta = scanner.nextLine().trim();
                                                 if (confermaTratta.equalsIgnoreCase("Y")) {
                                                     System.out.println("------INSERIRE LA DATA IN CUI IL MEZZO COMPIRA LA TRATTA------");
+                                                    DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                                                     System.out.println("------ DATA DI OGGI: " + LocalDate.now() + "----");
-                                                    System.out.println("------YYYY/MM/DD------");
+                                                    System.out.println("------YYYY-MM-DD------");
+                                                    String inputData = scanner.nextLine();
                                                     try {
-                                                        LocalDate dataPercorrenza = LocalDate.parse(scanner.nextLine());
+                                                        LocalDate dataPercorrenza = LocalDate.parse(inputData, formato);
                                                         if (dataPercorrenza.isBefore(LocalDate.now())) {
                                                             System.out.println("non  puoi associare una tratta ed un mezzo nel passato");
-                                                        }
-                                                        System.out.println("------INSERISCI UN TEMPO DI PERCORRENZA EFFETTIVO-----");
-                                                        int tempoDiPercorrenzaEffettivo = Integer.parseInt(scanner.nextLine());
-                                                        assert trattaFromDB != null;
-                                                        if (tempoDiPercorrenzaEffettivo < trattaFromDB.getTempoDiPercorrenzaPrevisto() - 30) {
-                                                            System.out.println("tempo di percorrenza effettivo troppo basso, ricontrolla i dati inseriti");
                                                         } else {
                                                             System.out.println("------ ASSEGNAZIONE MEZZO/TRATTA IN CORSO-----");
-                                                            Percorrenza newPercorrenza = new Percorrenza(dataPercorrenza, mezzofromdb, trattaFromDB, tempoDiPercorrenzaEffettivo);
+                                                            Percorrenza newPercorrenza = new Percorrenza(dataPercorrenza, mezzofromdb, trattaFromDB);
                                                             System.out.println("------CONFERMARE?------");
                                                             System.out.println("-----Digita Y per si N per no------");
                                                             String confermaSalvataggio = scanner.nextLine().trim();
                                                             if (confermaSalvataggio.equalsIgnoreCase("Y")) {
+
                                                                 percorrenzaDAO.save(newPercorrenza);
+                                                                mezzofromdb.setStato(StatoMezzo.SERVIZIO);
+                                                                mezzoDAO.update(mezzofromdb);
+
                                                             }
 
                                                         }
@@ -284,13 +353,6 @@ public class Application {
                                     System.out.println("mezzo non trovato");
                                 }
                             }
-                        }
-                        case 3 -> {
-                            System.out.println("----- VISUALIZZIAMO IL NUMERO DI VOLTE CHE " +
-                                    "UN MEZZO HA FATTO UNA TRATTA ------");
-                        }
-                        case 4 -> {
-                            System.out.println("----- ASSEGNAMO UN MEZZO AD UNA TRATTA ------");
 
                         }
                         default -> System.out.println("------- INSERISCI UN VALORE VALIDO------");

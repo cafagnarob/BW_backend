@@ -106,6 +106,7 @@ public class TitoloDiViaggioDAO {
         return new Abbonamento(LocalDate.now(), puntoDiEmissione, prezzo,
                 tipo, tessera);
     }
+
     public void stampaInfoAbbonamento(Long idTessera) {
         //cerco l'abbonamento legato al numero di tessera inserito
         TypedQuery<Abbonamento> query = this.entityManager.createQuery(

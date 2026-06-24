@@ -1,11 +1,12 @@
 package dao;
 
-import entities.*;
+import entities.Mezzo;
+import entities.Percorrenza;
+import entities.Tratta;
 import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
-
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,13 +21,13 @@ public class PercorrenzaDAO {
 
 
     // SAVE
-    public void save(Percorrenza p){
+    public void save(Percorrenza p) {
         EntityTransaction transaction = entityManager.getTransaction();
 
-            transaction.begin();
+        transaction.begin();
         entityManager.persist(p);
-            transaction.commit();
-            System.out.println("Nuova Percorrenza " + p + " aggiunta con successo al DB");
+        transaction.commit();
+        System.out.println("Nuova Percorrenza " + p + " aggiunta con successo al DB");
 
     }
 
@@ -58,15 +59,15 @@ public class PercorrenzaDAO {
 
     // Nuova percorrenza assegnando una tratta ad un mezzo
 
-    public void assegnaMezzoATratta(Mezzo mezzo, Tratta tratta, LocalDate data, int tempoEffettivo){
+    public void assegnaMezzoATratta(Mezzo mezzo, Tratta tratta, LocalDate data) {
 
-        Percorrenza nuovaPercorrenza = new Percorrenza(data, mezzo, tratta, tempoEffettivo);
+        Percorrenza nuovaPercorrenza = new Percorrenza(data, mezzo, tratta);
         this.save(nuovaPercorrenza);
     }
 
     // Informazioni di percorreze da id di un mezzo
 
-    public void stampaInfoDaIdMezzo(long idMezzo){
+    public void stampaInfoDaIdMezzo(long idMezzo) {
 
         TypedQuery<Percorrenza> query = entityManager.createQuery(
                 "SELECT p FROM Percorrenza p WHERE p.mezzo.id = :idMezzo",
@@ -88,6 +89,20 @@ public class PercorrenzaDAO {
             }
         }
     }
+
+    public List<Percorrenza> listaPercorrenzePerMezzo(Long idMezzo, Long idTratta) {
+        TypedQuery<Percorrenza> query = entityManager.createQuery(
+                "SELECT p FROM Percorrenza p WHERE p.mezzo.id = :param AND p.tratta.id = :param2"
+                , Percorrenza.class);
+        query.setParameter("param", idMezzo);
+        query.setParameter("param2", idTratta);
+        List<Percorrenza> listRes = query.getResultList();
+        System.out.println("------ IL NUMERO DI VOLTE CHE IL MEZZO" +
+                idMezzo + "HA EFFETTUATO LA TRATTA" + idTratta + " E': " + listRes.size());
+        listRes.forEach(System.out::println);
+        return listRes;
+    }
+
 
     public void popolaSeVuoto() {
         long count = entityManager.createQuery("SELECT COUNT(p) FROM Percorrenza p", Long.class).getSingleResult();
