@@ -176,7 +176,7 @@ public class PuntoDiEmissioneDAO {
 
             System.out.println("Punti di emissione aggiunti!");
         } else {
-            System.out.println("Tabella punti di emissione piena");
+            System.out.println("Tabella Punto di emissione piena");
         }
     }
 

@@ -93,7 +93,7 @@ public class UtenteDAO {
             save(u14); save(u15); save(u16); save(u17); save(u18); save(u19); save(u20);
             System.out.println("Utenti aggiunti!");
         } else {
-            System.out.println("Tabella utenti piena");
+            System.out.println("Tabella Utente piena");
         }
     }
 

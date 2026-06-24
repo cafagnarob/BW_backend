@@ -30,15 +30,21 @@ public class Application {
         TesseraDAO tesseraDAO = new TesseraDAO(entityManager);
         AbbonamentoDAO abbonamentoDAO = new AbbonamentoDAO(entityManager, puntoDao);
         TrattaDAO trattaDAO = new TrattaDAO(entityManager);
+        PercorrenzaDAO percorrenzaDAO = new PercorrenzaDAO(entityManager);
+        ManutenzioneDAO manutenzioneDao = new ManutenzioneDAO(entityManager);
+        BigliettoDAO bigliettoDAO = new BigliettoDAO(entityManager);
 
         //Ripopolamento delle tabelle
         utenteDAO.popolaSeVuoto();
         puntoDao.popolaSeVuoto();
-
-        trattaDAO.popolaSeVuoto();
         mezzoDAO.popolaSeVuoto();
+        trattaDAO.popolaSeVuoto();
+        manutenzioneDao.popolaSeVuoto();
+        percorrenzaDAO.popolaSeVuoto();
         tesseraDAO.popolaSeVuoto();
         abbonamentoDAO.popolaSeVuoto();
+        bigliettoDAO.popolaSeVuoto();
+
 
 /*
 // creazione di prova per testare metodo STAMPAINFOABBONAMENTO

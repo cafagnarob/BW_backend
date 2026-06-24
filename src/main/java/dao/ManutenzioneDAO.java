@@ -1,11 +1,15 @@
 package dao;
 
 import entities.Manutenzione;
+import entities.Mezzo;
 import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
+import Enum.TipoManutenzione;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ManutenzioneDAO {
@@ -65,12 +69,56 @@ public class ManutenzioneDAO {
     public void popolaSeVuoto() {
         long count = entityManager.createQuery("SELECT COUNT(m) FROM Manutenzione m", Long.class).getSingleResult();
         if (count == 0) {
-            //inserire qui nuove manutenzioni con i save
-            //aggiungere poi il metodo nel main
+
+            List<Mezzo> mezzi = entityManager.createQuery("SELECT m FROM Mezzo m", Mezzo.class).getResultList();
+
+            Mezzo m2 = mezzi.size() > 1 ? mezzi.get(1) : mezzi.get(0); // Autobus in MANUTENZIONE
+            Mezzo m6 = mezzi.size() > 5 ? mezzi.get(5) : mezzi.get(0); // Tram in MANUTENZIONE
+            Mezzo m9 = mezzi.size() > 8 ? mezzi.get(8) : mezzi.get(0); // Tram in MANUTENZIONE
+
+            Mezzo m3 = mezzi.size() > 2 ? mezzi.get(2) : mezzi.get(0);
+
+            List<Manutenzione> manutenzioni = new ArrayList<>();
+
+            manutenzioni.add(new Manutenzione(
+                    LocalDate.of(2026, 3, 10),
+                    LocalDate.of(2026, 3, 15),
+                    TipoManutenzione.ORDINARIA,
+                    m3
+            ));
+
+            manutenzioni.add(new Manutenzione(
+                    LocalDate.of(2026, 6, 18),
+                    LocalDate.of(2026, 6, 28),
+                    TipoManutenzione.STRAORDINARIA,
+                    m2
+            ));
+
+            manutenzioni.add(new Manutenzione(
+                    LocalDate.of(2026, 6, 24),
+                    LocalDate.of(2026, 6, 26),
+                    TipoManutenzione.STRAORDINARIA,
+                    m6
+            ));
+
+            manutenzioni.add(new Manutenzione(
+                    LocalDate.of(2026, 6, 23),
+                    LocalDate.of(2026, 7, 5),
+                    TipoManutenzione.ORDINARIA,
+                    m9
+            ));
+
+            for (Manutenzione m : manutenzioni) {
+                try {
+                    save(m);
+                } catch (Exception e) {
+                    System.err.println("Errore nel salvare la manutenzione");
+                }
+            }
 
             System.out.println("Manutenzioni aggiunte!");
         } else {
-            System.out.println("Tabella manutenzione piena");
+            System.out.println("Tabella Manutenzione piena");
         }
     }
 
