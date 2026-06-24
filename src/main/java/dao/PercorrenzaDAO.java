@@ -1,8 +1,6 @@
 package dao;
 
-import entities.Mezzo;
-import entities.Percorrenza;
-import entities.Tratta;
+import entities.*;
 import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -88,6 +86,18 @@ public class PercorrenzaDAO {
                         " Tratta: ID " + p.getTratta().getId() +
                         " (" + p.getTratta().getPartenza() + " -> " + p.getTratta().getCapolinea() + ")");
             }
+        }
+    }
+
+    public void popolaSeVuoto() {
+        long count = entityManager.createQuery("SELECT COUNT(p) FROM Percorrenza p", Long.class).getSingleResult();
+        if (count == 0) {
+            //inserire qui nuove percorrenze con i save
+            //aggiungere poi il metodo nel main
+
+            System.out.println("Percorrenze aggiunte!");
+        } else {
+            System.out.println("Tabella percorrenze piena");
         }
     }
 }

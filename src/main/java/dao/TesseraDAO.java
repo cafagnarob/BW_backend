@@ -1,13 +1,16 @@
 package dao;
 
+import entities.Abbonamento;
 import entities.PuntoDiEmissione;
 import entities.Tessera;
 import entities.Utente;
 import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import Enum.TipoAbbonamento;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class TesseraDAO {
     private final EntityManager entityManager;
@@ -65,6 +68,53 @@ public class TesseraDAO {
 
     public Tessera creaTessera(PuntoDiEmissione puntoDiEmissione, Utente utente) {
         return new Tessera(LocalDate.now(), puntoDiEmissione, utente);
+    }
+
+
+    public void popolaSeVuoto() {
+        long count = entityManager.createQuery("SELECT COUNT(t) FROM Tessera t", Long.class).getSingleResult();
+
+        if (count == 0) {
+
+            List<PuntoDiEmissione> punti = entityManager.createQuery("SELECT p FROM PuntoDiEmissione p", PuntoDiEmissione.class).getResultList();
+            List<Utente> utenti = entityManager.createQuery("SELECT u FROM Utente u", Utente.class).getResultList();
+
+
+            PuntoDiEmissione rivenditore1 = punti.get(0);
+            PuntoDiEmissione rivenditore2 = punti.size() > 1 ? punti.get(1) : rivenditore1;
+            PuntoDiEmissione rivenditore3 = punti.size() > 2 ? punti.get(2) : rivenditore1;
+            PuntoDiEmissione rivenditore4 = punti.size() > 3 ? punti.get(3) : rivenditore1;
+            PuntoDiEmissione rivenditore5 = punti.size() > 4 ? punti.get(4) : rivenditore1;
+
+            PuntoDiEmissione distributore1 = punti.size() > 5 ? punti.get(5) : rivenditore1;
+            PuntoDiEmissione distributore2 = punti.size() > 6 ? punti.get(6) : rivenditore1;
+            PuntoDiEmissione distributore3 = punti.size() > 7 ? punti.get(7) : rivenditore1;
+            PuntoDiEmissione distributore4 = punti.size() > 8 ? punti.get(8) : rivenditore1;
+
+            Utente u1 = utenti.get(0);
+            Utente u2 = utenti.size() > 1 ? utenti.get(1) : u1;
+            Utente u3 = utenti.size() > 2 ? utenti.get(2) : u1;
+            Utente u4 = utenti.size() > 3 ? utenti.get(3) : u1;
+            Utente u5 = utenti.size() > 4 ? utenti.get(4) : u1;
+            Utente u6 = utenti.size() > 5 ? utenti.get(5) : u1;
+            Utente u7 = utenti.size() > 6 ? utenti.get(6) : u1;
+            Utente u8 = utenti.size() > 7 ? utenti.get(7) : u1;
+            Utente u9 = utenti.size() > 8 ? utenti.get(8) : u1;
+
+            Tessera t1 = creaTessera(rivenditore1, u1); save(t1);
+            Tessera t2 = creaTessera(rivenditore2, u2); save(t2);
+            Tessera t3 = creaTessera(rivenditore3, u3); save(t3);
+            Tessera t4 = creaTessera(distributore1, u4); save(t4);
+            Tessera t5 = creaTessera(distributore2, u5); save(t5);
+            Tessera t6 = creaTessera(rivenditore4, u6); save(t6);
+            Tessera t7 = creaTessera(rivenditore5, u7); save(t7);
+            Tessera t8 = creaTessera(distributore3, u8); save(t8);
+            Tessera t9 = creaTessera(distributore4, u9); save(t9);
+
+            System.out.println("Tessere aggiunte!");
+        } else {
+            System.out.println("Tabella Tessera piena");
+        }
     }
 
 }

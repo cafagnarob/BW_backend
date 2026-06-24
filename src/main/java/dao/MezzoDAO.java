@@ -8,6 +8,8 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
+import Enum.StatoMezzo;
+import Enum.TipoMezzo;
 
 public class MezzoDAO {
     private final EntityManager entityManager;
@@ -61,4 +63,37 @@ public class MezzoDAO {
         List<Mezzo> res = query.getResultList();
         res.forEach(System.out::println);
     }
+
+    public void popolaSeVuoto() {
+
+        long count = entityManager.createQuery("SELECT COUNT(m) FROM Mezzo m", Long.class).getSingleResult();
+
+        if (count == 0) {
+            Mezzo m1 = new Mezzo(StatoMezzo.FERMO, TipoMezzo.AUTOBUS);
+            save(m1);
+            Mezzo m2 = new Mezzo(StatoMezzo.MANUTENZIONE, TipoMezzo.AUTOBUS);
+            save(m2);
+            Mezzo m3 = new Mezzo(StatoMezzo.SERVIZIO, TipoMezzo.AUTOBUS);
+            save(m3);
+            Mezzo m4 = new Mezzo(StatoMezzo.SERVIZIO, TipoMezzo.AUTOBUS);
+            save(m4);
+            Mezzo m5 = new Mezzo(StatoMezzo.SERVIZIO, TipoMezzo.AUTOBUS);
+            save(m5);
+            Mezzo m6 = new Mezzo(StatoMezzo.MANUTENZIONE, TipoMezzo.TRAM);
+            save(m6);
+            Mezzo m7 = new Mezzo(StatoMezzo.SERVIZIO, TipoMezzo.TRAM);
+            save(m7);
+            Mezzo m8 = new Mezzo( StatoMezzo.SERVIZIO, TipoMezzo.TRAM);
+            save(m8);
+            Mezzo m9 = new Mezzo(StatoMezzo.MANUTENZIONE, TipoMezzo.TRAM);
+            save(m9);
+            Mezzo m10 = new Mezzo(StatoMezzo.FERMO, TipoMezzo.TRAM);
+            save(m10);
+
+            System.out.println("Percorrenze aggiunte!");
+        } else {
+            System.out.println("Tabella percorrenze piena");
+        }
+    }
+
 }

@@ -61,4 +61,17 @@ public class ManutenzioneDAO {
         System.out.println("LISTA MANUTENZIONE DI" + idMezzo + ":" + risultati);
         return risultati;
     }
+
+    public void popolaSeVuoto() {
+        long count = entityManager.createQuery("SELECT COUNT(m) FROM Manutenzione m", Long.class).getSingleResult();
+        if (count == 0) {
+            //inserire qui nuove manutenzioni con i save
+            //aggiungere poi il metodo nel main
+
+            System.out.println("Manutenzioni aggiunte!");
+        } else {
+            System.out.println("Tabella manutenzione piena");
+        }
+    }
+
 }
