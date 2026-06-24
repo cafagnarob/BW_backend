@@ -32,9 +32,14 @@ public class Application {
         MezzoDAO mezzoDAO = new MezzoDAO(entityManager);
         PuntoDiEmissioneDAO dao = new PuntoDiEmissioneDAO(entityManager);
         Scanner scanner = new Scanner(System.in);
+        PuntoDiEmissioneDAO puntoDao = new PuntoDiEmissioneDAO(entityManager);
         TitoloDiViaggioDAO TdiViaggioDAO = new TitoloDiViaggioDAO(entityManager);
-TesseraDAO tesseraDAO = new TesseraDAO(entityManager);
+        TesseraDAO tesseraDAO = new TesseraDAO(entityManager);
 
+        //Ripopolamento delle tabelle
+        utenteDAO.popolaSeVuoto();
+        puntoDao.popolaSeVuoto();
+/*
 // creazione di prova per testare metodo STAMPAINFOABBONAMENTO
         //inizio transazione per la creazione di utente, tessera,abb;
         entityManager.getTransaction().begin();
@@ -205,6 +210,7 @@ TesseraDAO tesseraDAO = new TesseraDAO(entityManager);
 
 //
 //
+        System.out.println("=== FINE TEST COMPLETO ===");*/
 
 
         System.out.println("Hello World!");

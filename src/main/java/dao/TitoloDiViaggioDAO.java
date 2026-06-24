@@ -137,4 +137,16 @@ public class TitoloDiViaggioDAO {
         System.out.println("===================================");
     }
 
+    public void popolaSeVuoto() {
+        long count = entityManager.createQuery("SELECT COUNT(t) FROM Percorrenza t", Long.class).getSingleResult();
+        if (count == 0) {
+            //inserire qui nuovi titoli di viaggio con i save
+            //aggiungere poi il metodo nel main
+
+            System.out.println("Titoli di viaggio aggiunti!");
+        } else {
+            System.out.println("Tabella Titoli di viaggio piena");
+        }
+    }
+
 }

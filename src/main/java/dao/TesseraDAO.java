@@ -67,4 +67,16 @@ public class TesseraDAO {
         return new Tessera(LocalDate.now(), puntoDiEmissione, utente);
     }
 
+    public void popolaSeVuoto() {
+        long count = entityManager.createQuery("SELECT COUNT(t) FROM Percorrenza t", Long.class).getSingleResult();
+        if (count == 0) {
+            //inserire qui nuove tessere con i save
+            //aggiungere poi il metodo nel main
+
+            System.out.println("Tessere aggiunte!");
+        } else {
+            System.out.println("Tabella Tessera piena");
+        }
+    }
+
 }

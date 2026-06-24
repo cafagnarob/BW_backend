@@ -3,6 +3,8 @@ package dao;
 import Enum.StatoDistributore;
 import entities.Distributore;
 import entities.PuntoDiEmissione;
+import entities.Rivenditore;
+import entities.Utente;
 import exception.FuoriServizioException;
 import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
@@ -134,5 +136,47 @@ public class PuntoDiEmissioneDAO {
         }
     }
 
+    public void popolaSeVuoto() {
+        long count = em.createQuery("SELECT COUNT(p) FROM PuntoDiEmissione p", Long.class).getSingleResult();
+        if (count == 0) {
+
+            PuntoDiEmissione rivenditore1 = new Rivenditore("Via Roma 15, Milano");
+            ((Rivenditore) rivenditore1).setNome("Tabaccheria Rossi");
+
+            PuntoDiEmissione rivenditore2 = new Rivenditore("Piazza Garibaldi 2, Napoli");
+            ((Rivenditore) rivenditore2).setNome("Edicola Stazione");
+
+            PuntoDiEmissione rivenditore3 = new Rivenditore("Corso Vittorio Emanuele 88, Bari");
+            ((Rivenditore) rivenditore3).setNome("Bar dello Sport");
+
+            PuntoDiEmissione rivenditore4 = new Rivenditore("Via Dante 42, Firenze");
+            ((Rivenditore) rivenditore4).setNome("Tabacchi n.4");
+
+            PuntoDiEmissione rivenditore5 = new Rivenditore("Via dei Fori Imperiali 5, Roma");
+            ((Rivenditore) rivenditore5).setNome("Edicola Central");
+
+            PuntoDiEmissione distributore1 = new Distributore(StatoDistributore.DISPONIBILE, "Stazione Termini, Roma");
+            PuntoDiEmissione distributore2 = new Distributore(StatoDistributore.DISPONIBILE, "Stazione Cadorna, Milano");
+            PuntoDiEmissione distributore3 = new Distributore(StatoDistributore.DISPONIBILE, "Piazza Aldo Moro, Bari");
+            PuntoDiEmissione distributore4 = new Distributore(StatoDistributore.DISPONIBILE, "Via Toledo 110, Napoli");
+            PuntoDiEmissione distributore5 = new Distributore(StatoDistributore.NON_DISPONIBILE, "Fermata Tram 14, Torino");
+
+            SalvaPuntoDiEmissione(rivenditore1);
+            SalvaPuntoDiEmissione(rivenditore2);
+            SalvaPuntoDiEmissione(rivenditore3);
+            SalvaPuntoDiEmissione(rivenditore4);
+            SalvaPuntoDiEmissione(rivenditore5);
+
+            SalvaPuntoDiEmissione(distributore1);
+            SalvaPuntoDiEmissione(distributore2);
+            SalvaPuntoDiEmissione(distributore3);
+            SalvaPuntoDiEmissione(distributore4);
+            SalvaPuntoDiEmissione(distributore5);
+
+            System.out.println("Punti di emissione aggiunti!");
+        } else {
+            System.out.println("Tabella punti di emissione piena");
+        }
+    }
 
 }

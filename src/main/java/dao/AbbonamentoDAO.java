@@ -104,5 +104,16 @@ public class AbbonamentoDAO {
             System.out.println("Abbonamento acquistato!");
     }
 
+    public void popolaSeVuoto() {
+        long count = entityManager.createQuery("SELECT COUNT(a) FROM Abbonamento a", Long.class).getSingleResult();
+        if (count == 0) {
+            //inserire qui nuovi abbonamenti con i save
+            //aggiungere poi il metodo nel main
+
+            System.out.println("Abbonamenti aggiunti!");
+        } else {
+            System.out.println("Tabella abbonamenti piena");
+        }
+    }
 
 }
