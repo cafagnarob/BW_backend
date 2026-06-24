@@ -1,10 +1,10 @@
 package dao;
 
-import entities.Tratta;
 import entities.Utente;
 import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 
 public class UtenteDAO {
     private final EntityManager entityManager;
@@ -40,6 +40,18 @@ public class UtenteDAO {
         transaction.commit();
         System.out.println("L' UTENTE " + fromDB + "è stato rimosso dal DB");
 
+
+    }
+
+    public Utente getUtenteByEmail(String email) {
+
+        TypedQuery<Utente> query = entityManager.createQuery(
+                "SELECT u FROM Utente u WHERE u.email = :param", Utente.class
+        );
+        query.setParameter("param", email);
+        Utente fromDb = query.getSingleResult();
+        System.out.println("UTENTE SELEZIONATO:" + fromDb);
+        return fromDb;
 
     }
 

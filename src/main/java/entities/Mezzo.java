@@ -34,7 +34,7 @@ public class Mezzo {
 
     }
 
-    public Mezzo(int capienza, StatoMezzo stato, TipoMezzo tipo) {
+    public Mezzo(StatoMezzo stato, TipoMezzo tipo) {
 
         this.stato = stato;
         this.tipo = tipo;
