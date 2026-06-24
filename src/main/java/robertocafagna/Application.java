@@ -281,7 +281,7 @@ public class Application {
                             }
                         }
                         case 4 -> {
-                          
+
                             System.out.println("----- ASSEGNAMO UN MEZZO AD UNA TRATTA ------");
                             System.out.println("----LISTA MEZZI FERMI-----");
                             mezzoDAO.listaMezzoPerStato(StatoMezzo.FERMO);
@@ -328,11 +328,9 @@ public class Application {
                                                             System.out.println("-----Digita Y per si N per no------");
                                                             String confermaSalvataggio = scanner.nextLine().trim();
                                                             if (confermaSalvataggio.equalsIgnoreCase("Y")) {
-
-                                                                percorrenzaDAO.save(newPercorrenza);
                                                                 mezzofromdb.setStato(StatoMezzo.SERVIZIO);
                                                                 mezzoDAO.update(mezzofromdb);
-
+                                                                percorrenzaDAO.save(newPercorrenza);
                                                             }
 
                                                         }

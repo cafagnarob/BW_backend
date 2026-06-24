@@ -30,6 +30,13 @@ public class Percorrenza {
     }
 
 
+    public Percorrenza(LocalDate data, Mezzo mezzo, Tratta tratta, int tempoPercorrenzaEffettivo) {
+        this.mezzo = mezzo;
+        this.tratta = tratta;
+        this.tempoPercorrenzaEffettivo = tempoPercorrenzaEffettivo;
+        this.data = data;
+    }
+
     public Percorrenza(LocalDate data, Mezzo mezzo, Tratta tratta) {
         this.mezzo = mezzo;
         this.tratta = tratta;

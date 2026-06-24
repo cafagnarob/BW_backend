@@ -91,7 +91,7 @@ public class PercorrenzaDAO {
         }
     }
 
-    public List<Percorrenza> listaPercorrenzePerMezzo(Long idMezzo, Long idTratta) {
+    public void listaPercorrenzePerMezzo(Long idMezzo, Long idTratta) {
         TypedQuery<Percorrenza> query = entityManager.createQuery(
                 "SELECT p FROM Percorrenza p WHERE p.mezzo.id = :param AND p.tratta.id = :param2"
                 , Percorrenza.class);
@@ -101,7 +101,6 @@ public class PercorrenzaDAO {
         System.out.println("------ IL NUMERO DI VOLTE CHE IL MEZZO" +
                 idMezzo + "HA EFFETTUATO LA TRATTA" + idTratta + " E': " + listRes.size());
         listRes.forEach(System.out::println);
-        return listRes;
     }
 
 
@@ -163,7 +162,6 @@ public class PercorrenzaDAO {
                     System.err.println("Errore nel salvare la percorrenza");
                 }
             }
-
 
 
             System.out.println("Percorrenze aggiunte!");
