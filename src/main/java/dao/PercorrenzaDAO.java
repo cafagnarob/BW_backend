@@ -139,21 +139,21 @@ public class PercorrenzaDAO {
 
             List<Percorrenza> percorrenze = new ArrayList<>();
 
-            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 20), m1, t1, 48));
-            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 20), m2, t2, 58));
-            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 21), m3, t3, 125));
-            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 21), m4, t4, 180));
-            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 22), m5, t5, 162));
-            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 22), m6, t6, 88));
-            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 23), m7, t7, 70));
-            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 23), m8, t8, 205));
-            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 24), m9, t9, 238));
-            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 24), m1, t10, 315));
-            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 25), m2, t11, 49));
-            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 25), m3, t12, 35));
-            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 26), m4, t13, 112));
-            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 26), m5, t14, 93));
-            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 26), m6, t15, 76));
+            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 17), m1, t1, 48));
+            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 17), m2, t2, 58));
+            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 18), m3, t3, 125));
+            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 18), m4, t4, 180));
+            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 18), m5, t5, 162));
+            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 19), m6, t6, 88));
+            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 20), m7, t7, 70));
+            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 20), m8, t8, 205));
+            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 22), m9, t9, 238));
+            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 22), m1, t10, 315));
+            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 23), m2, t11, 49));
+            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 23), m3, t12, 35));
+            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 23), m4, t13, 112));
+            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 23), m5, t14, 93));
+            percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 23), m6, t15, 76));
 
             for (Percorrenza p : percorrenze) {
                 try {

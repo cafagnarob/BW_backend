@@ -1,12 +1,12 @@
 package dao;
 
+import Enum.TipoManutenzione;
 import entities.Manutenzione;
 import entities.Mezzo;
 import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
-import Enum.TipoManutenzione;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class ManutenzioneDAO {
             transaction.begin();
             this.entityManager.persist(newManutenzione);
             transaction.commit();
-            System.out.println("Il TITOLO DI VIAGGIO " + newManutenzione + "è stato aggiungo al DB");
+            System.out.println("LA MANUTENZIONE " + newManutenzione + "è stato aggiungo al DB");
         } catch (Exception e) {
             if (transaction.isActive()) {
                 transaction.rollback();
