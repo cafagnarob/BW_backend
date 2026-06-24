@@ -4,6 +4,7 @@ import entities.Tratta;
 import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 
 public class TrattaDAO {
     private final EntityManager entityManager;
@@ -47,6 +48,13 @@ public class TrattaDAO {
         this.entityManager.remove(fromDB);
         transaction.commit();
         System.out.println("LA TRATTA " + fromDB + "è stato rimosso dal DB");
+    }
+
+    public void listaTratte() {
+        TypedQuery<Tratta> query = entityManager.createQuery(
+                "SELECT t FROM Tratta t", Tratta.class
+        );
+        query.getResultList().forEach(System.out::println);
     }
 
 }
