@@ -1,15 +1,7 @@
 package robertocafagna;
-
-import Enum.TipoUtente;
 import dao.MezzoDAO;
-import dao.PuntoDiEmissioneDAO;
-import dao.TesseraDAO;
-import dao.TitoloDiViaggioDAO;
-import dao.UtenteDAO;
-import entities.Distributore;
-import entities.PuntoDiEmissione;
-import entities.Rivenditore;
-import entities.Utente;
+import dao.*;
+import entities.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
@@ -17,6 +9,8 @@ import jakarta.persistence.Persistence;
 import Enum.StatoDistributore;
 import Enum.TipoUtente;
 import Enum.TipoAbbonamento;
+import Enum.StatoMezzo;
+import Enum.TipoMezzo;
 
 import java.util.Scanner;
 
@@ -179,3 +173,4 @@ public class Application {
     }
 
 }
+
