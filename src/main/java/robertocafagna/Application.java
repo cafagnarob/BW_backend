@@ -50,45 +50,6 @@ public class Application {
         bigliettoDAO.popolaSeVuoto();
 
 
-/*
-// creazione di prova per testare metodo STAMPAINFOABBONAMENTO
-        //inizio transazione per la creazione di utente, tessera,abb;
-        entityManager.getTransaction().begin();
-
-        entities.Utente nuovoUtente = new entities.Utente("Rosa", "Dev", "emanuela@test.com", 25, 50.0, TipoUtente.VIAGGIATORE);
-        entityManager.persist(nuovoUtente);
-
-        entities.PuntoDiEmissione nuovoPunto = new entities.Rivenditore("Via Vesuvio 10, Napoli");
-        ((entities.Rivenditore) nuovoPunto).setNome("Tabaccheria Rossi");
-        entityManager.persist(nuovoPunto);
-        entityManager.getTransaction().commit();
-        System.out.println(" Utente e Punto di Emissione creati!");
-
-//compro la tess
-        tesseraDAO.compraTessera(nuovoPunto, nuovoUtente);
-
-        Long idNuovaTessera = nuovoUtente.getId();
-        entities.Tessera tesseraPerTest = tesseraDAO.getById(idNuovaTessera);
-//compro abbonamento
-        entities.Abbonamento nuovoAbb = TdiViaggioDAO.creaAbbonamento(nuovoPunto, tesseraPerTest, 35.0, TipoAbbonamento.MENSILE);
-//test di scadenza
-        nuovoAbb.setDataDiScadenza(java.time.LocalDate.now().plusMonths(1));
-
-        TdiViaggioDAO.save(nuovoAbb);
-
-
-        System.out.println(" STAMPA INFO ABBONAMENTO");
-        TdiViaggioDAO.stampaInfoAbbonamento(idNuovaTessera);
-
-        System.out.println("=== FINE TEST COMPLETO ===");
-
-
-        // AGGIUNGIAMO UN MEZZO
-        /*Mezzo m1 = new Mezzo(StatoMezzo.FERMO, TipoMezzo.AUTOBUS);
-
-        mezzoDAO.save(m1);*/
-
-
         // INIZIO PROGRAMMA
 
         System.out.println("------ INIZIO PROGRAMMA -----");
@@ -96,7 +57,6 @@ public class Application {
         System.out.println("------ INSERISCI LA TUA EMAIL------");
         System.out.println("ADMIN: admin@system.com ");
         System.out.println("USER SEMPLICE: mario.rossi@mail.com ");
-
 
         Utente fromDB = null;
         while (fromDB == null) {
@@ -120,9 +80,6 @@ public class Application {
         }
 
         System.out.println("=== FINE TEST COMPLETO ===");
-
-
-        System.out.println("Hello World!");
     }
 
     public static void menuAdmin() {
@@ -162,8 +119,6 @@ public class Application {
 
 
     public static void menuMezzi() {
-
-
         try {
             boolean flag2 = true;
             while (flag2) {
@@ -175,7 +130,6 @@ public class Application {
                 System.out.println("----- 4 per Assegnare un mezzo ad una tratta-------");
                 try {
                     int scelta = Integer.parseInt(scanner.nextLine().trim());
-
                     switch (scelta) {
                         case 0 -> {
                             System.out.println("---- CHIUSURA DEL PROGRAMMA ------");
@@ -544,8 +498,8 @@ public class Application {
     public static void menuUser() {
         System.out.println("----- 0 per uscire -------");
         System.out.println("----- 1 per Comprare biglietto ------");
-        System.out.println("----- 2 per Comprare la tessera ------");
-        System.out.println("----- 3 per Comprare un nuovo abbonamento------");
+        System.out.println("----- 2 per Crea/Rinnova la tessera ------");
+        System.out.println("----- 3 per Comprare un nuovo abbonamento ------");
         try {
             int scelta = Integer.parseInt(scanner.nextLine());
             while (true) {
@@ -571,6 +525,36 @@ public class Application {
                         Biglietto newBiglietto = new Biglietto(LocalDate.now(), punto, 1.50, null, null);
                         bigliettoDAO.compraBiglietto(utente, newBiglietto);
                     }
+                    case 2 -> {
+                        Utente utente = utenteDAO.getUtenteByEmail(email);
+                        System.out.println("------RINNOVARE UNA TESSERA-----");
+                        puntoDao.listaPuntoDiEmissione();
+                        System.out.println("------INSERISCI L' ID DI PUNTO DI EMISSIONE------");
+                        Long idPunto = Long.valueOf(scanner.nextLine());
+                        PuntoDiEmissione punto = puntoDao.getById(idPunto);
+                        if (punto instanceof Distributore distributore) {
+                            if (distributore.getStato() == StatoDistributore.NON_DISPONIBILE) {
+                                System.out.println("Il distributore non è disponibile: " + distributore);
+                                return; // ← stop here
+                            }
+                            System.out.println("Procedura in corso presso il distributore #" + punto.getId() + "...");
+                            Tessera tesseraEsistente = tesseraDAO.getTesseraByUtenteId(utente.getId());
+                            if (tesseraEsistente != null) {
+                                System.out.println("L'utente possiede già una tessera: " + tesseraEsistente);
+
+                                // rinnovo
+                                tesseraEsistente.setData_di_emissione(LocalDate.now());
+                                tesseraDAO.update(tesseraEsistente);
+
+                                System.out.println("Tessera rinnovata.");
+                            } else {
+                                tesseraDAO.compraTessera(punto, utente);
+
+                                System.out.println("Nuova tessera creata.");
+                            }
+                        }
+                    }
+
                 }
             }
         } catch (Exception e) {
