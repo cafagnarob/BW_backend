@@ -515,7 +515,7 @@ public class Application {
                                         if (LocalDateTime.now().isBefore(fineValidita)) {
                                             System.out.println("STATO: ANCORA VALIDO (In corso di viaggio)");
                                         } else {
-                                            System.out.println("STATO: SCADUTO (Oltre i 120 minutes concessi)");
+                                            System.out.println("STATO: SCADUTO (Oltre i 120 minuti concessi)");
                                         }
                                     }
                                 } else {
@@ -561,21 +561,43 @@ public class Application {
                     case 1 -> {
                         System.out.println("-----COMPRA UN BIGLIETTO-----");
                         puntoDao.listaPuntoDiEmissione();
-                        System.out.println("------INSERISCI ID DI UN PUNTO DI EMISSIONI-------");
-                        Long idPunto = Long.valueOf(scanner.nextLine());
-                        PuntoDiEmissione punto = puntoDao.getById(idPunto);
-                        if (punto instanceof Distributore distributore) {
-                            if (distributore.getStato() == StatoDistributore.NON_DISPONIBILE) {
-                                System.out.println("Il distributore non è disponibile: " + distributore);
-                                return; // ← stop here
+
+                        PuntoDiEmissione punto = null;
+
+                        while (punto==null){
+                            System.out.println("------INSERISCI ID DI UN PUNTO DI EMISSIONI-------");
+                            try {
+                                Long idPunto = Long.valueOf(scanner.nextLine());
+                                punto = puntoDao.getById(idPunto);
+
+                                if (punto == null){
+                                    System.out.println("Errore: Nessun punto di emissione trovato con questo ID. Riprova.");
+                                    continue;
+                                }
+
+                                if (punto instanceof Distributore distributore) {
+                                    if (distributore.getStato() == StatoDistributore.NON_DISPONIBILE) {
+                                        System.out.println("Il distributore non è disponibile: " + distributore);
+                                        punto = null;
+                                        continue;
+                                    }
+                                    System.out.println("Acquisto in corso presso il distributore #" + punto.getId() + "...");
                             }
-                            System.out.println("Acquisto in corso presso il distributore #" + punto.getId() + "...");
+                        } catch (NumberFormatException e){
+                                System.out.println("Errore: L'ID deve essere un numero valido!");
+                            }catch (Exception e){
+                                System.out.println("Si è verificato un errore: " + e.getMessage());
+                            }
                         }
-                        Utente utente = utenteDAO.getUtenteByEmail(email);
-                        Biglietto newBiglietto = new Biglietto(LocalDate.now(), punto, 1.50, null, null);
-                        bigliettoDAO.compraBiglietto(utente, newBiglietto);
-                        break;
+                        try {
+                            Utente utente = utenteDAO.getUtenteByEmail(email);
+                            Biglietto newBiglietto = new Biglietto(LocalDate.now(), punto, 1.50, null, null);
+                            bigliettoDAO.compraBiglietto(utente, newBiglietto);
+                        }catch (Exception e){
+                            System.out.println("Errore durante l'acquisto del biglietto: " + e.getMessage());
+                        }
                     }
+
                     case 2 -> {
                         Utente utente = utenteDAO.getUtenteByEmail(email);
                         System.out.println("------RINNOVARE UNA TESSERA-----");
@@ -643,19 +665,48 @@ public class Application {
                                 break;
                             }
 
+                            TipoAbbonamento tipo = null;
+                            while (tipo==null){
                             System.out.println("Scegli tipo abbonamento (1 per SETTIMANALE, 2 per MENSILE): ");
-                            int tipoScelta = Integer.parseInt(scanner.nextLine());
-                            TipoAbbonamento tipo = (tipoScelta == 1) ? TipoAbbonamento.SETTIMANALE : TipoAbbonamento.MENSILE;
+
+                            try{
+                                int tipoScelta = Integer.parseInt(scanner.nextLine());
+                                if(tipoScelta==1){
+                                    tipo = TipoAbbonamento.SETTIMANALE;
+                                } else if (tipoScelta == 2){
+                                    tipo = TipoAbbonamento.MENSILE;
+                                } else {
+                                    System.out.println("Opzione non valida! Inserisci 1 o 2.");
+                                }
+                            }catch (NumberFormatException e){
+                                System.out.println("Inserisci un numero valido, 1 o 2");
+                            }
+                            }
 
                             puntoDao.listaPuntoDiEmissione();
-                            System.out.println("------INSERISCI ID DI UN PUNTO DI EMISSIONI-------");
-                            Long idPunto = Long.valueOf(scanner.nextLine());
-                            PuntoDiEmissione punto = puntoDao.getById(idPunto);
 
-                            if (punto instanceof Distributore distributore) {
-                                if (distributore.getStato() == StatoDistributore.NON_DISPONIBILE) {
-                                    System.out.println("Il distributore non è disponibile: " + distributore);
-                                    break;
+                            PuntoDiEmissione punto = null;
+                            while (punto==null){
+                                System.out.println("------INSERISCI ID DI UN PUNTO DI EMISSIONI-------");
+                                try {
+                                    Long idPunto = Long.valueOf(scanner.nextLine());
+                                    punto = puntoDao.getById(idPunto);
+
+                                    if (punto==null){
+                                        System.out.println("Errore: Nessun punto di emissione trovato con questo ID. Riprova.");
+                                        continue;
+                                    }
+
+                                    if (punto instanceof Distributore distributore) {
+                                        if (distributore.getStato() == StatoDistributore.NON_DISPONIBILE) {
+                                            System.out.println("Il distributore non è disponibile: " + distributore);
+                                            punto = null;
+                                            continue;
+                                        }
+                                    }
+                                }catch (NumberFormatException e){
+                                    System.out.println("Errore: L'ID deve essere un numero valido!");
+                                    punto = null;
                                 }
                             }
 
@@ -671,10 +722,11 @@ public class Application {
                             utente.setPortafoglio(nuovoSaldo);
 
                             utenteDAO.update(utente);
-
                             abbonamentoDAO.save(nuovoAbbonamento);
+
                             System.out.println("Abbonamento acquistato e associato alla tessera n. " + tessera.getId());
                             System.out.println("Nuovo saldo del portafoglio: " + utente.getPortafoglio() + " €");
+
                         } catch (NumberFormatException e) {
                             System.out.println("Errore: inserisci un numero valido!");
                         } catch (NotFoundException e) {
@@ -682,7 +734,6 @@ public class Application {
                         }
                     }
                 }
-
 
             }
         } catch (Exception e) {
