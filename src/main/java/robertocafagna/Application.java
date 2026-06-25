@@ -176,34 +176,42 @@ public class Application {
                                     if (mezzofromdb == null) {
                                         System.out.println("---NESSUN MEZZO TROVATO----");
                                     }
-                                    System.out.println("-----CONFERMARE?-----");
-                                    System.out.println("-----Digita Y per si N per no------");
-                                    String conferma = scanner.nextLine().trim();
-                                    if (conferma.equalsIgnoreCase("Y")) {
-                                        assert mezzofromdb != null;
-                                        if (mezzofromdb.getStato() == StatoMezzo.MANUTENZIONE) {
-                                            System.out.println("----- IL MEZZO " + mezzofromdb + " E' GIA IN MANUTENZIONE-----");
-                                        }
-                                        System.out.println("------SELEZIONARE IL TIPO DI MANUTENZIONE-----");
-                                        System.out.println("------ORDINARIA/STRAORDINARIA------");
-                                        String tipoManutenzione = scanner.nextLine().trim();
-                                        if (tipoManutenzione.equalsIgnoreCase(TipoManutenzione.ORDINARIA.toString())) {
-                                            Manutenzione man1 = new Manutenzione(LocalDate.now(), null,
-                                                    TipoManutenzione.ORDINARIA, mezzofromdb);
-                                            manutenzioneDao.save(man1);
-                                        } else if (tipoManutenzione.equalsIgnoreCase(TipoManutenzione.STRAORDINARIA.toString())) {
-                                            Manutenzione man1 = new Manutenzione(LocalDate.now(), null,
-                                                    TipoManutenzione.STRAORDINARIA, mezzofromdb);
-                                            manutenzioneDao.save(man1);
-                                        }
-                                        mezzofromdb.setStato(StatoMezzo.MANUTENZIONE);
-                                        mezzoDAO.update(mezzofromdb);
+                                    while (true) {
+                                        try {
+                                            System.out.println("-----CONFERMARE?-----");
+                                            System.out.println("-----Digita Y per si N per no------");
+                                            String conferma = scanner.nextLine().trim();
+                                            if (conferma.equalsIgnoreCase("Y")) {
+                                                assert mezzofromdb != null;
+                                                if (mezzofromdb.getStato() == StatoMezzo.MANUTENZIONE) {
+                                                    System.out.println("----- IL MEZZO " + mezzofromdb + " E' GIA IN MANUTENZIONE-----");
+                                                }
+                                                System.out.println("------SELEZIONARE IL TIPO DI MANUTENZIONE-----");
+                                                System.out.println("------ORDINARIA/STRAORDINARIA------");
+                                                String tipoManutenzione = scanner.nextLine().trim();
+                                                if (tipoManutenzione.equalsIgnoreCase(TipoManutenzione.ORDINARIA.toString())) {
+                                                    Manutenzione man1 = new Manutenzione(LocalDate.now(), null,
+                                                            TipoManutenzione.ORDINARIA, mezzofromdb);
+                                                    manutenzioneDao.save(man1);
+                                                } else if (tipoManutenzione.equalsIgnoreCase(TipoManutenzione.STRAORDINARIA.toString())) {
+                                                    Manutenzione man1 = new Manutenzione(LocalDate.now(), null,
+                                                            TipoManutenzione.STRAORDINARIA, mezzofromdb);
+                                                    manutenzioneDao.save(man1);
+                                                } else {
+                                                    System.out.println("------ INSERIRE UN VALORE VALIDO-----");
+                                                }
+                                                mezzofromdb.setStato(StatoMezzo.MANUTENZIONE);
+                                                mezzoDAO.update(mezzofromdb);
 
-                                        System.out.println("-----" + mezzofromdb + "E' STATO MANDATO IN MANUTENZIONE-----");
-                                        break;
-                                    } else {
-                                        System.out.println("------ OPERAZIONE ANNULLATA------");
-                                        break;
+                                                System.out.println("-----" + mezzofromdb + "E' STATO MANDATO IN MANUTENZIONE-----");
+                                                break;
+                                            } else if (conferma.equalsIgnoreCase("N")) {
+                                                System.out.println("------ OPERAZIONE ANNULLATA------");
+                                                break;
+                                            } else throw new RuntimeException();
+                                        } catch (RuntimeException e) {
+                                            System.out.println("------ INSERISCI UN VALORE VALIDO-----");
+                                        }
                                     }
                                 } catch (Exception e) {
                                     System.out.println("mezzo non trovato");
