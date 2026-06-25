@@ -40,8 +40,21 @@ public class UtenteDAO {
         this.entityManager.remove(fromDB);
         transaction.commit();
         System.out.println("L' UTENTE " + fromDB + "è stato rimosso dal DB");
+    }
 
-
+    // Update
+    public void update(Utente utente) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.merge(utente);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            System.err.println("Errore durante l'aggiornamento dell'utente: " + e.getMessage());
+        }
     }
 
     public Utente getUtenteByEmail(String email) {

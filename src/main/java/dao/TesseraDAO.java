@@ -6,6 +6,7 @@ import entities.Utente;
 import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import Enum.TipoAbbonamento;
 import jakarta.persistence.NoResultException;
 
 import java.time.LocalDate;
@@ -98,6 +99,17 @@ public class TesseraDAO {
 
     public Tessera insertTessera(LocalDate data, PuntoDiEmissione puntoDiEmissione, Utente utente) {
         return new Tessera(data, puntoDiEmissione, utente);
+    }
+
+    public Tessera getTesseraByUtente(Utente utente) {
+        try {
+            return entityManager.createQuery(
+                            "SELECT t FROM Tessera t WHERE t.utente = :utente", Tessera.class)
+                    .setParameter("utente", utente)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
 
