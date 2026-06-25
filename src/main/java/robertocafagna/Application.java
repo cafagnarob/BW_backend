@@ -128,7 +128,7 @@ public class Application {
                 System.out.println("----- 1 per Aggiungere un nuovo mezzo ------");
                 System.out.println("----- 2 per Mandare un mezzo in manutenzione ------");
                 System.out.println("----- 3 per Visualizzare il numero di volte in cui un mezzo" +
-                        "ha fatto una specifica tratta");
+                        " ha fatto una specifica tratta");
                 System.out.println("----- 4 per Assegnare un mezzo ad una tratta-------");
                 try {
                     int scelta = Integer.parseInt(scanner.nextLine().trim());
@@ -266,7 +266,9 @@ public class Application {
                             System.out.println("----- ASSEGNAMO UN MEZZO AD UNA TRATTA ------");
                             System.out.println("----LISTA MEZZI FERMI-----");
                             mezzoDAO.listaMezzoPerStato(StatoMezzo.FERMO);
-                            while (true) {
+
+                            boolean flagMezzo = true;
+                            while (flagMezzo) {
                                 System.out.println("---- INSERISCI L'ID DEL MEZZO-----");
                                 try {
                                     Long idScelto = Long.valueOf(scanner.nextLine());
@@ -281,6 +283,7 @@ public class Application {
                                         System.out.println("------- SELEZIONA UNA TRATTA-------");
                                         System.out.println("------- LISTA TRATTA DISPONIBILE-----");
                                         trattaDAO.listaTratte();
+                                        boolean flagTratta = true;
                                         while (true) {
                                             System.out.println("------ INSERISCI L' ID DELLA TRATTA DA SELEZIONARE-------");
                                             try {
@@ -330,6 +333,9 @@ public class Application {
                                                             mezzofromdb.setStato(StatoMezzo.SERVIZIO);
                                                             mezzoDAO.update(mezzofromdb);
                                                             percorrenzaDAO.save(newPercorrenza);
+
+                                                            flagMezzo=false;
+                                                            flagTratta=false;
                                                             break;
                                                         }
                                                     } catch (Exception e) {
