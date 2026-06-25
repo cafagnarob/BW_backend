@@ -185,7 +185,10 @@ public class Application {
                                                 System.out.println("----- ASSEGNAMO UN MEZZO ALLA MANUTENZIONE ------");
                                                 System.out.println("----LISTA MEZZI FERMI-----");
                                                 List<Mezzo> listaMezziFermi = mezzoDAO.listaMezzoPerStato(StatoMezzo.FERMO);
-                                                while (true) {
+
+                                                boolean idMezzoValido = false;
+                                                Mezzo mezzofromdb = null;
+                                                while (!idMezzoValido) {
                                                     System.out.println("---- INSERISCI L'ID DEL MEZZO-----");
 
                                                     try {
@@ -194,12 +197,17 @@ public class Application {
                                                                 .anyMatch(m -> m.getId() == idScelto);
                                                         if (!trovato) {
                                                             System.out.println("------ L'ID INSERITO NON E' TRA I MEZZI FERMI ----");
+                                                            continue;
                                                         } else {
-                                                            Mezzo mezzofromdb = mezzoDAO.getById(idScelto);
+                                                            mezzofromdb = mezzoDAO.getById(idScelto);
 
                                                             if (mezzofromdb == null) {
                                                                 System.out.println("---NESSUN MEZZO TROVATO----");
+                                                                continue;
                                                             }
+
+                                                            idMezzoValido = true;
+
                                                             while (true) {
                                                                 try {
                                                                     System.out.println("-----CONFERMARE?-----");
@@ -209,12 +217,14 @@ public class Application {
                                                                         assert mezzofromdb != null;
                                                                         if (mezzofromdb.getStato() == StatoMezzo.MANUTENZIONE) {
                                                                             System.out.println("----- IL MEZZO " + mezzofromdb + " E' GIA IN MANUTENZIONE-----");
+                                                                            break;
                                                                         }
                                                                         while (true) {
 
                                                                             System.out.println("------SELEZIONARE IL TIPO DI MANUTENZIONE-----");
                                                                             System.out.println("------ORDINARIA/STRAORDINARIA------");
                                                                             String tipoManutenzione = scanner.nextLine().trim();
+
                                                                             if (tipoManutenzione.equalsIgnoreCase(TipoManutenzione.ORDINARIA.toString())) {
                                                                                 Manutenzione man1 = new Manutenzione(LocalDate.now(), null,
                                                                                         TipoManutenzione.ORDINARIA, mezzofromdb);
@@ -224,6 +234,7 @@ public class Application {
 
                                                                                 System.out.println("-----" + mezzofromdb + "E' STATO MANDATO IN MANUTENZIONE-----");
                                                                                 break;
+
                                                                             } else if (tipoManutenzione.equalsIgnoreCase(TipoManutenzione.STRAORDINARIA.toString())) {
                                                                                 Manutenzione man1 = new Manutenzione(LocalDate.now(), null,
                                                                                         TipoManutenzione.STRAORDINARIA, mezzofromdb);
@@ -233,10 +244,10 @@ public class Application {
 
                                                                                 System.out.println("-----" + mezzofromdb + "E' STATO MANDATO IN MANUTENZIONE-----");
                                                                                 break;
+
                                                                             } else {
                                                                                 System.out.println("------ INSERIRE UN VALORE VALIDO-----");
                                                                             }
-                                                                            break;
                                                                         }
                                                                         break;
                                                                     } else if (conferma.equalsIgnoreCase("N")) {
