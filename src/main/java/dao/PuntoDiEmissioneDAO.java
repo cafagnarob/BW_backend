@@ -9,6 +9,9 @@ import exception.FuoriServizioException;
 import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
+
+import java.util.List;
 
 
 public class PuntoDiEmissioneDAO {
@@ -16,6 +19,24 @@ public class PuntoDiEmissioneDAO {
 
     public PuntoDiEmissioneDAO(EntityManager em) {
         this.em = em;
+    }
+
+    public List<PuntoDiEmissione> stampaPuntiDiEmissioneDisponibili() {
+        try {
+            TypedQuery<PuntoDiEmissione> query = em.createQuery(
+                    "SELECT p FROM PuntoDiEmissione p " +
+                            "WHERE TYPE(p) = Rivenditore " +
+                            "OR (TYPE(p) = Distributore AND TREAT(p AS Distributore).stato = :stato)",
+                    PuntoDiEmissione.class);
+            query.setParameter("stato", StatoDistributore.DISPONIBILE);
+
+            List<PuntoDiEmissione> lista = query.getResultList();
+            lista.forEach(System.out::println);
+            return lista;
+        } catch (Exception ex) {
+            System.out.println("Errore nel recupero dei punti di emissione: " + ex.getMessage());
+            return List.of();
+        }
     }
 
     //metodo per salvare un punto di emissione

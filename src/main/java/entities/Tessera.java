@@ -17,6 +17,9 @@ public class Tessera {
     @Column(nullable = false)
     private LocalDate dataDiScadenza;
 
+    @Column(nullable = false)
+    private double prezzo;
+
     @OneToOne
     @JoinColumn(name = "id_utente", nullable = false, unique = true)
     private Utente utente;
@@ -24,6 +27,8 @@ public class Tessera {
     @ManyToOne
     @JoinColumn(nullable = false)
     private PuntoDiEmissione luogoDiEmissione;
+
+
 
 
     public Tessera() {
@@ -35,10 +40,18 @@ public class Tessera {
         this.dataDiScadenza = dataDiEmissione.plusYears(1);
         this.luogoDiEmissione = luogoDiEmissione;
         this.utente = utente;
+        this.prezzo = 49.99;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public double getPrezzo() {
+        return prezzo;
+    }
+    public void setPrezzo(double prezzo) {
+        this.prezzo = prezzo;
     }
 
     public LocalDate getData_di_emissione() {

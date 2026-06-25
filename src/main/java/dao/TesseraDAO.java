@@ -59,12 +59,18 @@ public class TesseraDAO {
 
     // Compra Tessera
     public void compraTessera(PuntoDiEmissione luogo, Utente utente){
-            if(luogo==null || utente==null){
-                throw new NotFoundException("Impossibile comprare una nuova tessera!");
-            }
-            Tessera nuovaTessera = new Tessera(LocalDate.now(), luogo, utente);
+        Tessera nuovaTessera = new Tessera();
+        if(luogo == null || utente==null){
+            throw new NotFoundException("Impossibile comprare una nuova tessera! Luogo o utente non validi. Riprovare.");
+        } else if (utente.getPortafoglio() < nuovaTessera.getPrezzo()) {
+            System.out.println("Credito insufficiente. Impossibile completare l'acquisto.");
+            return;
+        } else {
+            nuovaTessera = new Tessera(LocalDate.now(), luogo, utente);
+            utente.setPortafoglio(utente.getPortafoglio() - nuovaTessera.getPrezzo());
+        }
 
-            this.save(nuovaTessera);
+        this.save(nuovaTessera);
     }
 
     public Tessera creaTessera(PuntoDiEmissione puntoDiEmissione, Utente utente) {

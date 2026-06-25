@@ -10,6 +10,7 @@ public class Distributore extends PuntoDiEmissione {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private StatoDistributore stato;
+    private double prezzoBiglietto;
 
     public Distributore() {
         super();
@@ -18,6 +19,7 @@ public class Distributore extends PuntoDiEmissione {
     public Distributore(StatoDistributore stato, String indirizzo) {
         super(indirizzo);
         this.stato = stato;
+        this.prezzoBiglietto = 2;
 
     }
 
@@ -29,6 +31,18 @@ public class Distributore extends PuntoDiEmissione {
     public void setStato(StatoDistributore stato) {
         this.stato = stato;
     }
+
+
+
+    public double getPrezzoBiglietto() {
+        return prezzoBiglietto;
+    }
+
+    public void setPrezzoBiglietto(double prezzoBiglietto) {
+        this.prezzoBiglietto = prezzoBiglietto;
+    }
+
+
 
     @Override
     public String toString() {

@@ -8,6 +8,7 @@ import jakarta.persistence.Table;
 public class Rivenditore extends PuntoDiEmissione {
 
 public String nome;
+public double prezzoBiglietto;
     // costruttore vuoto
     public Rivenditore() {
         super();
@@ -18,6 +19,7 @@ public String nome;
 
     public Rivenditore(String indirizzo) {
         super(indirizzo);
+        this.prezzoBiglietto = 1.50;
 
     }
     public String getNome() {
@@ -33,6 +35,12 @@ public String nome;
         super.setIndirizzo(indirizzo);
     }
 
+    public double getPrezzoBiglietto() {
+        return prezzoBiglietto;
+    }
+    public void setPrezzoBiglietto(double prezzoBiglietto) {
+        this.prezzoBiglietto = prezzoBiglietto;
+    }
 
     @Override
     public String toString() {

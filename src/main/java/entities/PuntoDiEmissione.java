@@ -12,10 +12,14 @@ public abstract class PuntoDiEmissione {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(nullable = false)
     private String indirizzo;
+
     @OneToMany(mappedBy = "luogoDiEmissione", cascade = CascadeType.ALL)
     private List<TitoloDiViaggio> titoliEmessi;
+
+    private double prezzoBiglietto;
 
     //costruttore vuoto
     public PuntoDiEmissione() {
@@ -27,7 +31,7 @@ public abstract class PuntoDiEmissione {
     }
 
     //getter e setter
-//
+
     public long getId() {
         return id;
     }
@@ -35,11 +39,17 @@ public abstract class PuntoDiEmissione {
         this.id = id;
     }
 
+    public double getPrezzoBiglietto() {
+        return prezzoBiglietto;
+    }
+    public void setPrezzoBiglietto(double prezzoBiglietto) {
+        this.prezzoBiglietto = prezzoBiglietto;
+    }
 
     public String getIndirizzo() {
         return indirizzo;
     }
-public  void setIndirizzo(String indirizzo) {
+    public  void setIndirizzo(String indirizzo) {
         this.indirizzo = indirizzo;
 }
 

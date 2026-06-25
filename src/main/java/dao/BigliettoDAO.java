@@ -13,7 +13,7 @@ import java.util.List;
 
 public class BigliettoDAO {
 
-    public final EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public BigliettoDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -56,7 +56,6 @@ public class BigliettoDAO {
             System.out.println("Credito insufficiente per completare l'acquisto. Prezzo: " + biglietto.getPrezzo());
         } else {
             try {
-                save(biglietto);
                 utente.setPortafoglio(utente.getPortafoglio() - biglietto.getPrezzo());
                 System.out.println("Acquisto andato a buon fine.");
                 System.out.println(biglietto);
