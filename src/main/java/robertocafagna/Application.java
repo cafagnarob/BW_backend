@@ -671,16 +671,38 @@ public class Application {
                         Utente utente = utenteDAO.getUtenteByEmail(email);
                         System.out.println("------RINNOVARE UNA TESSERA-----");
                         puntoDao.listaPuntoDiEmissione();
-                        System.out.println("------INSERISCI L' ID DI PUNTO DI EMISSIONE------");
-                        Long idPunto = Long.valueOf(scanner.nextLine());
-                        PuntoDiEmissione punto = puntoDao.getById(idPunto);
-                        if (punto instanceof Distributore distributore) {
-                            if (distributore.getStato() == StatoDistributore.NON_DISPONIBILE) {
-                                System.out.println("Il distributore non è disponibile: " + distributore);
-                                break;
-                            }
 
-                            System.out.println("Procedura in corso presso il distributore #" + punto.getId() + "...");
+                        PuntoDiEmissione punto = null;
+                        while (punto == null) {
+                            System.out.println("------INSERISCI L' ID DI PUNTO DI EMISSIONE------");
+                            try {
+                                Long idPunto = Long.valueOf(scanner.nextLine());
+                                punto = puntoDao.getById(idPunto);
+
+                                if (punto == null) {
+                                    System.out.println("Errore: Nessun punto di emissione trovato con questo ID. Riprova.");
+                                    continue;
+                                }
+
+                                if (punto instanceof Distributore distributore) {
+                                    if (distributore.getStato() == StatoDistributore.NON_DISPONIBILE) {
+                                        System.out.println("Il distributore non è disponibile: " + distributore);
+                                        punto = null;
+                                        continue;
+                                    }
+                                    System.out.println("Procedura in corso presso il distributore #" + punto.getId());
+
+                                } else if (punto instanceof Rivenditore) {
+                                    System.out.println("Procedura in corso presso il rivenditore #" + punto.getId());
+                                }
+                            } catch (NumberFormatException e) {
+                                System.out.println("Errore: L'ID deve essere un numero valido!");
+                                punto = null;
+                            }
+                        }
+
+                        try {
+
                             Tessera tesseraEsistente = tesseraDAO.getTesseraByUtenteId(utente.getId());
                             if (tesseraEsistente != null) {
                                 System.out.println("L'utente possiede già una tessera: " + tesseraEsistente);
@@ -691,36 +713,17 @@ public class Application {
                                 tesseraDAO.update(tesseraEsistente);
 
                                 System.out.println("Tessera rinnovata.");
+                                System.out.println("---- NUOVI DATI TESSERA: " + tesseraEsistente);
                             } else {
                                 tesseraDAO.compraTessera(punto, utente);
-
                                 System.out.println("Nuova tessera creata.");
-                                break;
+
+                                Tessera nuovaTessera = tesseraDAO.getTesseraByUtenteId(utente.getId());
+                                System.out.println("----- DATI NUOVA TESSERA ------ " + nuovaTessera);
                             }
-                        } else if (punto instanceof Rivenditore rivenditore) {
-                            System.out.println("Procedura in corso presso il rivenditore #" + punto.getId() + "...");
-                            Tessera tesseraEsistente = tesseraDAO.getTesseraByUtenteId(utente.getId());
-                            if (tesseraEsistente != null) {
-                                System.out.println("L'utente possiede già una tessera: " + tesseraEsistente);
-
-                                // rinnovo
-                                tesseraEsistente.setData_di_emissione(LocalDate.now());
-                                tesseraDAO.update(tesseraEsistente);
-
-                                System.out.println("Tessera rinnovata.");
-                                System.out.println("----NUOVI DATI TESSERA: " + tesseraEsistente);
-                            } else {
-                                tesseraDAO.compraTessera(punto, utente);
-
-                                System.out.println("Nuova tessera creata.");
-                                System.out.println("----- DATI NUOVA TESSERRA------" + tesseraEsistente);
-                                break;
-                            }
-
-                        } else {
-                            System.out.println("----INSERISCI UN VALORE VALIDO------");
+                        } catch (Exception e){
+                            System.out.println("Si è verificato un errore durante la gestione della tessera: " + e.getMessage());
                         }
-
                     }
                     case 3 -> {
                         System.out.println("-----COMPRA ABBONAMENTO------");
