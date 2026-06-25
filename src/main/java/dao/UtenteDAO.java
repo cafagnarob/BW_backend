@@ -56,14 +56,6 @@ public class UtenteDAO {
 
     }
 
-//
-//    public void stampaInfoPercorrenza(Long idMezzo) {
-//    }
-//
-//
-//    public Tratta calcolaTempoEffettivo(Long idTratta) {
-//    }
-
 
     public void popolaSeVuoto(){
         long count = entityManager.createQuery("SELECT COUNT(u) FROM Utente u", long.class).getSingleResult();

@@ -1,8 +1,7 @@
 package dao;
 
-import entities.*;
 import Enum.StatoDistributore;
-
+import entities.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
@@ -123,7 +122,7 @@ public class BigliettoDAO {
         long count = entityManager.createQuery("SELECT COUNT(b) FROM Biglietto b", Long.class).getSingleResult();
 
         if (count == 0) {
-
+            List<Mezzo> mezzi = entityManager.createQuery("SELECT m FROM Mezzo m", Mezzo.class).getResultList();
             List<PuntoDiEmissione> punti = entityManager.createQuery("SELECT p FROM PuntoDiEmissione p", entities.PuntoDiEmissione.class).getResultList();
 
             PuntoDiEmissione rivenditore1 = punti.get(0);
@@ -137,34 +136,45 @@ public class BigliettoDAO {
             PuntoDiEmissione distributore3 = punti.get(7);
             PuntoDiEmissione distributore4 = punti.get(8);
 
-            Biglietto b1 = new Biglietto(LocalDate.now(), rivenditore1, 1.50);
+
+            Mezzo m1 = mezzi.get(0);
+            Mezzo m2 = mezzi.get(1);
+            Mezzo m3 = mezzi.get(2);
+            Mezzo m4 = mezzi.get(3);
+            Mezzo m5 = mezzi.get(4);
+            Mezzo m6 = mezzi.get(5);
+            Mezzo m7 = mezzi.get(6);
+            Mezzo m8 = mezzi.get(7);
+            Mezzo m9 = mezzi.get(8);
+
+            Biglietto b1 = new Biglietto(LocalDate.now().minusDays(2), rivenditore1, 1.50, LocalDateTime.now().minusDays(2).plusHours(3), m6);
             save(b1);
 
-            Biglietto b2 = new Biglietto(LocalDate.now(), distributore1, 1.50);
+            Biglietto b2 = new Biglietto(LocalDate.now().minusDays(2), distributore1, 1.50, LocalDateTime.now().minusDays(2).plusHours(2), m6);
             save(b2);
 
-            Biglietto b3 = new Biglietto(LocalDate.now(), rivenditore2, 2.50);
+            Biglietto b3 = new Biglietto(LocalDate.now().minusDays(2), rivenditore2, 2.50, LocalDateTime.now().minusDays(2).plusHours(3), m4);
             save(b3);
 
-            Biglietto b4 = new Biglietto(LocalDate.now().minusDays(1), rivenditore3, 1.50);
+            Biglietto b4 = new Biglietto(LocalDate.now().minusDays(2), rivenditore3, 1.50, LocalDateTime.now().minusDays(2).plusHours(1), m4);
             save(b4);
 
-            Biglietto b5 = new Biglietto(LocalDate.now().minusDays(2), distributore2, 1.50);
+            Biglietto b5 = new Biglietto(LocalDate.now().minusDays(3), distributore2, 1.50, LocalDateTime.now().minusDays(3).plusHours(3), m2);
             save(b5);
 
-            Biglietto b6 = new Biglietto(LocalDate.now(), rivenditore4, 1.00);
+            Biglietto b6 = new Biglietto(LocalDate.now().minusDays(3), rivenditore4, 1.00, LocalDateTime.now().minusDays(3).plusHours(2), m2);
             save(b6);
 
-            Biglietto b7 = new Biglietto(LocalDate.now(), rivenditore5, 1.50);
+            Biglietto b7 = new Biglietto(LocalDate.now().minusDays(3), rivenditore5, 1.50, LocalDateTime.now().minusDays(3).plusHours(1), m2);
             save(b7);
 
-            Biglietto b8 = new Biglietto(LocalDate.now(), distributore3, 1.50);
+            Biglietto b8 = new Biglietto(LocalDate.now().minusDays(3), distributore3, 1.50, LocalDateTime.now().minusDays(3).plusHours(4), m2);
             save(b8);
 
-            Biglietto b9 = new Biglietto(LocalDate.now(), distributore4, 3.00);
+            Biglietto b9 = new Biglietto(LocalDate.now().minusDays(4), distributore4, 3.00, LocalDateTime.now().minusDays(4).plusHours(3), m9);
             save(b9);
 
-            Biglietto b10 = new Biglietto(LocalDate.now(), rivenditore1, 1.50);
+            Biglietto b10 = new Biglietto(LocalDate.now().minusDays(4), rivenditore1, 1.50, LocalDateTime.now().minusDays(4).plusHours(2), m9);
             save(b10);
 
             System.out.println("Biglietti aggiunti!");

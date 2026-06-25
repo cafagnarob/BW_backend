@@ -4,11 +4,10 @@ import Enum.StatoDistributore;
 import entities.Distributore;
 import entities.PuntoDiEmissione;
 import entities.Rivenditore;
-import entities.Utente;
-import exception.FuoriServizioException;
 import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 
 
 public class PuntoDiEmissioneDAO {
@@ -134,6 +133,14 @@ public class PuntoDiEmissioneDAO {
             }
             System.out.println("Errore durante l'aggiornamento nel DB: " + e.getMessage());
         }
+    }
+
+
+    public void listaPuntoDiEmissione() {
+        TypedQuery<PuntoDiEmissione> query = em.createQuery(
+                "SELECT p FROM PuntoDiEmissione p", PuntoDiEmissione.class
+        );
+        query.getResultList().forEach(System.out::println);
     }
 
     public void popolaSeVuoto() {

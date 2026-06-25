@@ -40,7 +40,7 @@ public class Percorrenza {
     public Percorrenza(LocalDate data, Mezzo mezzo, Tratta tratta) {
         this.mezzo = mezzo;
         this.tratta = tratta;
-        this.tempoPercorrenzaEffettivo = Integer.parseInt(null);
+        this.tempoPercorrenzaEffettivo = 0;
         this.data = data;
     }
 

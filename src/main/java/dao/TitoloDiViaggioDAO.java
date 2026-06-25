@@ -98,7 +98,7 @@ public class TitoloDiViaggioDAO {
 
 
     public Biglietto creaBiglietto(PuntoDiEmissione puntoDiEmissione) {
-        return new Biglietto(LocalDate.now(), puntoDiEmissione, 2.50);
+        return new Biglietto(LocalDate.now(), puntoDiEmissione, 2.50, null, null);
     }
 
     public Abbonamento creaAbbonamento(PuntoDiEmissione puntoDiEmissione, Tessera tessera,

@@ -33,6 +33,7 @@ public class Application {
     static PercorrenzaDAO percorrenzaDAO = new PercorrenzaDAO(entityManager);
     static ManutenzioneDAO manutenzioneDao = new ManutenzioneDAO(entityManager);
     static BigliettoDAO bigliettoDAO = new BigliettoDAO(entityManager);
+    static String email = null;
 
     public static void main(String[] args) {
 
@@ -97,7 +98,6 @@ public class Application {
         System.out.println("USER SEMPLICE: mario.rossi@mail.com ");
 
 
-        String email = null;
         Utente fromDB = null;
         while (fromDB == null) {
             email = scanner.nextLine().trim();
@@ -325,7 +325,8 @@ public class Application {
                                                         if (inputData == null || inputData.isBlank()) {
                                                             System.out.println("inserisci un valore valido");
                                                             continue;
-                                                        }try {
+                                                        }
+                                                        try {
                                                             LocalDate parsed = LocalDate.parse(inputData);
 
                                                             if (parsed.isBefore(LocalDate.now())) {
@@ -474,8 +475,23 @@ public class Application {
         System.out.println("----- 3 per Comprare un nuovo abbonamento------");
         try {
             int scelta = Integer.parseInt(scanner.nextLine());
-            switch (scelta) {
-                case 0 -> System.out.println();
+            while (true) {
+                switch (scelta) {
+                    case 0 -> {
+                        System.out.println("-------- CHIUSURA DEL PROGRAMMA------");
+                        break;
+                    }
+                    case 1 -> {
+                        System.out.println("-----COMPRA UN BIGLIETTO-----");
+                        puntoDao.listaPuntoDiEmissione();
+                        System.out.println("------INSERISCI ID DI UN PUNTO DI EMISSIONI-------");
+                        Long idPunto = Long.valueOf(scanner.nextLine());
+                        PuntoDiEmissione punto = puntoDao.getById(idPunto);
+                        Biglietto newBiglietto = new Biglietto(LocalDate.now(), punto, 1.50, null, null);
+
+
+                    }
+                }
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

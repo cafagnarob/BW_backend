@@ -7,7 +7,6 @@ import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Entity
 public class Biglietto extends TitoloDiViaggio {
@@ -22,10 +21,11 @@ public class Biglietto extends TitoloDiViaggio {
     protected Biglietto() {
     }
 
-    public Biglietto(LocalDate dataDiEmissione, PuntoDiEmissione luogo_di_emissione, double prezzo) {
+    public Biglietto(LocalDate dataDiEmissione, PuntoDiEmissione luogo_di_emissione, double prezzo, LocalDateTime orarioVidimazione,
+                     Mezzo mezzo) {
         super(dataDiEmissione, luogo_di_emissione, prezzo);
-        this.orarioVidimazione = null;
-        this.mezzo = null;
+        this.orarioVidimazione = orarioVidimazione;
+        this.mezzo = mezzo;
     }
 
     public Mezzo getMezzo() {
