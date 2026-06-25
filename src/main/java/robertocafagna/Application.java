@@ -3,6 +3,7 @@ package robertocafagna;
 import Enum.*;
 import dao.*;
 import entities.*;
+import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
@@ -481,13 +482,55 @@ public class Application {
                             }
                         }
 
-
-
-
                         case 3 -> {
-                            System.out.println();
+                            System.out.println("\n----- CONTROLLO VALIDITÀ BIGLIETTO SINGOLO -----");
+                            try {
+                                System.out.println("Inserisci l'ID del BIGLIETTO:");
+                                long idBiglietto = Long.parseLong(scanner.nextLine().trim());
+
+                                // prendo il titolo dal DB tramite il getById del dao
+                                TitoloDiViaggio tdv = titoloDiViaggioDAO.getById(idBiglietto);
+
+                                System.out.println("\n=== VERIFICA VALIDITA' BIGLIETTO ===");
+                                if (tdv instanceof Biglietto) {
+                                    Biglietto b = (Biglietto) tdv;
+
+                                    // controllo prima se è null, cioe se il biglietto non è mai stato convalidato
+                                    if (b.getOrarioVidimazione() == null) {
+                                        System.out.println("ID Biglietto: " + idBiglietto);
+                                        System.out.println("STATO: VALIDO (Pronto da vidimare)");
+                                    } else {
+                                        // se il biglietto è convalidato verifico la finestra dei 120 minuti di vidimazione
+                                        LocalDateTime momentoVidimazione = b.getOrarioVidimazione();
+                                        LocalDateTime fineValidita = momentoVidimazione.plusMinutes(120);
+
+                                        System.out.println("ID Biglietto: " + idBiglietto);
+                                        System.out.println("Vidimato sul mezzo ID: " + b.getMezzo().getId());
+                                        System.out.println("Orario Vidimazione: " + momentoVidimazione);
+                                        System.out.println("Valido fino a: " + fineValidita);
+
+                                        // confronto con l'orario attuale
+                                        if (LocalDateTime.now().isBefore(fineValidita)) {
+                                            System.out.println("STATO: ANCORA VALIDO (In corso di viaggio)");
+                                        } else {
+                                            System.out.println("STATO: SCADUTO (Oltre i 120 minutes concessi)");
+                                        }
+                                    }
+                                } else {
+                                    System.out.println("L'ID inserito non appartiene a un biglietto singolo (è un abbonamento).");
+                                }
+                                System.out.println("====================================");
+
+                            } catch (NotFoundException e) {
+                                System.out.println("Errore: " + e.getMessage()); // gestisco l'errore se l'id del biglietto non esiste
+                            } catch (NumberFormatException e) {
+                                System.out.println("Errore: Inserisci un ID numerico valido!");
+                            } catch (Exception e) {
+                                System.out.println("Errore durante il controllo del biglietto: " + e.getMessage());
+                            }
                         }
-                        default -> System.out.println("------- INSERISCI UN VALORE VALIDO------");
+
+                        default -> System.out.println("------- NON HAI INSERITO UN VALORE------");
                     }
                 } catch (Exception e) {
                     System.out.println("------- INSERISCI UN VALORE VALIDO------");
