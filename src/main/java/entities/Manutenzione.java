@@ -33,7 +33,7 @@ public class Manutenzione {
     }
 
 
-    public Manutenzione( LocalDate dataInizioManutenzione, LocalDate dataFineManutenzione, TipoManutenzione tipoManutenzione, Mezzo mezzo) {
+    public Manutenzione(LocalDate dataInizioManutenzione, LocalDate dataFineManutenzione, TipoManutenzione tipoManutenzione, Mezzo mezzo) {
         this.dataInizioManutenzione = dataInizioManutenzione;
         this.dataFineManutenzione = dataFineManutenzione;
         this.tipoManutenzione = tipoManutenzione;
@@ -48,12 +48,15 @@ public class Manutenzione {
     public LocalDate getDataInizioManutenzione() {
         return dataInizioManutenzione;
     }
-    
+
 
     public LocalDate getDataFineManutenzione() {
         return dataFineManutenzione;
     }
 
+    public void setDataFineManutenzione(LocalDate dataFineManutenzione) {
+        this.dataFineManutenzione = dataFineManutenzione;
+    }
 
     public TipoManutenzione getTipoManutenzione() {
         return tipoManutenzione;

@@ -66,6 +66,32 @@ public class ManutenzioneDAO {
         return risultati;
     }
 
+    public Manutenzione getUltimaManutenzionePerIdMezzo(Long idMezzo) {
+        TypedQuery<Manutenzione> query = entityManager.createQuery(
+                "SELECT m FROM Manutenzione m WHERE m.mezzo.id= :param ORDER BY m.dataInizioManutenzione DESC", Manutenzione.class
+        );
+        query.setParameter("param", idMezzo);
+        query.setMaxResults(1);
+        List<Manutenzione> res = query.getResultList();
+        return res.isEmpty() ? null : res.get(0);
+    }
+
+    public void update(Manutenzione manutenzione) {
+        EntityTransaction transaction = this.entityManager.getTransaction();
+        try {
+
+            transaction.begin();
+            entityManager.merge(manutenzione);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw e;
+        }
+    }
+
+
     public void popolaSeVuoto() {
         long count = entityManager.createQuery("SELECT COUNT(m) FROM Manutenzione m", Long.class).getSingleResult();
         if (count == 0) {

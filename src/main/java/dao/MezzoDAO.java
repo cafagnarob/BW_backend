@@ -55,12 +55,13 @@ public class MezzoDAO {
     }
 
 
-    public void listaMezzoPerStato(StatoMezzo stato) {
+    public List<Mezzo> listaMezzoPerStato(StatoMezzo stato) {
         TypedQuery<Mezzo> query = entityManager.createQuery(
                 "SELECT m FROM Mezzo m WHERE m.stato= :param", Mezzo.class);
         query.setParameter("param", stato);
         List<Mezzo> res = query.getResultList();
         res.forEach(System.out::println);
+        return res;
     }
 
     public void update(Mezzo mezzo) {

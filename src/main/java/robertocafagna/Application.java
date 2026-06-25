@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Application {
@@ -126,7 +127,7 @@ public class Application {
             while (flag2) {
                 System.out.println("----- 0 per uscire -------");
                 System.out.println("----- 1 per Aggiungere un nuovo mezzo ------");
-                System.out.println("----- 2 per Mandare un mezzo in manutenzione ------");
+                System.out.println("----- 2 per Mandare/Rimuovo un mezzo in manutenzione ------");
                 System.out.println("----- 3 per Visualizzare il numero di volte in cui un mezzo" +
                         " ha fatto una specifica tratta");
                 System.out.println("----- 4 per Assegnare un mezzo ad una tratta-------");
@@ -165,67 +166,135 @@ public class Application {
                             }
                         }
                         case 2 -> {
-                            while (true) {
-                                System.out.println("----- ASSEGNAMO UN MEZZO ALLA MANUTENZIONE ------");
-                                System.out.println("----LISTA MEZZI FERMI-----");
-                                mezzoDAO.listaMezzoPerStato(StatoMezzo.FERMO);
-                                System.out.println("---- INSERISCI L'ID DEL MEZZO-----");
+                            boolean flag3 = true;
+                            while (flag3) {
+                                System.out.println("------SCEGLI SI ASSEGNARE O RIMUOVERE UN MEZZO DALLA MANUTENZIONE-------");
+                                System.out.println("------0 per uscire-----");
+                                System.out.println("------1 per ASSEGNARE-----");
+                                System.out.println("------2 per RIMUOVERE-----");
                                 try {
-                                    Long idScelto = Long.valueOf(scanner.nextLine().trim());
-                                    Mezzo mezzofromdb = mezzoDAO.getById(idScelto);
-                                    if (mezzofromdb == null) {
-                                        System.out.println("---NESSUN MEZZO TROVATO----");
-                                    }
-                                    while (true) {
-                                        try {
-                                            System.out.println("-----CONFERMARE?-----");
-                                            System.out.println("-----Digita Y per si N per no------");
-                                            String conferma = scanner.nextLine().trim();
-                                            if (conferma.equalsIgnoreCase("Y")) {
-                                                assert mezzofromdb != null;
-                                                if (mezzofromdb.getStato() == StatoMezzo.MANUTENZIONE) {
-                                                    System.out.println("----- IL MEZZO " + mezzofromdb + " E' GIA IN MANUTENZIONE-----");
-                                                }
-                                                while (true) {
 
-                                                    System.out.println("------SELEZIONARE IL TIPO DI MANUTENZIONE-----");
-                                                    System.out.println("------ORDINARIA/STRAORDINARIA------");
-                                                    String tipoManutenzione = scanner.nextLine().trim();
-                                                    if (tipoManutenzione.equalsIgnoreCase(TipoManutenzione.ORDINARIA.toString())) {
-                                                        Manutenzione man1 = new Manutenzione(LocalDate.now(), null,
-                                                                TipoManutenzione.ORDINARIA, mezzofromdb);
-                                                        manutenzioneDao.save(man1);
-                                                        mezzofromdb.setStato(StatoMezzo.MANUTENZIONE);
-                                                        mezzoDAO.update(mezzofromdb);
-
-                                                        System.out.println("-----" + mezzofromdb + "E' STATO MANDATO IN MANUTENZIONE-----");
-                                                        break;
-                                                    } else if (tipoManutenzione.equalsIgnoreCase(TipoManutenzione.STRAORDINARIA.toString())) {
-                                                        Manutenzione man1 = new Manutenzione(LocalDate.now(), null,
-                                                                TipoManutenzione.STRAORDINARIA, mezzofromdb);
-                                                        manutenzioneDao.save(man1);
-                                                        mezzofromdb.setStato(StatoMezzo.MANUTENZIONE);
-                                                        mezzoDAO.update(mezzofromdb);
-
-                                                        System.out.println("-----" + mezzofromdb + "E' STATO MANDATO IN MANUTENZIONE-----");
-                                                        break;
-                                                    } else {
-                                                        System.out.println("------ INSERIRE UN VALORE VALIDO-----");
-                                                    }
-                                                }
-                                                break;
-                                            } else if (conferma.equalsIgnoreCase("N")) {
-                                                System.out.println("------ OPERAZIONE ANNULLATA------");
-                                                break;
-                                            } else throw new RuntimeException();
-                                        } catch (RuntimeException e) {
-                                            System.out.println("------ INSERISCI UN VALORE VALIDO-----");
+                                    int sceltaManutenzione = Integer.parseInt(scanner.nextLine());
+                                    switch (sceltaManutenzione) {
+                                        case 0 -> {
+                                            System.out.println("-----CHIUSURA PROGRAMMA------");
+                                            flag3 = false;
                                         }
+                                        case 1 -> {
+                                            while (true) {
+                                                System.out.println("----- ASSEGNAMO UN MEZZO ALLA MANUTENZIONE ------");
+                                                System.out.println("----LISTA MEZZI FERMI-----");
+                                                List<Mezzo> listaMezziFermi = mezzoDAO.listaMezzoPerStato(StatoMezzo.FERMO);
+                                                while (true) {
+                                                    System.out.println("---- INSERISCI L'ID DEL MEZZO-----");
+
+                                                    try {
+                                                        Long idScelto = Long.valueOf(scanner.nextLine().trim());
+                                                        boolean trovato = listaMezziFermi.stream()
+                                                                .anyMatch(m -> m.getId() == idScelto);
+                                                        if (!trovato) {
+                                                            System.out.println("------ L'ID INSERITO NON E' TRA I MEZZI FERMI ----");
+                                                        } else {
+                                                            Mezzo mezzofromdb = mezzoDAO.getById(idScelto);
+
+                                                            if (mezzofromdb == null) {
+                                                                System.out.println("---NESSUN MEZZO TROVATO----");
+                                                            }
+                                                            while (true) {
+                                                                try {
+                                                                    System.out.println("-----CONFERMARE?-----");
+                                                                    System.out.println("-----Digita Y per si N per no------");
+                                                                    String conferma = scanner.nextLine().trim();
+                                                                    if (conferma.equalsIgnoreCase("Y")) {
+                                                                        assert mezzofromdb != null;
+                                                                        if (mezzofromdb.getStato() == StatoMezzo.MANUTENZIONE) {
+                                                                            System.out.println("----- IL MEZZO " + mezzofromdb + " E' GIA IN MANUTENZIONE-----");
+                                                                        }
+                                                                        while (true) {
+
+                                                                            System.out.println("------SELEZIONARE IL TIPO DI MANUTENZIONE-----");
+                                                                            System.out.println("------ORDINARIA/STRAORDINARIA------");
+                                                                            String tipoManutenzione = scanner.nextLine().trim();
+                                                                            if (tipoManutenzione.equalsIgnoreCase(TipoManutenzione.ORDINARIA.toString())) {
+                                                                                Manutenzione man1 = new Manutenzione(LocalDate.now(), null,
+                                                                                        TipoManutenzione.ORDINARIA, mezzofromdb);
+                                                                                manutenzioneDao.save(man1);
+                                                                                mezzofromdb.setStato(StatoMezzo.MANUTENZIONE);
+                                                                                mezzoDAO.update(mezzofromdb);
+
+                                                                                System.out.println("-----" + mezzofromdb + "E' STATO MANDATO IN MANUTENZIONE-----");
+                                                                                break;
+                                                                            } else if (tipoManutenzione.equalsIgnoreCase(TipoManutenzione.STRAORDINARIA.toString())) {
+                                                                                Manutenzione man1 = new Manutenzione(LocalDate.now(), null,
+                                                                                        TipoManutenzione.STRAORDINARIA, mezzofromdb);
+                                                                                manutenzioneDao.save(man1);
+                                                                                mezzofromdb.setStato(StatoMezzo.MANUTENZIONE);
+                                                                                mezzoDAO.update(mezzofromdb);
+
+                                                                                System.out.println("-----" + mezzofromdb + "E' STATO MANDATO IN MANUTENZIONE-----");
+                                                                                break;
+                                                                            } else {
+                                                                                System.out.println("------ INSERIRE UN VALORE VALIDO-----");
+                                                                            }
+                                                                            break;
+                                                                        }
+                                                                        break;
+                                                                    } else if (conferma.equalsIgnoreCase("N")) {
+                                                                        System.out.println("------ OPERAZIONE ANNULLATA------");
+                                                                        break;
+                                                                    } else throw new RuntimeException();
+                                                                } catch (RuntimeException e) {
+                                                                    System.out.println("------ INSERISCI UN VALORE VALIDO-----");
+                                                                }
+
+                                                            }
+
+                                                        }
+                                                    } catch (Exception e) {
+                                                        System.out.println("mezzo non trovato");
+                                                    }
+                                                    break;
+                                                }
+                                                break;
+                                            }
+                                        }
+                                        case 2 -> {
+                                            System.out.println("----- RIMUOVIAMO UN MEZZO DALLA MANUTENZIONE ------");
+                                            System.out.println("----LISTA MEZZI IN MANUTENZIONE-----");
+                                            mezzoDAO.listaMezzoPerStato(StatoMezzo.MANUTENZIONE);
+                                            System.out.println("---- INSERISCI L'ID DEL MEZZO-----");
+                                            try {
+                                                Long idScelto = Long.valueOf(scanner.nextLine().trim());
+                                                Mezzo mezzofromdb = mezzoDAO.getById(idScelto);
+                                                if (mezzofromdb == null) {
+                                                    System.out.println("------ NESSUN MEZZO TROVATO------");
+                                                }
+                                                Manutenzione manutenzioneFromDB = manutenzioneDao.getUltimaManutenzionePerIdMezzo
+                                                        (mezzofromdb.getId());
+                                                if (manutenzioneFromDB == null) {
+                                                    System.out.println("---NESSUN MEZZO IN MANUTENZIONE TROVATO----");
+                                                } else {
+                                                    System.out.println("------ PROCEDURA IN CORSO ... ------");
+                                                    manutenzioneFromDB.setDataFineManutenzione(LocalDate.now());
+                                                    System.out.println("------- AGGIORNAMENTO DATA DI FINE MANUTENZIONE-----");
+                                                    mezzofromdb.setStato(StatoMezzo.FERMO);
+                                                    System.out.println("-------SETTAGGIO DELLO STATO A FERMO------");
+                                                    mezzoDAO.update(mezzofromdb);
+                                                    manutenzioneDao.update(manutenzioneFromDB);
+                                                    System.out.println("------- AGGIORNAMENTO A DB------");
+                                                    break;
+                                                }
+                                            } catch (Exception e) {
+                                                System.out.println("----- INSERISCI UN VALORE VALIDO------");
+                                            }
+
+                                        }
+
                                     }
-                                    break;
                                 } catch (Exception e) {
-                                    System.out.println("mezzo non trovato");
+                                    System.out.println("-----INSERIRE UN VALORE VALIDO------");
                                 }
+                                flag3 = false;
                             }
                         }
                         case 3 -> {
@@ -334,8 +403,8 @@ public class Application {
                                                             mezzoDAO.update(mezzofromdb);
                                                             percorrenzaDAO.save(newPercorrenza);
 
-                                                            flagMezzo=false;
-                                                            flagTratta=false;
+                                                            flagMezzo = false;
+                                                            flagTratta = false;
                                                             break;
                                                         }
                                                     } catch (Exception e) {
