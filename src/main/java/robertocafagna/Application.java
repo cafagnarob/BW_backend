@@ -512,12 +512,12 @@ public class Application {
                                 long idMezzo = Long.parseLong(scanner.nextLine().trim());
 
                                 LocalTime oraInizio = null;
-                                while (oraInizio== null){
+                                while (oraInizio == null) {
                                     System.out.println("Inserisci l'ora di INIZIO (es. 08:30): ");
                                     String oraInizioInput = scanner.nextLine().trim();
-                                    try{
+                                    try {
                                         oraInizio = LocalTime.parse(oraInizioInput);
-                                    }catch (DateTimeParseException e){
+                                    } catch (DateTimeParseException e) {
                                         System.out.println("Errore: Formato orario non valido! Usa il formato HH:mm");
                                     }
                                 }
@@ -619,13 +619,14 @@ public class Application {
                 System.out.println("----- 1 per Comprare biglietto ------");
                 System.out.println("----- 2 per Crea/Rinnova la tessera ------");
                 System.out.println("----- 3 per Comprare un nuovo abbonamento ------");
+                System.out.println("----- 4 per prendere il Mezzo------ ");
 
 
                 int scelta = Integer.parseInt(scanner.nextLine());
                 switch (scelta) {
                     case 0 -> {
                         System.out.println("-------- CHIUSURA DEL PROGRAMMA------");
-                        break;
+                        return;
                     }
                     case 1 -> {
                         System.out.println("-----COMPRA UN BIGLIETTO-----");
@@ -633,13 +634,13 @@ public class Application {
 
                         PuntoDiEmissione punto = null;
 
-                        while (punto==null){
+                        while (punto == null) {
                             System.out.println("------INSERISCI ID DI UN PUNTO DI EMISSIONI-------");
                             try {
                                 Long idPunto = Long.valueOf(scanner.nextLine());
                                 punto = puntoDao.getById(idPunto);
 
-                                if (punto == null){
+                                if (punto == null) {
                                     System.out.println("Errore: Nessun punto di emissione trovato con questo ID. Riprova.");
                                     continue;
                                 }
@@ -651,10 +652,10 @@ public class Application {
                                         continue;
                                     }
                                     System.out.println("Acquisto in corso presso il distributore #" + punto.getId() + "...");
-                            }
-                        } catch (NumberFormatException e){
+                                }
+                            } catch (NumberFormatException e) {
                                 System.out.println("Errore: L'ID deve essere un numero valido!");
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 System.out.println("Si è verificato un errore: " + e.getMessage());
                             }
                         }
@@ -662,14 +663,14 @@ public class Application {
                             Utente utente = utenteDAO.getUtenteByEmail(email);
                             Biglietto newBiglietto = new Biglietto(LocalDate.now(), punto, 1.50, null, null);
                             bigliettoDAO.compraBiglietto(utente, newBiglietto);
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             System.out.println("Errore durante l'acquisto del biglietto: " + e.getMessage());
                         }
                     }
 
                     case 2 -> {
                         Utente utente = utenteDAO.getUtenteByEmail(email);
-                        System.out.println("------RINNOVARE UNA TESSERA-----");
+                        System.out.println("------RINNOVARE/CREA UNA TESSERA-----");
                         puntoDao.listaPuntoDiEmissione();
                         System.out.println("------INSERISCI L' ID DI PUNTO DI EMISSIONE------");
                         Long idPunto = Long.valueOf(scanner.nextLine());
@@ -706,14 +707,11 @@ public class Application {
                                 // rinnovo
                                 tesseraEsistente.setData_di_emissione(LocalDate.now());
                                 tesseraDAO.update(tesseraEsistente);
-
                                 System.out.println("Tessera rinnovata.");
-                                System.out.println("----NUOVI DATI TESSERA: " + tesseraEsistente);
+
                             } else {
                                 tesseraDAO.compraTessera(punto, utente);
-
                                 System.out.println("Nuova tessera creata.");
-                                System.out.println("----- DATI NUOVA TESSERRA------" + tesseraEsistente);
                                 break;
                             }
 
@@ -735,33 +733,33 @@ public class Application {
                             }
 
                             TipoAbbonamento tipo = null;
-                            while (tipo==null){
-                            System.out.println("Scegli tipo abbonamento (1 per SETTIMANALE, 2 per MENSILE): ");
+                            while (tipo == null) {
+                                System.out.println("Scegli tipo abbonamento (1 per SETTIMANALE, 2 per MENSILE): ");
 
-                            try{
-                                int tipoScelta = Integer.parseInt(scanner.nextLine());
-                                if(tipoScelta==1){
-                                    tipo = TipoAbbonamento.SETTIMANALE;
-                                } else if (tipoScelta == 2){
-                                    tipo = TipoAbbonamento.MENSILE;
-                                } else {
-                                    System.out.println("Opzione non valida! Inserisci 1 o 2.");
+                                try {
+                                    int tipoScelta = Integer.parseInt(scanner.nextLine());
+                                    if (tipoScelta == 1) {
+                                        tipo = TipoAbbonamento.SETTIMANALE;
+                                    } else if (tipoScelta == 2) {
+                                        tipo = TipoAbbonamento.MENSILE;
+                                    } else {
+                                        System.out.println("Opzione non valida! Inserisci 1 o 2.");
+                                    }
+                                } catch (NumberFormatException e) {
+                                    System.out.println("Inserisci un numero valido, 1 o 2");
                                 }
-                            }catch (NumberFormatException e){
-                                System.out.println("Inserisci un numero valido, 1 o 2");
-                            }
                             }
 
                             puntoDao.listaPuntoDiEmissione();
 
                             PuntoDiEmissione punto = null;
-                            while (punto==null){
+                            while (punto == null) {
                                 System.out.println("------INSERISCI ID DI UN PUNTO DI EMISSIONI-------");
                                 try {
                                     Long idPunto = Long.valueOf(scanner.nextLine());
                                     punto = puntoDao.getById(idPunto);
 
-                                    if (punto==null){
+                                    if (punto == null) {
                                         System.out.println("Errore: Nessun punto di emissione trovato con questo ID. Riprova.");
                                         continue;
                                     }
@@ -773,7 +771,7 @@ public class Application {
                                             continue;
                                         }
                                     }
-                                }catch (NumberFormatException e){
+                                } catch (NumberFormatException e) {
                                     System.out.println("Errore: L'ID deve essere un numero valido!");
                                     punto = null;
                                 }
@@ -801,6 +799,9 @@ public class Application {
                         } catch (NotFoundException e) {
                             System.out.println("Errore: " + e.getMessage());
                         }
+                    }
+                    case 4 -> {
+                        System.out.println("-----PRENDI UN BUS------");
                     }
                 }
 
