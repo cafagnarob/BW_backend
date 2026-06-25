@@ -30,11 +30,11 @@ public class Distributore extends PuntoDiEmissione {
         this.stato = stato;
     }
 
+
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Distributore{");
-        sb.append("stato=").append(stato);
-        sb.append('}');
-        return sb.toString();
+        return "Distributore{" +
+                "stato='" + stato + '\'' +
+                "} " + super.toString();
     }
 }
