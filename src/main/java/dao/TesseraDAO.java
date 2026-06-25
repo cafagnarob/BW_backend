@@ -86,25 +86,25 @@ public class TesseraDAO {
 
 
             PuntoDiEmissione rivenditore1 = punti.get(0);
-            PuntoDiEmissione rivenditore2 = punti.size() > 1 ? punti.get(1) : rivenditore1;
-            PuntoDiEmissione rivenditore3 = punti.size() > 2 ? punti.get(2) : rivenditore1;
-            PuntoDiEmissione rivenditore4 = punti.size() > 3 ? punti.get(3) : rivenditore1;
-            PuntoDiEmissione rivenditore5 = punti.size() > 4 ? punti.get(4) : rivenditore1;
+            PuntoDiEmissione rivenditore2 = punti.get(1);
+            PuntoDiEmissione rivenditore3 = punti.get(2);
+            PuntoDiEmissione rivenditore4 = punti.get(3);
+            PuntoDiEmissione rivenditore5 = punti.get(4);
 
-            PuntoDiEmissione distributore1 = punti.size() > 5 ? punti.get(5) : rivenditore1;
-            PuntoDiEmissione distributore2 = punti.size() > 6 ? punti.get(6) : rivenditore1;
-            PuntoDiEmissione distributore3 = punti.size() > 7 ? punti.get(7) : rivenditore1;
-            PuntoDiEmissione distributore4 = punti.size() > 8 ? punti.get(8) : rivenditore1;
+            PuntoDiEmissione distributore1 = punti.get(5);
+            PuntoDiEmissione distributore2 = punti.get(6);
+            PuntoDiEmissione distributore3 = punti.get(7);
+            PuntoDiEmissione distributore4 = punti.get(8);
 
             Utente u1 = utenti.get(0);
-            Utente u2 = utenti.size() > 1 ? utenti.get(1) : u1;
-            Utente u3 = utenti.size() > 2 ? utenti.get(2) : u1;
-            Utente u4 = utenti.size() > 3 ? utenti.get(3) : u1;
-            Utente u5 = utenti.size() > 4 ? utenti.get(4) : u1;
-            Utente u6 = utenti.size() > 5 ? utenti.get(5) : u1;
-            Utente u7 = utenti.size() > 6 ? utenti.get(6) : u1;
-            Utente u8 = utenti.size() > 7 ? utenti.get(7) : u1;
-            Utente u9 = utenti.size() > 8 ? utenti.get(8) : u1;
+            Utente u2 = utenti.get(1);
+            Utente u3 = utenti.get(2);
+            Utente u4 = utenti.get(3);
+            Utente u5 = utenti.get(4);
+            Utente u6 = utenti.get(5);
+            Utente u7 = utenti.get(6);
+            Utente u8 = utenti.get(7);
+            Utente u9 = utenti.get(8);
 
             List<Tessera> tessere = new ArrayList<>();
 

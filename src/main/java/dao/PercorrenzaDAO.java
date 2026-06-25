@@ -112,31 +112,30 @@ public class PercorrenzaDAO {
             List<Tratta> tratte = entityManager.createQuery("SELECT t FROM Tratta t", Tratta.class).getResultList();
 
             Mezzo m1 = mezzi.get(0);
-            Mezzo m2 = mezzi.size() > 1 ? mezzi.get(1) : m1;
-            Mezzo m3 = mezzi.size() > 2 ? mezzi.get(2) : m1;
-            Mezzo m4 = mezzi.size() > 3 ? mezzi.get(3) : m1;
-            Mezzo m5 = mezzi.size() > 4 ? mezzi.get(4) : m1;
-            Mezzo m6 = mezzi.size() > 5 ? mezzi.get(5) : m1;
-            Mezzo m7 = mezzi.size() > 6 ? mezzi.get(6) : m1;
-            Mezzo m8 = mezzi.size() > 7 ? mezzi.get(7) : m1;
-            Mezzo m9 = mezzi.size() > 8 ? mezzi.get(8) : m1;
+            Mezzo m2 = mezzi.get(1);
+            Mezzo m3 = mezzi.get(2);
+            Mezzo m4 = mezzi.get(3);
+            Mezzo m5 = mezzi.get(4);
+            Mezzo m6 = mezzi.get(5);
+            Mezzo m7 = mezzi.get(6);
+            Mezzo m8 = mezzi.get(7);
+            Mezzo m9 = mezzi.get(8);
 
             Tratta t1 = tratte.get(0);
-            Tratta t2 = tratte.size() > 1 ? tratte.get(1) : t1;
-            Tratta t3 = tratte.size() > 2 ? tratte.get(2) : t1;
-            Tratta t4 = tratte.size() > 3 ? tratte.get(3) : t1;
-            Tratta t5 = tratte.size() > 4 ? tratte.get(4) : t1;
-            Tratta t6 = tratte.size() > 5 ? tratte.get(5) : t1;
-            Tratta t7 = tratte.size() > 6 ? tratte.get(6) : t1;
-            Tratta t8 = tratte.size() > 7 ? tratte.get(7) : t1;
-            Tratta t9 = tratte.size() > 8 ? tratte.get(8) : t1;
-            Tratta t10 = tratte.size() > 9 ? tratte.get(9) : t1;
-            Tratta t11 = tratte.size() > 10 ? tratte.get(10) : t1;
-            Tratta t12 = tratte.size() > 11 ? tratte.get(11) : t1;
-            Tratta t13 = tratte.size() > 12 ? tratte.get(12) : t1;
-            Tratta t14 = tratte.size() > 13 ? tratte.get(13) : t1;
-            Tratta t15 = tratte.size() > 14 ? tratte.get(14) : t1;
-
+            Tratta t2 = tratte.get(1);
+            Tratta t3 = tratte.get(2);
+            Tratta t4 = tratte.get(3);
+            Tratta t5 = tratte.get(4);
+            Tratta t6 = tratte.get(5);
+            Tratta t7 = tratte.get(6);
+            Tratta t8 = tratte.get(7);
+            Tratta t9 = tratte.get(8);
+            Tratta t10 = tratte.get(9);
+            Tratta t11 = tratte.get(10);
+            Tratta t12 = tratte.get(11);
+            Tratta t13 = tratte.get(12);
+            Tratta t14 = tratte.get(13);
+            Tratta t15 = tratte.get(14);
             List<Percorrenza> percorrenze = new ArrayList<>();
 
             percorrenze.add(new Percorrenza(LocalDate.of(2026, 6, 20), m1, t1, 48));
