@@ -1,13 +1,12 @@
 package dao;
 
-import entities.Abbonamento;
 import entities.PuntoDiEmissione;
 import entities.Tessera;
 import entities.Utente;
 import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import Enum.TipoAbbonamento;
+import jakarta.persistence.NoResultException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -58,18 +57,44 @@ public class TesseraDAO {
     }
 
     // Compra Tessera
-    public void compraTessera(PuntoDiEmissione luogo, Utente utente){
-            if(luogo==null || utente==null){
-                throw new NotFoundException("Impossibile comprare una nuova tessera!");
+    public void compraTessera(PuntoDiEmissione luogo, Utente utente) {
+        if (luogo == null || utente == null) {
+            throw new NotFoundException("Impossibile comprare una nuova tessera!");
+        }
+        Tessera nuovaTessera = new Tessera(LocalDate.now(), luogo, utente);
+
+        this.save(nuovaTessera);
+    }
+
+    public Tessera getTesseraByUtenteId(Long utenteId) {
+        try {
+            return entityManager.createQuery(
+                            "SELECT t FROM Tessera t WHERE t.utente.id = :id",
+                            Tessera.class
+                    )
+                    .setParameter("id", utenteId)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+
+    }
+
+    public void update(Tessera tessera) {
+        EntityTransaction transaction = this.entityManager.getTransaction();
+        try {
+
+            transaction.begin();
+            entityManager.merge(tessera);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
             }
-            Tessera nuovaTessera = new Tessera(LocalDate.now(), luogo, utente);
-
-            this.save(nuovaTessera);
+            throw e;
+        }
     }
 
-    public Tessera creaTessera(PuntoDiEmissione puntoDiEmissione, Utente utente) {
-        return new Tessera(LocalDate.now(), puntoDiEmissione, utente);
-    }
 
     public Tessera insertTessera(LocalDate data, PuntoDiEmissione puntoDiEmissione, Utente utente) {
         return new Tessera(data, puntoDiEmissione, utente);
