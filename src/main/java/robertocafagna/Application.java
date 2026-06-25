@@ -331,7 +331,6 @@ public class Application {
                                             }
                                         }
 
-
                                     } else {
                                         break;
                                     }
@@ -599,6 +598,56 @@ public class Application {
                             System.out.println("----INSERISCI UN VALORE VALIDO------");
                         }
 
+                    }
+                    case 3 -> {
+                        System.out.println("-----COMPRA ABBONAMENTO------");
+
+                        try{
+                            Utente utente = utenteDAO.getUtenteByEmail(email);
+                            Tessera tessera = tesseraDAO.getTesseraByUtente(utente);
+
+                            if (tessera == null) {
+                                System.out.println("Errore: Non hai una tessera attiva associata al tuo profilo.");
+                                break;
+                            }
+
+                            System.out.println("Scegli tipo abbonamento (1 per SETTIMANALE, 2 per MENSILE): ");
+                            int tipoScelta = Integer.parseInt(scanner.nextLine());
+                            TipoAbbonamento tipo = (tipoScelta == 1) ? TipoAbbonamento.SETTIMANALE : TipoAbbonamento.MENSILE;
+
+                            puntoDao.listaPuntoDiEmissione();
+                            System.out.println("------INSERISCI ID DI UN PUNTO DI EMISSIONI-------");
+                            Long idPunto = Long.valueOf(scanner.nextLine());
+                            PuntoDiEmissione punto = puntoDao.getById(idPunto);
+
+                            if (punto instanceof Distributore distributore) {
+                                if (distributore.getStato() == StatoDistributore.NON_DISPONIBILE) {
+                                    System.out.println("Il distributore non è disponibile: " + distributore);
+                                    break;
+                                }
+                            }
+
+                            Abbonamento nuovoAbbonamento = new Abbonamento(LocalDate.now(), punto, tipo, tessera);
+                            double prezzo = nuovoAbbonamento.getPrezzo();
+
+                            if (utente.getPortafoglio() < prezzo) {
+                                System.out.println("Errore: Credito insufficiente! Il tuo saldo attuale è: " + utente.getPortafoglio() + " €, ma l'abbonamento costa: " + prezzo + " €");
+                                break;
+                            }
+
+                            double nuovoSaldo = utente.getPortafoglio() - prezzo;
+                            utente.setPortafoglio(nuovoSaldo);
+
+                            utenteDAO.update(utente);
+
+                            abbonamentoDAO.save(nuovoAbbonamento);
+                            System.out.println("Abbonamento acquistato e associato alla tessera n. " + tessera.getId());
+                            System.out.println("Nuovo saldo del portafoglio: " + utente.getPortafoglio() + " €");
+                        }catch (NumberFormatException e){
+                            System.out.println("Errore: inserisci un numero valido!" );
+                        }catch (NotFoundException e){
+                            System.out.println("Errore: " + e.getMessage());
+                        }
                     }
                 }
 
