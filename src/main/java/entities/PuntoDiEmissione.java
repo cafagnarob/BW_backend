@@ -31,6 +31,7 @@ public abstract class PuntoDiEmissione {
     public long getId() {
         return id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -39,17 +40,16 @@ public abstract class PuntoDiEmissione {
     public String getIndirizzo() {
         return indirizzo;
     }
-public  void setIndirizzo(String indirizzo) {
+
+    public void setIndirizzo(String indirizzo) {
         this.indirizzo = indirizzo;
-}
+    }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("PuntoDiEmissione{");
-        sb.append("id=").append(id);
-        sb.append(", indirizzo='").append(indirizzo).append('\'');
-        sb.append(", titoliEmessi=").append(titoliEmessi);
-        sb.append('}');
-        return sb.toString();
+        return "PuntoDiEmissione{" +
+                "id=" + id +
+                ", indirizzo='" + indirizzo + '\'' +
+                '}';
     }
 }

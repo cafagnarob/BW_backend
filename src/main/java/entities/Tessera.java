@@ -57,6 +57,9 @@ public class Tessera {
         return luogoDiEmissione;
     }
 
+    public void setDataDiScadenza(LocalDate dataDiScadenza) {
+        this.dataDiScadenza = dataDiScadenza;
+    }
 
     @Override
     public String toString() {

@@ -5,7 +5,6 @@ import dao.*;
 import entities.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
@@ -56,17 +55,20 @@ public class Application {
         System.out.println("USER SEMPLICE: mario.rossi@mail.com ");
 
         Utente fromDB = null;
+
         while (fromDB == null) {
             email = scanner.nextLine().trim();
-            if (email == null || !email.contains("@") || !email.contains(".")) {
+            if (!email.contains("@") || !email.contains(".")) {
+                System.out.println("Email non valida");
                 continue;
             }
             try {
                 fromDB = utenteDAO.getUtenteByEmail(email);
-            } catch (NoResultException e) {
-                System.out.println("Email non valida");
+            } catch (Exception e) {
+                System.out.println("Utente non Trovato");
             }
         }
+
 
         System.out.println("------ BENVENUTO " + fromDB.getNome() + " " + fromDB.getCognome() + "-------");
 
@@ -138,15 +140,22 @@ public class Application {
                             if (newMezzo != null) {
                                 System.out.println("----- ECCO IL MEZZO CREATO------");
                                 System.out.println(newMezzo);
-                                System.out.println("----- VUOI SALVARLO?------");
-                                System.out.println("-----Digita Y per si N per no------");
-                                String sceltasav = scanner.nextLine().trim();
-
-                                if (sceltasav.equalsIgnoreCase("Y")) {
-                                    mezzoDAO.save(newMezzo);
-                                    System.out.println("Mezzo salvato con successo");
-                                } else {
-                                    System.out.println("Salvataggio annullato");
+                                while (true) {
+                                    try {
+                                        System.out.println("----- VUOI SALVARLO?------");
+                                        System.out.println("-----Digita Y per si N per no------");
+                                        String sceltasav = scanner.nextLine().trim();
+                                        if (sceltasav.equalsIgnoreCase("Y")) {
+                                            mezzoDAO.save(newMezzo);
+                                            System.out.println("Mezzo salvato con successo");
+                                            break;
+                                        } else if (sceltasav.equalsIgnoreCase("N")) {
+                                            System.out.println("Salvataggio annullato");
+                                            break;
+                                        } else throw new RuntimeException();
+                                    } catch (RuntimeException e) {
+                                        System.out.println("------ INSERISCI UN VALORE VALIDO-----");
+                                    }
                                 }
                             } else {
                                 System.out.println("nessun mezzo trovato");
@@ -420,13 +429,15 @@ public class Application {
     }
 
     public static void menuUser() {
-        System.out.println("----- 0 per uscire -------");
-        System.out.println("----- 1 per Comprare biglietto ------");
-        System.out.println("----- 2 per Crea/Rinnova la tessera ------");
-        System.out.println("----- 3 per Comprare un nuovo abbonamento ------");
         try {
-            int scelta = Integer.parseInt(scanner.nextLine());
             while (true) {
+                System.out.println("----- 0 per uscire -------");
+                System.out.println("----- 1 per Comprare biglietto ------");
+                System.out.println("----- 2 per Crea/Rinnova la tessera ------");
+                System.out.println("----- 3 per Comprare un nuovo abbonamento ------");
+
+
+                int scelta = Integer.parseInt(scanner.nextLine());
                 switch (scelta) {
                     case 0 -> {
                         System.out.println("-------- CHIUSURA DEL PROGRAMMA------");
@@ -448,6 +459,7 @@ public class Application {
                         Utente utente = utenteDAO.getUtenteByEmail(email);
                         Biglietto newBiglietto = new Biglietto(LocalDate.now(), punto, 1.50, null, null);
                         bigliettoDAO.compraBiglietto(utente, newBiglietto);
+                        break;
                     }
                     case 2 -> {
                         Utente utente = utenteDAO.getUtenteByEmail(email);
@@ -459,9 +471,28 @@ public class Application {
                         if (punto instanceof Distributore distributore) {
                             if (distributore.getStato() == StatoDistributore.NON_DISPONIBILE) {
                                 System.out.println("Il distributore non è disponibile: " + distributore);
-                                return; // ← stop here
+                                break;
                             }
+
                             System.out.println("Procedura in corso presso il distributore #" + punto.getId() + "...");
+                            Tessera tesseraEsistente = tesseraDAO.getTesseraByUtenteId(utente.getId());
+                            if (tesseraEsistente != null) {
+                                System.out.println("L'utente possiede già una tessera: " + tesseraEsistente);
+
+                                // rinnovo
+                                tesseraEsistente.setData_di_emissione(LocalDate.now());
+                                tesseraEsistente.setDataDiScadenza(LocalDate.now().plusYears(1));
+                                tesseraDAO.update(tesseraEsistente);
+
+                                System.out.println("Tessera rinnovata.");
+                            } else {
+                                tesseraDAO.compraTessera(punto, utente);
+
+                                System.out.println("Nuova tessera creata.");
+                                break;
+                            }
+                        } else if (punto instanceof Rivenditore rivenditore) {
+                            System.out.println("Procedura in corso presso il rivenditore #" + punto.getId() + "...");
                             Tessera tesseraEsistente = tesseraDAO.getTesseraByUtenteId(utente.getId());
                             if (tesseraEsistente != null) {
                                 System.out.println("L'utente possiede già una tessera: " + tesseraEsistente);
@@ -471,23 +502,27 @@ public class Application {
                                 tesseraDAO.update(tesseraEsistente);
 
                                 System.out.println("Tessera rinnovata.");
+                                System.out.println("----NUOVI DATI TESSERA: " + tesseraEsistente);
                             } else {
                                 tesseraDAO.compraTessera(punto, utente);
 
                                 System.out.println("Nuova tessera creata.");
+                                System.out.println("----- DATI NUOVA TESSERRA------" + tesseraEsistente);
+                                break;
                             }
-                        }
-                    }
 
+                        } else {
+                            System.out.println("----INSERISCI UN VALORE VALIDO------");
+                        }
+
+                    }
                 }
+
+
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        ;
-        entityManager.close();
-        scanner.close();
     }
-
 }
 
