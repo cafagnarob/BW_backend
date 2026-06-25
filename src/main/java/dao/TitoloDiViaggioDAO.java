@@ -103,7 +103,7 @@ public class TitoloDiViaggioDAO {
 
     public Abbonamento creaAbbonamento(PuntoDiEmissione puntoDiEmissione, Tessera tessera,
                                        double prezzo, TipoAbbonamento tipo) {
-        return new Abbonamento(LocalDate.now(), puntoDiEmissione, prezzo,
+        return new Abbonamento(LocalDate.now(), puntoDiEmissione,
                 tipo, tessera);
     }
 

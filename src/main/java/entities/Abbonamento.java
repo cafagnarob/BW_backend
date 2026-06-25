@@ -23,9 +23,9 @@ public class Abbonamento extends TitoloDiViaggio {
 
     }
 
-    public Abbonamento(LocalDate dataDiEmissione, PuntoDiEmissione luogoDiEmissione, double prezzo, TipoAbbonamento tipo,
+    public Abbonamento(LocalDate dataDiEmissione, PuntoDiEmissione luogoDiEmissione, TipoAbbonamento tipo,
                        Tessera tessera) {
-        super(dataDiEmissione, luogoDiEmissione, prezzo);
+        super(dataDiEmissione, luogoDiEmissione, (tipo == TipoAbbonamento.SETTIMANALE) ? 10.00 : 35.00);
         this.tipo = tipo;
         if (tipo == TipoAbbonamento.SETTIMANALE) {
             this.dataDiScadenza = getDataDiEmissione().plusWeeks(1);
@@ -54,7 +54,6 @@ public class Abbonamento extends TitoloDiViaggio {
     @Override
     public String toString() {
         return "Abbonamento{ \n" +
-                super.toString() +
                 "tipo=" + tipo + "\n" +
                 ", prezzo=" + getPrezzo() + "\n" +
                 ", data_di_scadenza=" + dataDiScadenza + "\n" +
