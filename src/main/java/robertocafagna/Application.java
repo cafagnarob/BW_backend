@@ -186,24 +186,33 @@ public class Application {
                                                 if (mezzofromdb.getStato() == StatoMezzo.MANUTENZIONE) {
                                                     System.out.println("----- IL MEZZO " + mezzofromdb + " E' GIA IN MANUTENZIONE-----");
                                                 }
-                                                System.out.println("------SELEZIONARE IL TIPO DI MANUTENZIONE-----");
-                                                System.out.println("------ORDINARIA/STRAORDINARIA------");
-                                                String tipoManutenzione = scanner.nextLine().trim();
-                                                if (tipoManutenzione.equalsIgnoreCase(TipoManutenzione.ORDINARIA.toString())) {
-                                                    Manutenzione man1 = new Manutenzione(LocalDate.now(), null,
-                                                            TipoManutenzione.ORDINARIA, mezzofromdb);
-                                                    manutenzioneDao.save(man1);
-                                                } else if (tipoManutenzione.equalsIgnoreCase(TipoManutenzione.STRAORDINARIA.toString())) {
-                                                    Manutenzione man1 = new Manutenzione(LocalDate.now(), null,
-                                                            TipoManutenzione.STRAORDINARIA, mezzofromdb);
-                                                    manutenzioneDao.save(man1);
-                                                } else {
-                                                    System.out.println("------ INSERIRE UN VALORE VALIDO-----");
-                                                }
-                                                mezzofromdb.setStato(StatoMezzo.MANUTENZIONE);
-                                                mezzoDAO.update(mezzofromdb);
+                                                while (true) {
 
-                                                System.out.println("-----" + mezzofromdb + "E' STATO MANDATO IN MANUTENZIONE-----");
+                                                    System.out.println("------SELEZIONARE IL TIPO DI MANUTENZIONE-----");
+                                                    System.out.println("------ORDINARIA/STRAORDINARIA------");
+                                                    String tipoManutenzione = scanner.nextLine().trim();
+                                                    if (tipoManutenzione.equalsIgnoreCase(TipoManutenzione.ORDINARIA.toString())) {
+                                                        Manutenzione man1 = new Manutenzione(LocalDate.now(), null,
+                                                                TipoManutenzione.ORDINARIA, mezzofromdb);
+                                                        manutenzioneDao.save(man1);
+                                                        mezzofromdb.setStato(StatoMezzo.MANUTENZIONE);
+                                                        mezzoDAO.update(mezzofromdb);
+
+                                                        System.out.println("-----" + mezzofromdb + "E' STATO MANDATO IN MANUTENZIONE-----");
+                                                        break;
+                                                    } else if (tipoManutenzione.equalsIgnoreCase(TipoManutenzione.STRAORDINARIA.toString())) {
+                                                        Manutenzione man1 = new Manutenzione(LocalDate.now(), null,
+                                                                TipoManutenzione.STRAORDINARIA, mezzofromdb);
+                                                        manutenzioneDao.save(man1);
+                                                        mezzofromdb.setStato(StatoMezzo.MANUTENZIONE);
+                                                        mezzoDAO.update(mezzofromdb);
+
+                                                        System.out.println("-----" + mezzofromdb + "E' STATO MANDATO IN MANUTENZIONE-----");
+                                                        break;
+                                                    } else {
+                                                        System.out.println("------ INSERIRE UN VALORE VALIDO-----");
+                                                    }
+                                                }
                                                 break;
                                             } else if (conferma.equalsIgnoreCase("N")) {
                                                 System.out.println("------ OPERAZIONE ANNULLATA------");
@@ -213,6 +222,7 @@ public class Application {
                                             System.out.println("------ INSERISCI UN VALORE VALIDO-----");
                                         }
                                     }
+                                    break;
                                 } catch (Exception e) {
                                     System.out.println("mezzo non trovato");
                                 }
@@ -602,7 +612,7 @@ public class Application {
                     case 3 -> {
                         System.out.println("-----COMPRA ABBONAMENTO------");
 
-                        try{
+                        try {
                             Utente utente = utenteDAO.getUtenteByEmail(email);
                             Tessera tessera = tesseraDAO.getTesseraByUtente(utente);
 
@@ -643,9 +653,9 @@ public class Application {
                             abbonamentoDAO.save(nuovoAbbonamento);
                             System.out.println("Abbonamento acquistato e associato alla tessera n. " + tessera.getId());
                             System.out.println("Nuovo saldo del portafoglio: " + utente.getPortafoglio() + " €");
-                        }catch (NumberFormatException e){
-                            System.out.println("Errore: inserisci un numero valido!" );
-                        }catch (NotFoundException e){
+                        } catch (NumberFormatException e) {
+                            System.out.println("Errore: inserisci un numero valido!");
+                        } catch (NotFoundException e) {
                             System.out.println("Errore: " + e.getMessage());
                         }
                     }
