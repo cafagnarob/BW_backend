@@ -78,7 +78,7 @@ public class TitoloDiViaggioDAO {
                 "SELECT t FROM TitoloDiViaggio t WHERE t.luogoDiEmissione.id = :param", TitoloDiViaggio.class);
         query.setParameter("param", idPunto);
         List<TitoloDiViaggio> res = query.getResultList();
-        System.out.println("I TITOLI DI VIAGGIO EMESSI DALL ATTIVITA: " + idPunto + "SONO : " + res.size());
+        System.out.println("I TITOLI DI VIAGGIO EMESSI DALL ATTIVITA: " + idPunto + " SONO : " + res.size());
         System.out.println(res);
         return res;
     }

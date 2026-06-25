@@ -351,12 +351,10 @@ public class Application {
                                         break;
                                     }
 
-
                                 } catch (Exception e) {
                                     System.out.println("mezzo non trovato");
                                 }
                             }
-
                         }
                         default -> System.out.println("------- INSERISCI UN VALORE VALIDO------");
                     }
@@ -440,16 +438,36 @@ public class Application {
                         case 2 -> {
                             System.out.println("----- BIGLIETTI VIDIMATI SU UN MEZZO PER FASCIA ORARIA -----");
                             try {
-                                System.out.println("Inserisci l'ID del mezzo:");
+                                mezzoDAO.listaMezzi();
+                                System.out.println("Inserisci l'ID del mezzo: ");
                                 long idMezzo = Long.parseLong(scanner.nextLine().trim());
 
-                                System.out.println("Inserisci l'ora di INIZIO (es. 08:30):");
-                                String oraInizioInput = scanner.nextLine().trim();
-                                LocalTime oraInizio = LocalTime.parse(oraInizioInput);
+                                LocalTime oraInizio = null;
+                                while (oraInizio== null){
+                                    System.out.println("Inserisci l'ora di INIZIO (es. 08:30): ");
+                                    String oraInizioInput = scanner.nextLine().trim();
+                                    try{
+                                        oraInizio = LocalTime.parse(oraInizioInput);
+                                    }catch (DateTimeParseException e){
+                                        System.out.println("Errore: Formato orario non valido! Usa il formato HH:mm");
+                                    }
+                                }
 
-                                System.out.println("Inserisci l'ora di FINE (es. 18:00):");
-                                String oraFineInput = scanner.nextLine().trim();
-                                LocalTime oraFine = LocalTime.parse(oraFineInput);
+                                LocalTime oraFine = null;
+                                while (oraFine == null) {
+                                    System.out.println("Inserisci l'ora di FINE (es. 18:00):");
+                                    String oraFineInput = scanner.nextLine().trim();
+                                    try {
+                                        oraFine = LocalTime.parse(oraFineInput);
+
+                                        if (oraFine.isBefore(oraInizio)) {
+                                            System.out.println("Errore: L'orario di fine non può essere precedente a quello di inizio!");
+                                            oraFine = null;
+                                        }
+                                    } catch (java.time.format.DateTimeParseException e) {
+                                        System.out.println("Errore: Formato orario non valido! Usa il formato HH:mm");
+                                    }
+                                }
 
                                 LocalDate oggi = LocalDate.now();
 
@@ -461,8 +479,6 @@ public class Application {
 
                             } catch (NumberFormatException e) {
                                 System.out.println("Errore: L'ID del mezzo deve essere un numero intero!");
-                            } catch (java.time.format.DateTimeParseException e) {
-                                System.out.println("Errore: Formato orario non valido! Usa il formato HH:mm (es. 14:15).");
                             } catch (Exception e) {
                                 System.out.println("Errore durante il recupero dei dati: " + e.getMessage());
                             }
