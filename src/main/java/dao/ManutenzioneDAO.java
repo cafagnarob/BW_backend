@@ -72,9 +72,9 @@ public class ManutenzioneDAO {
 
             List<Mezzo> mezzi = entityManager.createQuery("SELECT m FROM Mezzo m", Mezzo.class).getResultList();
 
-            Mezzo m2 = mezzi.size() > 1 ? mezzi.get(1) : mezzi.get(0); // Autobus in MANUTENZIONE
-            Mezzo m6 = mezzi.size() > 5 ? mezzi.get(5) : mezzi.get(0); // Tram in MANUTENZIONE
-            Mezzo m9 = mezzi.size() > 8 ? mezzi.get(8) : mezzi.get(0); // Tram in MANUTENZIONE
+            Mezzo m2 = mezzi.get(0); // Autobus in MANUTENZIONE
+            Mezzo m6 = mezzi.get(0); // Tram in MANUTENZIONE
+            Mezzo m9 = mezzi.get(0); // Tram in MANUTENZIONE
 
             Mezzo m3 = mezzi.size() > 2 ? mezzi.get(2) : mezzi.get(0);
 

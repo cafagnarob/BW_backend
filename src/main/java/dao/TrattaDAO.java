@@ -64,31 +64,22 @@ public class TrattaDAO {
         long count = entityManager.createQuery("SELECT COUNT(t) FROM Tratta t", Long.class).getSingleResult();
         if (count == 0) {
 
-            List<Tratta> tratte = new ArrayList<>();
+            save(new Tratta(45, "Milano Centrale", "Bergamo"));
+            save(new Tratta(60, "Milano Centrale", "Brescia"));
+            save(new Tratta(120, "Milano Centrale", "Verona"));
+            save(new Tratta(180, "Milano Centrale", "Venezia Santa Lucia"));
+            save(new Tratta(150, "Milano Porta Garibaldi", "Torino Porta Nuova"));
+            save(new Tratta(90, "Milano Rogoredo", "Piacenza"));
+            save(new Tratta(70, "Milano Lambrate", "Monza"));
+            save(new Tratta(200, "Milano Centrale", "Bologna Centrale"));
+            save(new Tratta(240, "Milano Centrale", "Firenze Santa Maria Novella"));
+            save(new Tratta(300, "Milano Centrale", "Roma Termini"));
+            save(new Tratta(50, "Milano Cadorna", "Saronno"));
+            save(new Tratta(35, "Milano Bovisa", "Como San Giovanni"));
+            save(new Tratta(110, "Milano Centrale", "Genova Piazza Principe"));
+            save(new Tratta(95, "Milano Porta Garibaldi", "Varese"));
+            save(new Tratta(75, "Milano Rogoredo", "Lodi"));
 
-            tratte.add(new Tratta(45, "Milano Centrale", "Bergamo"));
-            tratte.add(new Tratta(60, "Milano Centrale", "Brescia"));
-            tratte.add(new Tratta(120, "Milano Centrale", "Verona"));
-            tratte.add(new Tratta(180, "Milano Centrale", "Venezia Santa Lucia"));
-            tratte.add(new Tratta(150, "Milano Porta Garibaldi", "Torino Porta Nuova"));
-            tratte.add(new Tratta(90, "Milano Rogoredo", "Piacenza"));
-            tratte.add(new Tratta(70, "Milano Lambrate", "Monza"));
-            tratte.add(new Tratta(200, "Milano Centrale", "Bologna Centrale"));
-            tratte.add(new Tratta(240, "Milano Centrale", "Firenze Santa Maria Novella"));
-            tratte.add(new Tratta(300, "Milano Centrale", "Roma Termini"));
-            tratte.add(new Tratta(50, "Milano Cadorna", "Saronno"));
-            tratte.add(new Tratta(35, "Milano Bovisa", "Como San Giovanni"));
-            tratte.add(new Tratta(110, "Milano Centrale", "Genova Piazza Principe"));
-            tratte.add(new Tratta(95, "Milano Porta Garibaldi", "Varese"));
-            tratte.add(new Tratta(75, "Milano Rogoredo", "Lodi"));
-
-            for (Tratta t : tratte) {
-                try {
-                    save(t);
-                } catch (Exception e) {
-                    System.err.println("Errore nel salvare la tratta da " + t.getPartenza() + " a " + t.getCapolinea());
-                }
-            }
 
             System.out.println("Tratte aggiunte!");
         } else {

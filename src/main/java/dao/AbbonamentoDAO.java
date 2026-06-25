@@ -115,25 +115,25 @@ public class AbbonamentoDAO {
             List<Tessera> tessere = entityManager.createQuery("SELECT t FROM Tessera t", Tessera.class).getResultList();
 
             PuntoDiEmissione rivenditore1 = punti.get(0);
-            PuntoDiEmissione rivenditore2 = punti.size() > 1 ? punti.get(1) : rivenditore1;
-            PuntoDiEmissione rivenditore3 = punti.size() > 2 ? punti.get(2) : rivenditore1;
-            PuntoDiEmissione rivenditore4 = punti.size() > 3 ? punti.get(3) : rivenditore1;
-            PuntoDiEmissione rivenditore5 = punti.size() > 4 ? punti.get(4) : rivenditore1;
+            PuntoDiEmissione rivenditore2 = punti.get(1);
+            PuntoDiEmissione rivenditore3 = punti.get(2);
+            PuntoDiEmissione rivenditore4 = punti.get(3);
+            PuntoDiEmissione rivenditore5 = punti.get(4);
 
-            PuntoDiEmissione distributore1 = punti.size() > 5 ? punti.get(5) : rivenditore1;
-            PuntoDiEmissione distributore2 = punti.size() > 6 ? punti.get(6) : rivenditore1;
-            PuntoDiEmissione distributore3 = punti.size() > 7 ? punti.get(7) : rivenditore1;
-            PuntoDiEmissione distributore4 = punti.size() > 8 ? punti.get(8) : rivenditore1;
+            PuntoDiEmissione distributore1 = punti.get(5);
+            PuntoDiEmissione distributore2 = punti.get(6);
+            PuntoDiEmissione distributore3 = punti.get(7);
+            PuntoDiEmissione distributore4 = punti.get(8);
 
             Tessera t1 = tessere.get(0);
-            Tessera t2 = tessere.size() > 1 ? tessere.get(1) : t1;
-            Tessera t3 = tessere.size() > 2 ? tessere.get(2) : t1;
-            Tessera t4 = tessere.size() > 3 ? tessere.get(3) : t1;
-            Tessera t5 = tessere.size() > 4 ? tessere.get(4) : t1;
-            Tessera t6 = tessere.size() > 5 ? tessere.get(5) : t1;
-            Tessera t7 = tessere.size() > 6 ? tessere.get(6) : t1;
-            Tessera t8 = tessere.size() > 7 ? tessere.get(7) : t1;
-            Tessera t9 = tessere.size() > 8 ? tessere.get(8) : t1;
+            Tessera t2 = tessere.get(1);
+            Tessera t3 = tessere.get(2);
+            Tessera t4 = tessere.get(3);
+            Tessera t5 = tessere.get(4);
+            Tessera t6 = tessere.get(5);
+            Tessera t7 = tessere.get(6);
+            Tessera t8 = tessere.get(7);
+            Tessera t9 = tessere.get(8);
 
             Abbonamento a1 = new Abbonamento(LocalDate.now(), rivenditore1, 12.00, TipoAbbonamento.SETTIMANALE, t1); save(a1);
             Abbonamento a2 = new Abbonamento(LocalDate.now(), rivenditore2, 35.00, TipoAbbonamento.MENSILE, t2); save(a2);
