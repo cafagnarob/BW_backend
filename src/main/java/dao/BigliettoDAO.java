@@ -1,7 +1,9 @@
 package dao;
 
-import Enum.StatoDistributore;
-import entities.*;
+import entities.Biglietto;
+import entities.Mezzo;
+import entities.PuntoDiEmissione;
+import entities.Utente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
@@ -42,14 +44,6 @@ public class BigliettoDAO {
 
     public void compraBiglietto(Utente utente, Biglietto biglietto) {
         PuntoDiEmissione puntoDiEmissione = biglietto.getLuogoDiEmissione();
-
-        if (puntoDiEmissione instanceof Distributore distributore) {
-            if (distributore.getStato() == StatoDistributore.NON_DISPONIBILE) {
-                System.out.println("Il distributore non è disponibile: " + distributore);
-                return; // ← stop here
-            }
-            System.out.println("Acquisto in corso presso il distributore #" + puntoDiEmissione.getId() + "...");
-        }
 
         if (utente.getPortafoglio() < biglietto.getPrezzo()) {
             System.out.println("Credito insufficiente per completare l'acquisto. Prezzo: " + biglietto.getPrezzo());

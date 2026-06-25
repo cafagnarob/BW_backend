@@ -1,9 +1,6 @@
 package robertocafagna;
 
-import Enum.StatoMezzo;
-import Enum.TipoManutenzione;
-import Enum.TipoMezzo;
-import Enum.TipoUtente;
+import Enum.*;
 import dao.*;
 import entities.*;
 import jakarta.persistence.EntityManager;
@@ -487,9 +484,16 @@ public class Application {
                         System.out.println("------INSERISCI ID DI UN PUNTO DI EMISSIONI-------");
                         Long idPunto = Long.valueOf(scanner.nextLine());
                         PuntoDiEmissione punto = puntoDao.getById(idPunto);
+                        if (punto instanceof Distributore distributore) {
+                            if (distributore.getStato() == StatoDistributore.NON_DISPONIBILE) {
+                                System.out.println("Il distributore non è disponibile: " + distributore);
+                                return; // ← stop here
+                            }
+                            System.out.println("Acquisto in corso presso il distributore #" + punto.getId() + "...");
+                        }
+                        Utente utente = utenteDAO.getUtenteByEmail(email);
                         Biglietto newBiglietto = new Biglietto(LocalDate.now(), punto, 1.50, null, null);
-
-
+                        bigliettoDAO.compraBiglietto(utente, newBiglietto);
                     }
                 }
             }
