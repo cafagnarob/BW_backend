@@ -101,7 +101,7 @@ public class Application {
         Utente fromDB = null;
         while (fromDB == null) {
             email = scanner.nextLine().trim();
-            if (email == null && !email.contains("@") && !email.contains(".")) {
+            if (email == null || !email.contains("@") || !email.contains(".")) {
                 continue;
             }
             try {
@@ -319,12 +319,13 @@ public class Application {
                                                         System.out.println("Data oggi: " + LocalDate.now());
 
                                                         String inputData = scanner.nextLine();
+                                                        System.out.println(mezzofromdb);
+                                                        System.out.println(trattaFromDB);
+                                                        System.out.println(inputData);
                                                         if (inputData == null || inputData.isBlank()) {
                                                             System.out.println("inserisci un valore valido");
                                                             continue;
-                                                        }
-
-                                                        try {
+                                                        }try {
                                                             LocalDate parsed = LocalDate.parse(inputData);
 
                                                             if (parsed.isBefore(LocalDate.now())) {
@@ -461,8 +462,8 @@ public class Application {
                     System.out.println("------- INSERISCI UN VALORE VALIDO------");
                 }
             }
-        } finally {
-            entityManager.close();
+        } catch (Exception e) {
+            System.out.println("ERRORE" + e.getMessage());
         }
     }
 
@@ -480,6 +481,8 @@ public class Application {
             System.out.println(e.getMessage());
         }
         ;
+        entityManager.close();
+        scanner.close();
     }
 
 }
