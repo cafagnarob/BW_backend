@@ -8,7 +8,9 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class TitoloDiViaggioDAO {
@@ -82,20 +84,24 @@ public class TitoloDiViaggioDAO {
     }
 
     // metodo che stampa i biglietti vidimanti dalle ore ... alle ore ... dato il mezzo
-    public List<Biglietto> stampaListNumTDVVidimatiPerTempo(LocalTime oraInizo, LocalTime oraFine,
+
+    public List<Biglietto> stampaListNumTDVVidimatiPerTempo(LocalDateTime oraInizo, LocalDateTime oraFine,
                                                             Long idMezzo) {
         TypedQuery<Biglietto> query = this.entityManager.createQuery(
                 "SELECT b FROM Biglietto b " +
-                        "WHERE b.orarioVidimazione BETWEEN :param AND :param2 AND b.mezzo.id=:param3", Biglietto.class);
+                        "WHERE b.orarioVidimazione BETWEEN :param AND :param2 AND b.mezzo.id = :param3", Biglietto.class);
+
         query.setParameter("param", oraInizo);
-        query.setParameter("param3", idMezzo);
         query.setParameter("param2", oraFine);
+        query.setParameter("param3", idMezzo);
+
         List<Biglietto> res = query.getResultList();
-        System.out.println("I BIGLIETTI VIDIMATI DAL" + oraInizo + "AL" + oraFine + "SONO : " + res.size());
+        DateTimeFormatter soloOra = DateTimeFormatter.ofPattern("HH:mm");
+
+        System.out.println("I BIGLIETTI VIDIMATI DAL " + oraInizo.format(soloOra) + " AL " + oraFine.format(soloOra) + " SONO : " + res.size());
         System.out.println(res);
         return res;
     }
-
 
     public Biglietto creaBiglietto(PuntoDiEmissione puntoDiEmissione) {
         return new Biglietto(LocalDate.now(), puntoDiEmissione, 2.50, null, null);

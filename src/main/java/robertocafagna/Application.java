@@ -9,6 +9,8 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
@@ -403,8 +405,39 @@ public class Application {
                             }
                         }
                         case 2 -> {
-                            System.out.println();
+                            System.out.println("----- BIGLIETTI VIDIMATI SU UN MEZZO PER FASCIA ORARIA -----");
+                            try {
+                                System.out.println("Inserisci l'ID del mezzo:");
+                                long idMezzo = Long.parseLong(scanner.nextLine().trim());
+
+                                System.out.println("Inserisci l'ora di INIZIO (es. 08:30):");
+                                String oraInizioInput = scanner.nextLine().trim();
+                                LocalTime oraInizio = LocalTime.parse(oraInizioInput);
+
+                                System.out.println("Inserisci l'ora di FINE (es. 18:00):");
+                                String oraFineInput = scanner.nextLine().trim();
+                                LocalTime oraFine = LocalTime.parse(oraFineInput);
+
+                                LocalDate oggi = LocalDate.now();
+
+                                //  LocalTime in LocalDateTime uniti alla data di oggi
+                                LocalDateTime inizioCompleto = oraInizio.atDate(oggi);
+                                LocalDateTime fineCompleto = oraFine.atDate(oggi);
+
+                                titoloDiViaggioDAO.stampaListNumTDVVidimatiPerTempo(inizioCompleto, fineCompleto, idMezzo);
+
+                            } catch (NumberFormatException e) {
+                                System.out.println("Errore: L'ID del mezzo deve essere un numero intero!");
+                            } catch (java.time.format.DateTimeParseException e) {
+                                System.out.println("Errore: Formato orario non valido! Usa il formato HH:mm (es. 14:15).");
+                            } catch (Exception e) {
+                                System.out.println("Errore durante il recupero dei dati: " + e.getMessage());
+                            }
                         }
+
+
+
+
                         case 3 -> {
                             System.out.println();
                         }
