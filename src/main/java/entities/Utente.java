@@ -107,6 +107,7 @@ public class Utente {
                 ", eta=" + eta + "\n" +
                 ", portafoglio=" + portafoglio + "\n" +
                 ", tipo=" + tipo + "\n" +
+                ", listaBigliettiDellUtente=" + listaBigliettiDellUtente + "\n" +
                 "} \n";
     }
 }

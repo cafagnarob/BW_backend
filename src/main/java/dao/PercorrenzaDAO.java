@@ -106,7 +106,7 @@ public class PercorrenzaDAO {
 
     public List<Percorrenza> listaPercorrenzePerTrattaOggi(Long idTratta) {
         TypedQuery<Percorrenza> query = entityManager.createQuery(
-                "SELECT p FROM Percorrenza p WHERE p.mezzo.id= :param AND p.data=CURRENT_DATE", Percorrenza.class
+                "SELECT p FROM Percorrenza p WHERE p.tratta.id= :param AND p.data=CURRENT_DATE", Percorrenza.class
         );
         query.setParameter("param", idTratta);
         List<Percorrenza> res = query.getResultList();
