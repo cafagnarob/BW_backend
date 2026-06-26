@@ -35,9 +35,7 @@ public class PercorrenzaDAO {
     // GET
     public Percorrenza getById(long id) {
         Percorrenza p = entityManager.find(Percorrenza.class, id);
-        if (p == null) {
-            throw new NotFoundException("Non esistono percorrenze con questo id: " + id);
-        }
+
         return p;
     }
 

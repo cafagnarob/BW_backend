@@ -818,34 +818,61 @@ public class Application {
                         List<Percorrenza> listaPercorrenza = percorrenzaDAO.listaPercorrenzeOggi();
                         if (listaPercorrenza.isEmpty()) {
                             System.out.println("----NESSUNA CORSA DISPONIBILE-----");
+                            break;
                         }
-                        System.out.println("------INSERISCI L'ID DELLA CORSA------");
-                        Long idCorsa = Long.valueOf(scanner.nextLine().trim());
-                        Percorrenza percorrenzaFromDB = percorrenzaDAO.getById(idCorsa);
-                        if (percorrenzaFromDB == null) {
-                            System.out.println("-----NESSUNA CORSA DISPONIBILE------");
+                        Percorrenza percorrenzaFromDB = null;
+                        while(percorrenzaFromDB == null){
+                            System.out.println("------INSERISCI L'ID DELLA CORSA------");
+                            try {
+                                Long idCorsa = Long.valueOf(scanner.nextLine().trim());
+                                percorrenzaFromDB = percorrenzaDAO.getById(idCorsa);
+
+                                if (percorrenzaFromDB == null) {
+                                    System.out.println("----- CORSA NON TROVATA ------");
+                                }
+                            }catch (NumberFormatException e){
+                                System.out.println("----ID NON VALIDO. INSERISCI UN NUMERO CORRETTO.----");
+                            }
                         }
+
                         Mezzo mezzoPerPercorrenza = percorrenzaFromDB.getMezzo();
+                        if(mezzoPerPercorrenza == null){
+                            System.out.println("---- ERRORE: Questa corsa non ha un mezzo assegnato! ----");
+                            break;
+                        }
+
                         Utente utenteFromDB = utenteDAO.getUtenteByEmail(email);
                         List<Biglietto> listaBigliettiPerUtente = utenteFromDB.getListaBigliettiDellUtente();
                         if (listaBigliettiPerUtente.isEmpty()) {
                             System.out.println("---- NON HAI BIGLIETTI A DISPOSIZIONE, COMPRANE UNO-----");
+                            break;
                         }
-                        System.out.println("-----INSERISCI L'ID DEL BIGLIETTO DA UTILIZZARE-----");
-                        try {
 
-                            Long idBiglietto = Long.valueOf(scanner.nextLine());
-                            Biglietto bigliettoFromDB = bigliettoDAO.getById(idBiglietto);
+                        Biglietto bigliettoFromDB = null;
+                        while(bigliettoFromDB == null){
+                            System.out.println("-----INSERISCI L'ID DEL BIGLIETTO DA UTILIZZARE-----");
+                            try {
+                                Long idBiglietto = Long.valueOf(scanner.nextLine());
+                                bigliettoFromDB = bigliettoDAO.getById(idBiglietto);
+
+                                if(bigliettoFromDB == null){
+                                    System.out.println("---- IL BIGLIETTO SPECIFICATO NON ESISTE. ----");
+                                }
+                            } catch (NumberFormatException e) {
+                                System.out.println("----INSERISCI UN VALORE VALIDO-----");
+                            }catch (Exception e){
+                                System.out.println("---- ERRORE: Biglietto non trovato. ----");
+                                bigliettoFromDB = null;
+                            }
+                        }
+                        try {
                             bigliettoDAO.vidimaBiglietto(bigliettoFromDB, mezzoPerPercorrenza);
                             System.out.println("-----OPERAZIONE AVVENUTA CON SUCCESSO-----");
-
                         } catch (Exception e) {
-                            System.out.println("----INSERISCI UN VALORE VALIDO-----");
+                            System.out.println("---- ERRORE DURANTE LA VIDIMAZIONE: " + e.getMessage() + " ----");
                         }
-
                     }
                 }
-
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
