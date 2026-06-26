@@ -160,35 +160,50 @@ public class BigliettoDAO {
             Mezzo m8 = mezzi.get(7);
             Mezzo m9 = mezzi.get(8);
 
-            Biglietto b1 = new Biglietto(LocalDate.now().minusDays(2), rivenditore1, 1.50, LocalDateTime.now().minusDays(2).plusHours(3), m6);
+            Biglietto b1 = new Biglietto(LocalDate.now().minusMonths(3), rivenditore1, 1.50, LocalDateTime.now().minusMonths(2).plusHours(3), m6);
             save(b1);
 
-            Biglietto b2 = new Biglietto(LocalDate.now().minusDays(2), distributore1, 1.50, LocalDateTime.now().minusDays(2).plusHours(2), m6);
+            Biglietto b2 = new Biglietto(LocalDate.now().minusMonths(2), distributore1, 1.50, LocalDateTime.now().minusMonths(2).plusHours(2), m6);
             save(b2);
 
-            Biglietto b3 = new Biglietto(LocalDate.now().minusDays(2), rivenditore2, 2.50, LocalDateTime.now().minusDays(2).plusHours(3), m4);
+            Biglietto b3 = new Biglietto(LocalDate.now().minusMonths(2), rivenditore2, 2.50, LocalDateTime.now().minusMonths(2).plusHours(3), m4);
             save(b3);
 
-            Biglietto b4 = new Biglietto(LocalDate.now().minusDays(2), rivenditore3, 1.50, LocalDateTime.now().minusDays(2).plusHours(1), m4);
+            Biglietto b4 = new Biglietto(LocalDate.now().minusMonths(2), rivenditore3, 1.50, LocalDateTime.now().minusDays(2).plusHours(1), m4);
             save(b4);
 
-            Biglietto b5 = new Biglietto(LocalDate.now().minusDays(3), distributore2, 1.50, LocalDateTime.now().minusDays(3).plusHours(3), m2);
+            Biglietto b5 = new Biglietto(LocalDate.now().minusMonths(3), distributore2, 1.50, LocalDateTime.now().minusMonths(3).plusHours(3), m2);
             save(b5);
 
-            Biglietto b6 = new Biglietto(LocalDate.now().minusDays(3), rivenditore4, 1.00, LocalDateTime.now().minusDays(3).plusHours(2), m2);
+            Biglietto b6 = new Biglietto(LocalDate.now().minusMonths(3), rivenditore4, 1.00, LocalDateTime.now().minusMonths(3).plusHours(2), m2);
             save(b6);
 
-            Biglietto b7 = new Biglietto(LocalDate.now().minusDays(3), rivenditore5, 1.50, LocalDateTime.now().minusDays(3).plusHours(1), m2);
+            Biglietto b7 = new Biglietto(LocalDate.now().minusMonths(3), rivenditore5, 1.50, LocalDateTime.now().minusMonths(3).plusHours(1), m2);
             save(b7);
 
-            Biglietto b8 = new Biglietto(LocalDate.now().minusDays(3), distributore3, 1.50, LocalDateTime.now().minusDays(3).plusHours(4), m2);
+            Biglietto b8 = new Biglietto(LocalDate.now().minusMonths(3), distributore3, 1.50, LocalDateTime.now().minusMonths(3).plusHours(4), m2);
             save(b8);
 
-            Biglietto b9 = new Biglietto(LocalDate.now().minusDays(4), distributore4, 3.00, LocalDateTime.now().minusDays(4).plusHours(3), m9);
+            Biglietto b9 = new Biglietto(LocalDate.now().minusMonths(4), distributore4, 3.00, LocalDateTime.now().minusMonths(4).plusHours(3), m9);
             save(b9);
 
-            Biglietto b10 = new Biglietto(LocalDate.now().minusDays(4), rivenditore1, 1.50, LocalDateTime.now().minusDays(4).plusHours(2), m9);
+            Biglietto b10 = new Biglietto(LocalDate.now().minusMonths(4), rivenditore1, 1.50, LocalDateTime.now().minusMonths(4).plusHours(2), m9);
             save(b10);
+
+            Biglietto b11 = new Biglietto(LocalDate.now().minusMonths(4), rivenditore1, 1.50, LocalDateTime.now().minusMonths(4).plusHours(2), m9);
+            save(b11);
+
+            Biglietto b12 = new Biglietto(LocalDate.now().minusMonths(4), rivenditore1, 1.50, LocalDateTime.now().minusMonths(3), m9);
+            save(b12);
+
+            Biglietto b13 = new Biglietto(LocalDate.now().minusMonths(4), rivenditore1, 3.50, LocalDateTime.now().minusMonths(3), m9);
+            save(b13);
+
+            Biglietto b14 = new Biglietto(LocalDate.now().minusMonths(4), rivenditore1, 2.50, LocalDateTime.now().minusMonths(4).plusHours(2), m9);
+            save(b14);
+
+            Biglietto b15 = new Biglietto(LocalDate.now().minusMonths(5), rivenditore1, 6.50, LocalDateTime.now().minusMonths(4).plusHours(2), m9);
+            save(b15);
 
             System.out.println("Biglietti aggiunti!");
         } else {

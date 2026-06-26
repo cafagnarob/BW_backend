@@ -257,9 +257,7 @@ public class Application {
                                                                 } catch (RuntimeException e) {
                                                                     System.out.println("------ INSERISCI UN VALORE VALIDO-----");
                                                                 }
-
                                                             }
-
                                                         }
                                                     } catch (Exception e) {
                                                         System.out.println("mezzo non trovato");
@@ -279,33 +277,32 @@ public class Application {
                                                 Mezzo mezzofromdb = mezzoDAO.getById(idScelto);
                                                 if (mezzofromdb == null) {
                                                     System.out.println("------ NESSUN MEZZO TROVATO------");
-                                                }
-                                                Manutenzione manutenzioneFromDB = manutenzioneDao.getUltimaManutenzionePerIdMezzo
-                                                        (mezzofromdb.getId());
-                                                if (manutenzioneFromDB == null) {
-                                                    System.out.println("---NESSUN MEZZO IN MANUTENZIONE TROVATO----");
-                                                } else {
-                                                    System.out.println("------ PROCEDURA IN CORSO ... ------");
-                                                    manutenzioneFromDB.setDataFineManutenzione(LocalDate.now());
-                                                    System.out.println("------- AGGIORNAMENTO DATA DI FINE MANUTENZIONE-----");
-                                                    mezzofromdb.setStato(StatoMezzo.FERMO);
-                                                    System.out.println("-------SETTAGGIO DELLO STATO A FERMO------");
-                                                    mezzoDAO.update(mezzofromdb);
-                                                    manutenzioneDao.update(manutenzioneFromDB);
-                                                    System.out.println("------- AGGIORNAMENTO A DB------");
-                                                    break;
+                                                } else{
+                                                    Manutenzione manutenzioneFromDB = manutenzioneDao.getUltimaManutenzionePerIdMezzo
+                                                            (mezzofromdb.getId());
+                                                    if (manutenzioneFromDB == null) {
+                                                        System.out.println("---NESSUN MEZZO IN MANUTENZIONE TROVATO----");
+                                                    } else {
+                                                        System.out.println("------ PROCEDURA IN CORSO ... ------");
+                                                        manutenzioneFromDB.setDataFineManutenzione(LocalDate.now());
+                                                        System.out.println("------- AGGIORNAMENTO DATA DI FINE MANUTENZIONE-----");
+                                                        mezzofromdb.setStato(StatoMezzo.FERMO);
+                                                        System.out.println("-------SETTAGGIO DELLO STATO A FERMO------");
+                                                        mezzoDAO.update(mezzofromdb);
+                                                        manutenzioneDao.update(manutenzioneFromDB);
+                                                        System.out.println("------- AGGIORNAMENTO A DB------");
+                                                        flag3 = false;
+                                                    }
                                                 }
                                             } catch (Exception e) {
                                                 System.out.println("----- INSERISCI UN VALORE VALIDO------");
+
                                             }
-
                                         }
-
                                     }
                                 } catch (Exception e) {
                                     System.out.println("-----INSERIRE UN VALORE VALIDO------");
                                 }
-                                flag3 = false;
                             }
                         }
                         case 3 -> {
