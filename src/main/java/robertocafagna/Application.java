@@ -185,7 +185,10 @@ public class Application {
                                                 System.out.println("----- ASSEGNAMO UN MEZZO ALLA MANUTENZIONE ------");
                                                 System.out.println("----LISTA MEZZI FERMI-----");
                                                 List<Mezzo> listaMezziFermi = mezzoDAO.listaMezzoPerStato(StatoMezzo.FERMO);
-                                                while (true) {
+
+                                                boolean idMezzoValido = false;
+                                                Mezzo mezzofromdb = null;
+                                                while (!idMezzoValido) {
                                                     System.out.println("---- INSERISCI L'ID DEL MEZZO-----");
 
                                                     try {
@@ -194,12 +197,17 @@ public class Application {
                                                                 .anyMatch(m -> m.getId() == idScelto);
                                                         if (!trovato) {
                                                             System.out.println("------ L'ID INSERITO NON E' TRA I MEZZI FERMI ----");
+                                                            continue;
                                                         } else {
-                                                            Mezzo mezzofromdb = mezzoDAO.getById(idScelto);
+                                                            mezzofromdb = mezzoDAO.getById(idScelto);
 
                                                             if (mezzofromdb == null) {
                                                                 System.out.println("---NESSUN MEZZO TROVATO----");
+                                                                continue;
                                                             }
+
+                                                            idMezzoValido = true;
+
                                                             while (true) {
                                                                 try {
                                                                     System.out.println("-----CONFERMARE?-----");
@@ -209,12 +217,14 @@ public class Application {
                                                                         assert mezzofromdb != null;
                                                                         if (mezzofromdb.getStato() == StatoMezzo.MANUTENZIONE) {
                                                                             System.out.println("----- IL MEZZO " + mezzofromdb + " E' GIA IN MANUTENZIONE-----");
+                                                                            break;
                                                                         }
                                                                         while (true) {
 
                                                                             System.out.println("------SELEZIONARE IL TIPO DI MANUTENZIONE-----");
                                                                             System.out.println("------ORDINARIA/STRAORDINARIA------");
                                                                             String tipoManutenzione = scanner.nextLine().trim();
+
                                                                             if (tipoManutenzione.equalsIgnoreCase(TipoManutenzione.ORDINARIA.toString())) {
                                                                                 Manutenzione man1 = new Manutenzione(LocalDate.now(), null,
                                                                                         TipoManutenzione.ORDINARIA, mezzofromdb);
@@ -224,6 +234,7 @@ public class Application {
 
                                                                                 System.out.println("-----" + mezzofromdb + "E' STATO MANDATO IN MANUTENZIONE-----");
                                                                                 break;
+
                                                                             } else if (tipoManutenzione.equalsIgnoreCase(TipoManutenzione.STRAORDINARIA.toString())) {
                                                                                 Manutenzione man1 = new Manutenzione(LocalDate.now(), null,
                                                                                         TipoManutenzione.STRAORDINARIA, mezzofromdb);
@@ -233,10 +244,10 @@ public class Application {
 
                                                                                 System.out.println("-----" + mezzofromdb + "E' STATO MANDATO IN MANUTENZIONE-----");
                                                                                 break;
+
                                                                             } else {
                                                                                 System.out.println("------ INSERIRE UN VALORE VALIDO-----");
                                                                             }
-                                                                            break;
                                                                         }
                                                                         break;
                                                                     } else if (conferma.equalsIgnoreCase("N")) {
@@ -677,16 +688,35 @@ public class Application {
                         Utente utente = utenteDAO.getUtenteByEmail(email);
                         System.out.println("------RINNOVARE/CREA UNA TESSERA-----");
                         puntoDao.listaPuntoDiEmissione();
-                        System.out.println("------INSERISCI L' ID DI PUNTO DI EMISSIONE------");
-                        Long idPunto = Long.valueOf(scanner.nextLine());
-                        PuntoDiEmissione punto = puntoDao.getById(idPunto);
-                        if (punto instanceof Distributore distributore) {
-                            if (distributore.getStato() == StatoDistributore.NON_DISPONIBILE) {
-                                System.out.println("Il distributore non è disponibile: " + distributore);
-                                break;
-                            }
 
-                            System.out.println("Procedura in corso presso il distributore #" + punto.getId() + "...");
+                        PuntoDiEmissione punto = null;
+                        while (punto == null) {
+                            System.out.println("------INSERISCI L' ID DI PUNTO DI EMISSIONE------");
+                            try {
+                                Long idPunto = Long.valueOf(scanner.nextLine());
+                                punto = puntoDao.getById(idPunto);
+
+                                if (punto == null) {
+                                    System.out.println("Errore: Nessun punto di emissione trovato con questo ID. Riprova.");
+                                    continue;
+                                }
+
+                                if (punto instanceof Distributore distributore) {
+                                    if (distributore.getStato() == StatoDistributore.NON_DISPONIBILE) {
+                                        System.out.println("Il distributore non è disponibile: " + distributore);
+                                        punto = null;
+                                        continue;
+                                    }
+                                    System.out.println("Procedura in corso presso il distributore #" + punto.getId());
+
+                                } else if (punto instanceof Rivenditore) {
+                                    System.out.println("Procedura in corso presso il rivenditore #" + punto.getId());
+                                }
+                            } catch (NumberFormatException e) {
+                                System.out.println("Errore: L'ID deve essere un numero valido!");
+                                punto = null;
+                            }
+                        }
                             Tessera tesseraEsistente = tesseraDAO.getTesseraByUtenteId(utente.getId());
                             if (tesseraEsistente != null) {
                                 System.out.println("L'utente possiede già una tessera: " + tesseraEsistente);
@@ -703,7 +733,7 @@ public class Application {
                                 System.out.println("Nuova tessera creata.");
                                 break;
                             }
-                        } else if (punto instanceof Rivenditore rivenditore) {
+                         } else if (punto instanceof Rivenditore rivenditore) {
                             System.out.println("Procedura in corso presso il rivenditore #" + punto.getId() + "...");
                             Tessera tesseraEsistente = tesseraDAO.getTesseraByUtenteId(utente.getId());
                             if (tesseraEsistente != null) {
@@ -714,16 +744,19 @@ public class Application {
                                 tesseraDAO.update(tesseraEsistente);
                                 System.out.println("Tessera rinnovata.");
 
+                                System.out.println("---- NUOVI DATI TESSERA: " + tesseraEsistente);
                             } else {
                                 tesseraDAO.compraTessera(punto, utente);
                                 System.out.println("Nuova tessera creata.");
                                 break;
                             }
 
-                        } else {
-                            System.out.println("----INSERISCI UN VALORE VALIDO------");
+                                Tessera nuovaTessera = tesseraDAO.getTesseraByUtenteId(utente.getId());
+                                System.out.println("----- DATI NUOVA TESSERA ------ " + nuovaTessera);
+                            }}
+                        } catch (Exception e){
+                            System.out.println("Si è verificato un errore durante la gestione della tessera: " + e.getMessage());
                         }
-
                     }
                     case 3 -> {
                         System.out.println("-----COMPRA ABBONAMENTO------");
