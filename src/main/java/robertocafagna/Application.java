@@ -14,6 +14,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Application {
@@ -277,7 +278,7 @@ public class Application {
                                                 Mezzo mezzofromdb = mezzoDAO.getById(idScelto);
                                                 if (mezzofromdb == null) {
                                                     System.out.println("------ NESSUN MEZZO TROVATO------");
-                                                } else{
+                                                } else {
                                                     Manutenzione manutenzioneFromDB = manutenzioneDao.getUltimaManutenzionePerIdMezzo
                                                             (mezzofromdb.getId());
                                                     if (manutenzioneFromDB == null) {
@@ -409,7 +410,8 @@ public class Application {
                                                         if (confermaSalvataggio.equalsIgnoreCase("Y")) {
                                                             percorrenzaDAO.save(newPercorrenza);
                                                             Percorrenza percorrenza = percorrenzaDAO.getById(newPercorrenza.getId());
-                                                            if (percorrenza.getData() == LocalDate.now()) {
+                                                            if (Objects.equals(percorrenza.getData(), LocalDate.now())) {
+                                                                System.out.println("----- AGGIORNAMENTO STATO MEZZO A SERVIZIO-----");
                                                                 mezzofromdb.setStato(StatoMezzo.SERVIZIO);
                                                                 mezzoDAO.update(mezzofromdb);
                                                             } else {
@@ -824,6 +826,9 @@ public class Application {
                         Long idTratta = Long.valueOf(scanner.nextLine().trim());
                         Tratta trattaFromDB = trattaDAO.getById(idTratta);
                         List<Percorrenza> listPercorrenzaFromDB = percorrenzaDAO.listaPercorrenzePerTrattaOggi(idTratta);
+                        if (listPercorrenzaFromDB.isEmpty()) {
+                            System.out.println("-----NESSUNA CORSA DISPONIBILE------");
+                        }
                         System.out.println("----INDERISCI L' ID DELLA CORSA CHE VUOI SCEGLIERE------");
                         Long sceltaCorsa = Long.valueOf(scanner.nextLine());
                         Percorrenza percorrenzaFromDB = percorrenzaDAO.getById(sceltaCorsa);
