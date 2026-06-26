@@ -815,23 +815,16 @@ public class Application {
                     case 4 -> {
                         System.out.println("-----PRENDI UN BUS------");
                         System.out.println("----- INSERISCI DOVE VUOI ANDARE------");
-                        List<Tratta> listaTratte = trattaDAO.listaTratte();
-                        listaTratte.forEach(tratta -> System.out.println(tratta.getCapolinea()));
-                        String destinazione = scanner.nextLine().trim();
-                        List<Tratta> listaPerDestinazione = trattaDAO.listaTrattePerCapolinea(destinazione);
-                        System.out.println("------TRATTE DISPONIBILI PER QUESTA DESTINAZIONE------");
-                        listaPerDestinazione.forEach(t -> System.out.println(t.getId() + " - " + t.getCapolinea()));
-
-                        System.out.println("------INSERISCI L'ID DELLA TRATTA------");
-                        Long idTratta = Long.valueOf(scanner.nextLine().trim());
-                        Tratta trattaFromDB = trattaDAO.getById(idTratta);
-                        List<Percorrenza> listPercorrenzaFromDB = percorrenzaDAO.listaPercorrenzePerTrattaOggi(idTratta);
-                        if (listPercorrenzaFromDB.isEmpty()) {
+                        List<Percorrenza> listaPercorrenza = percorrenzaDAO.listaPercorrenzeOggi();
+                        if (listaPercorrenza.isEmpty()) {
+                            System.out.println("----NESSUNA CORSA DISPONIBILE-----");
+                        }
+                        System.out.println("------INSERISCI L'ID DELLA CORSA------");
+                        Long idCorsa = Long.valueOf(scanner.nextLine().trim());
+                        Percorrenza percorrenzaFromDB = percorrenzaDAO.getById(idCorsa);
+                        if (percorrenzaFromDB == null) {
                             System.out.println("-----NESSUNA CORSA DISPONIBILE------");
                         }
-                        System.out.println("----INDERISCI L' ID DELLA CORSA CHE VUOI SCEGLIERE------");
-                        Long sceltaCorsa = Long.valueOf(scanner.nextLine());
-                        Percorrenza percorrenzaFromDB = percorrenzaDAO.getById(sceltaCorsa);
                         Mezzo mezzoPerPercorrenza = percorrenzaFromDB.getMezzo();
                         Utente utenteFromDB = utenteDAO.getUtenteByEmail(email);
                         List<Biglietto> listaBigliettiPerUtente = utenteFromDB.getListaBigliettiDellUtente();

@@ -114,6 +114,16 @@ public class PercorrenzaDAO {
         return res;
     }
 
+    public List<Percorrenza> listaPercorrenzeOggi() {
+        TypedQuery<Percorrenza> query = entityManager.createQuery(
+                "SELECT p FROM Percorrenza p WHERE p.data=CURRENT_DATE", Percorrenza.class
+        );
+        List<Percorrenza> res = query.getResultList();
+        res.forEach(System.out::println);
+        return res;
+    }
+
+
     public void popolaSeVuoto() {
         long count = entityManager.createQuery("SELECT COUNT(p) FROM Percorrenza p", Long.class).getSingleResult();
         if (count == 0) {
