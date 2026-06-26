@@ -135,15 +135,19 @@ public class AbbonamentoDAO {
             Tessera t8 = tessere.get(7);
             Tessera t9 = tessere.get(8);
 
-            Abbonamento a1 = new Abbonamento(LocalDate.now(), rivenditore1, TipoAbbonamento.SETTIMANALE, t1); save(a1);
-            Abbonamento a2 = new Abbonamento(LocalDate.now(), rivenditore2, TipoAbbonamento.MENSILE, t2); save(a2);
-            Abbonamento a3 = new Abbonamento(LocalDate.now(), rivenditore3, TipoAbbonamento.SETTIMANALE, t3); save(a3);
+            Abbonamento a1 = new Abbonamento(LocalDate.now().minusMonths(3), rivenditore1, TipoAbbonamento.SETTIMANALE, t1); save(a1);
+            Abbonamento a2 = new Abbonamento(LocalDate.now().minusMonths(2), rivenditore2, TipoAbbonamento.MENSILE, t2); save(a2);
+            Abbonamento a3 = new Abbonamento(LocalDate.now().minusMonths(2), rivenditore3, TipoAbbonamento.SETTIMANALE, t3); save(a3);
             Abbonamento a4 = new Abbonamento(LocalDate.now().minusDays(5), distributore1, TipoAbbonamento.MENSILE, t4); save(a4);
-            Abbonamento a5 = new Abbonamento(LocalDate.now(), distributore2, TipoAbbonamento.SETTIMANALE, t5); save(a5);
-            Abbonamento a6 = new Abbonamento(LocalDate.now(), rivenditore4, TipoAbbonamento.MENSILE, t6); save(a6);
-            Abbonamento a7 = new Abbonamento(LocalDate.now(), rivenditore5, TipoAbbonamento.SETTIMANALE, t7); save(a7);
-            Abbonamento a8 = new Abbonamento(LocalDate.now(), distributore3, TipoAbbonamento.MENSILE, t8); save(a8);
-            Abbonamento a9 = new Abbonamento(LocalDate.now(), distributore4, TipoAbbonamento.SETTIMANALE, t9); save(a9);
+            Abbonamento a5 = new Abbonamento(LocalDate.now().minusMonths(5), distributore2, TipoAbbonamento.SETTIMANALE, t5); save(a5);
+            Abbonamento a6 = new Abbonamento(LocalDate.now().minusMonths(4), rivenditore4, TipoAbbonamento.MENSILE, t6); save(a6);
+            Abbonamento a7 = new Abbonamento(LocalDate.now().minusMonths(1), rivenditore5, TipoAbbonamento.SETTIMANALE, t7); save(a7);
+            Abbonamento a8 = new Abbonamento(LocalDate.now().minusMonths(2), distributore3, TipoAbbonamento.MENSILE, t8); save(a8);
+            Abbonamento a9 = new Abbonamento(LocalDate.now().minusMonths(1), distributore4, TipoAbbonamento.SETTIMANALE, t9); save(a9);
+            Abbonamento a10 = new Abbonamento(LocalDate.now().minusMonths(2), rivenditore4, TipoAbbonamento.MENSILE, t6); save(a10);
+            Abbonamento a11 = new Abbonamento(LocalDate.now().minusMonths(3), rivenditore5, TipoAbbonamento.SETTIMANALE, t7); save(a11);
+            Abbonamento a12 = new Abbonamento(LocalDate.now().minusMonths(1), distributore3, TipoAbbonamento.MENSILE, t8); save(a12);
+            Abbonamento a13 = new Abbonamento(LocalDate.now().minusMonths(3), distributore4, TipoAbbonamento.SETTIMANALE, t9); save(a13);
 
             System.out.println("Tessere aggiunte!");
         } else {
