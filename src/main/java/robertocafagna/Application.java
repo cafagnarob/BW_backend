@@ -825,8 +825,28 @@ public class Application {
 
                         System.out.println("------INSERISCI L'ID DELLA TRATTA------");
                         Long idTratta = Long.valueOf(scanner.nextLine().trim());
-
                         Tratta trattaFromDB = trattaDAO.getById(idTratta);
+                        List<Percorrenza> listPercorrenzaFromDB = percorrenzaDAO.listaPercorrenzePerTrattaOggi(idTratta);
+                        System.out.println("----INDERISCI L' ID DELLA CORSA CHE VUOI SCEGLIERE------");
+                        Long sceltaCorsa = Long.valueOf(scanner.nextLine());
+                        Percorrenza percorrenzaFromDB = percorrenzaDAO.getById(sceltaCorsa);
+                        Mezzo mezzoPerPercorrenza = percorrenzaFromDB.getMezzo();
+                        Utente utenteFromDB = utenteDAO.getUtenteByEmail(email);
+                        List<Biglietto> listaBigliettiPerUtente = utenteFromDB.getListaBigliettiDellUtente();
+                        if (listaBigliettiPerUtente.isEmpty()) {
+                            System.out.println("---- NON HAI BIGLIETTI A DISPOSIZIONE, COMPRANE UNO-----");
+                        }
+                        System.out.println("-----INSERISCI L'ID DEL BIGLIETTO DA UTILIZZARE-----");
+                        try {
+
+                            Long idBiglietto = Long.valueOf(scanner.nextLine());
+                            Biglietto bigliettoFromDB = bigliettoDAO.getById(idBiglietto);
+                            bigliettoDAO.vidimaBiglietto(bigliettoFromDB, mezzoPerPercorrenza);
+                            System.out.println("-----OPERAZIONE AVVENUTA CON SUCCESSO-----");
+
+                        } catch (Exception e) {
+                            System.out.println("----INSERISCI UN VALORE VALIDO-----");
+                        }
 
                     }
                 }

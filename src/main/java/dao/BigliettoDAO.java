@@ -4,11 +4,13 @@ import entities.Biglietto;
 import entities.Mezzo;
 import entities.PuntoDiEmissione;
 import entities.Utente;
+import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -48,18 +50,35 @@ public class BigliettoDAO {
         if (utente.getPortafoglio() < biglietto.getPrezzo()) {
             System.out.println("Credito insufficiente per completare l'acquisto. Prezzo: " + biglietto.getPrezzo());
         } else {
+            EntityTransaction transaction = entityManager.getTransaction();
             try {
-                save(biglietto);
+                transaction.begin();
+                entityManager.persist(biglietto);
                 utente.setPortafoglio(utente.getPortafoglio() - biglietto.getPrezzo());
+                if (utente.getListaBigliettiDellUtente() == null) {
+                    utente.setListaBigliettiDellUtente(new ArrayList<>());
+                }
+                utente.getListaBigliettiDellUtente().add(biglietto);
+                entityManager.merge(utente);
+                transaction.commit();
                 System.out.println("Acquisto andato a buon fine.");
                 System.out.println(biglietto);
             } catch (Exception ex) {
+                if (transaction.isActive()) transaction.rollback();
                 ex.printStackTrace();
             }
         }
 
     }
 
+
+    public Biglietto getById(Long id) {
+        Biglietto fromDB = this.entityManager.find(Biglietto.class, id);
+        if (fromDB == null) throw new NotFoundException("Biglietto non trovata");
+        System.out.println("BIGLIETTO RICHIESTA" + fromDB);
+        return fromDB;
+
+    }
 
     // ----------------- VIDIMA BIGLIETTO -----------------------
 

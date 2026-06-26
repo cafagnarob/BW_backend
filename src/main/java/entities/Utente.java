@@ -3,41 +3,43 @@ package entities;
 import Enum.TipoUtente;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 
 public class Utente {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false)
     private String nome;
     @Column(nullable = false)
     private String cognome;
     @Column(nullable = false, unique = true)
     private String email;
-
     private int eta;
-
     @Column
     private double portafoglio;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoUtente tipo;
-
+    @OneToMany
+    @JoinColumn(name = "biglietti_per_utente")
+    private List<Biglietto> listaBigliettiDellUtente;
 
     public Utente() {
     }
 
     public Utente(String nome, String cognome, String email, int eta, double portafoglio,
-                  TipoUtente tipo) {
+                  TipoUtente tipo, List<Biglietto> listaBigliettiDellUtente) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.eta = eta;
         this.portafoglio = portafoglio;
         this.tipo = tipo;
+        this.listaBigliettiDellUtente = listaBigliettiDellUtente;
     }
 
     public String getCognome() {
@@ -58,6 +60,14 @@ public class Utente {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Biglietto> getListaBigliettiDellUtente() {
+        return listaBigliettiDellUtente;
+    }
+
+    public void setListaBigliettiDellUtente(List<Biglietto> listaBigliettiDellUtente) {
+        this.listaBigliettiDellUtente = listaBigliettiDellUtente;
     }
 
     public int getEta() {
