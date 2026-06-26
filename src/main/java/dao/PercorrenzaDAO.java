@@ -123,6 +123,34 @@ public class PercorrenzaDAO {
         return res;
     }
 
+    public Percorrenza listaPercorrenzaOggiPerIdMezzo(Long idMezzo) {
+        TypedQuery<Percorrenza> query = entityManager.createQuery(
+                "SELECT p FROM Percorrenza p WHERE p.mezzo.id = :param AND p.data = CURRENT_DATE " +
+                        "AND p.tempoPercorrenzaEffettivo = 0 " +  // solo quelle non ancora completate
+                        "ORDER BY p.id DESC",
+                Percorrenza.class
+        );
+        query.setParameter("param", idMezzo);
+        query.setMaxResults(1);
+        List<Percorrenza> res = query.getResultList();
+        return res.isEmpty() ? null : res.get(0);
+    }
+
+    // Update
+    public void update(Percorrenza percorrenza) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.merge(percorrenza);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            System.err.println("Errore durante l'aggiornamento dell'utente: " + e.getMessage());
+        }
+    }
+
 
     public void popolaSeVuoto() {
         long count = entityManager.createQuery("SELECT COUNT(p) FROM Percorrenza p", Long.class).getSingleResult();

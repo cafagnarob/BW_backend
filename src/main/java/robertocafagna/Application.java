@@ -132,6 +132,7 @@ public class Application {
                 System.out.println("----- 3 per Visualizzare il numero di volte in cui un mezzo" +
                         " ha fatto una specifica tratta");
                 System.out.println("----- 4 per Assegnare un mezzo ad una tratta-------");
+                System.out.println("---- 5 per rimuoveere un mezzo dal servizio------");
                 try {
                     int scelta = Integer.parseInt(scanner.nextLine().trim());
                     switch (scelta) {
@@ -440,9 +441,59 @@ public class Application {
                                 }
                             }
                         }
+                        case 5 -> {
+                            System.out.println("----LISTA MEZZI IN SERVIZIO-----");
+                            mezzoDAO.listaMezzoPerStato(StatoMezzo.SERVIZIO);
+
+                            boolean flagMezzoServizio = true;
+                            while (flagMezzoServizio) {
+                                System.out.println("---- INSERISCI L'ID DEL MEZZO-----");
+                                try {
+                                    Long idScelto = Long.valueOf(scanner.nextLine());
+                                    Mezzo mezzofromdb = mezzoDAO.getById(idScelto);
+                                    if (mezzofromdb == null) {
+                                        System.out.println("---NESSUN MEZZO TROVATO----");
+                                        continue;
+                                    }
+                                    Percorrenza percorrenzaFromDB = percorrenzaDAO.listaPercorrenzaOggiPerIdMezzo(mezzofromdb.getId());
+                                    if (percorrenzaFromDB == null) {
+                                        System.out.println("---NESSUNA PERCORRENZA TROVATA PER OGGI----");
+                                        continue;
+                                    }
+                                    Tratta trattaFromDB = trattaDAO.getById(percorrenzaFromDB.getTratta().getId());
+                                    System.out.println("-----CONFERMARE?-----");
+                                    System.out.println("-----Digita Y per si N per no------");
+                                    String conferma = scanner.nextLine().trim();
+                                    if (conferma.equalsIgnoreCase("Y")) {
+                                        while (true) {
+                                            System.out.println("----- INSERISCI IL TEMPO DI PERCORRENZA EFFETTIVO (in min)----");
+                                            int tPEffettivo = Integer.parseInt(scanner.nextLine());
+                                            if (tPEffettivo < trattaFromDB.getTempoDiPercorrenzaPrevisto() - 30) {
+                                                System.out.println("---- VALORI TROPPO BASSI, RICONTROLLARE IL VALORE INSERITO---- ");
+
+                                            } else {
+                                                percorrenzaFromDB.setTempoPercorrenzaEffettivo(tPEffettivo);
+                                                percorrenzaDAO.update(percorrenzaFromDB);
+                                                mezzofromdb.setStato(StatoMezzo.FERMO);
+                                                mezzoDAO.update(mezzofromdb);
+                                                break;
+                                            }
+                                        }
+                                        break;
+
+                                    } else {
+                                        break;
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    System.out.println("---- INSERIRE UN VALORE VALIDO-----");
+                                }
+                            }
+                        }
                         default -> System.out.println("------- INSERISCI UN VALORE VALIDO------");
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                     System.out.println("------- INSERISCI UN VALORE VALIDO------");
                 }
 
