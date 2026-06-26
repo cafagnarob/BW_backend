@@ -26,7 +26,7 @@ public abstract class TitoloDiViaggio {
     }
 
     public TitoloDiViaggio(LocalDate dataDiEmissione, PuntoDiEmissione luogoDiEmissione, double prezzo) {
-        this.dataDiEmissione = LocalDate.now();
+        this.dataDiEmissione = dataDiEmissione;
         this.luogoDiEmissione = luogoDiEmissione;
         this.prezzo = prezzo;
     }

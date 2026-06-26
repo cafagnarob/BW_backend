@@ -66,7 +66,7 @@ public class TitoloDiViaggioDAO {
         query.setParameter("param", dataInizo);
         query.setParameter("param2", dataFine);
         List<TitoloDiViaggio> res = query.getResultList();
-        System.out.println("I TITOLI DI VIAGGIO EMESSI DAL" + dataInizo + "AL" + dataFine + "SONO : " + res.size());
+        System.out.println("I TITOLI DI VIAGGIO EMESSI DAL " + dataInizo + " AL " + dataFine + " SONO: " + res.size());
         System.out.println(res);
         return res;
     }
