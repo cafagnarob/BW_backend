@@ -33,8 +33,9 @@ public class Distributore extends PuntoDiEmissione {
 
     @Override
     public String toString() {
-        return "Distributore{" +
-                "stato='" + stato + '\'' +
-                "} " + super.toString();
+        return "Distributore{ \n"
+                + super.toString() + "\n" +
+                "stato='" + stato + "\n" +
+                "} \n";
     }
 }

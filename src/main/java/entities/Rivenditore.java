@@ -40,8 +40,9 @@ public class Rivenditore extends PuntoDiEmissione {
 
     @Override
     public String toString() {
-        return "Rivenditore{" +
-                "nome='" + nome + '\'' +
-                "} " + super.toString();
+        return "Rivenditore{ \n"
+                + super.toString() +
+                "nome='" + nome + "\n" +
+                "} \n ";
     }
 }

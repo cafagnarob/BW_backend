@@ -399,9 +399,14 @@ public class Application {
                                                         System.out.println("-----Digita Y per si N per no------");
                                                         String confermaSalvataggio = scanner.nextLine().trim();
                                                         if (confermaSalvataggio.equalsIgnoreCase("Y")) {
-                                                            mezzofromdb.setStato(StatoMezzo.SERVIZIO);
-                                                            mezzoDAO.update(mezzofromdb);
                                                             percorrenzaDAO.save(newPercorrenza);
+                                                            Percorrenza percorrenza = percorrenzaDAO.getById(newPercorrenza.getId());
+                                                            if (percorrenza.getData() == LocalDate.now()) {
+                                                                mezzofromdb.setStato(StatoMezzo.SERVIZIO);
+                                                                mezzoDAO.update(mezzofromdb);
+                                                            } else {
+                                                                System.out.println("------ LO STATO DEL MEZZO SARA' AGGIORNATO IL " + dataPercorrenza + "------");
+                                                            }
 
                                                             flagMezzo = false;
                                                             flagTratta = false;
@@ -802,6 +807,19 @@ public class Application {
                     }
                     case 4 -> {
                         System.out.println("-----PRENDI UN BUS------");
+                        System.out.println("----- INSERISCI DOVE VUOI ANDARE------");
+                        List<Tratta> listaTratte = trattaDAO.listaTratte();
+                        listaTratte.forEach(tratta -> System.out.println(tratta.getCapolinea()));
+                        String destinazione = scanner.nextLine().trim();
+                        List<Tratta> listaPerDestinazione = trattaDAO.listaTrattePerCapolinea(destinazione);
+                        System.out.println("------TRATTE DISPONIBILI PER QUESTA DESTINAZIONE------");
+                        listaPerDestinazione.forEach(t -> System.out.println(t.getId() + " - " + t.getCapolinea()));
+
+                        System.out.println("------INSERISCI L'ID DELLA TRATTA------");
+                        Long idTratta = Long.valueOf(scanner.nextLine().trim());
+
+                        Tratta trattaFromDB = trattaDAO.getById(idTratta);
+
                     }
                 }
 

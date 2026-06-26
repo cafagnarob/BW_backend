@@ -47,9 +47,9 @@ public abstract class PuntoDiEmissione {
 
     @Override
     public String toString() {
-        return "PuntoDiEmissione{" +
-                "id=" + id +
-                ", indirizzo='" + indirizzo + '\'' +
-                '}';
+        return "PuntoDiEmissione{ \n" +
+                "id=" + id + "\n" +
+                ", indirizzo='" + indirizzo + "\n" +
+                "}\n";
     }
 }

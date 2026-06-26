@@ -6,7 +6,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TrattaDAO {
@@ -53,11 +52,22 @@ public class TrattaDAO {
         System.out.println("LA TRATTA " + fromDB + "è stato rimosso dal DB");
     }
 
-    public void listaTratte() {
+    public List<Tratta> listaTratte() {
         TypedQuery<Tratta> query = entityManager.createQuery(
                 "SELECT t FROM Tratta t", Tratta.class
         );
         query.getResultList().forEach(System.out::println);
+        return query.getResultList();
+    }
+
+    public List<Tratta> listaTrattePerCapolinea(String destinazione) {
+        TypedQuery<Tratta> query = entityManager.createQuery(
+                "SELECT t FROM Tratta t WHERE t.capolinea=:param", Tratta.class
+        );
+        query.setParameter("param", destinazione);
+        List<Tratta> res = query.getResultList();
+        res.forEach(System.out::println);
+        return res;
     }
 
     public void popolaSeVuoto() {
