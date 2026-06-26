@@ -817,7 +817,7 @@ public class Application {
                         System.out.println("----- INSERISCI DOVE VUOI ANDARE------");
                         List<Percorrenza> listaPercorrenza = percorrenzaDAO.listaPercorrenzeOggi();
                         if (listaPercorrenza.isEmpty()) {
-                            System.out.println("----NESSUNA CORSA DISPONIBILE-----");
+                            System.out.println("----NESSUNA CORSA DISPONIBILE PER OGGI-----");
                         }
                         System.out.println("------INSERISCI L'ID DELLA CORSA------");
                         Long idCorsa = Long.valueOf(scanner.nextLine().trim());
